@@ -24,3 +24,8 @@ services:
     arguments: ['@class_resolver']
     tags:
       - { name: drush.command }
+  provenza_core.login_redirect:
+    class: Drupal\provenza_core\EventSubscriber\LoginRedirectSubscriber
+    arguments: ['@current_user']
+    tags:
+      - { name: event_subscriber }

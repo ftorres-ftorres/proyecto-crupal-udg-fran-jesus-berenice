@@ -1,48 +1,62 @@
 /* Provenza: tokens y base.
-   Paleta inspirada en la piedra caliza, el olivo y la terracota. */
+   Gilda Display para la voz de marca y Jost (geométrica de raíz Futura)
+   para la lectura. Olivo, negro y blanco. */
 :root {
-  --piedra: #f5f1ea;
-  --piedra-2: #ece5d8;
-  --piedra-3: #e2d9c8;
-  --blanco: #fffdf9;
-  --tinta: #1d2b26;
-  --tinta-2: #44534c;
-  --tinta-3: #6d7a73;
-  --olivo: #2f4a3f;
-  --olivo-2: #3f6153;
-  --salvia: #a9bfae;
-  --terracota: #b9583a;
-  --terracota-2: #9e4529;
-  --terracota-suave: #f4dfd5;
-  --lavanda: #e6e2f1;
-  --lavanda-2: #6e6597;
-  --exito: #2f7a52;
-  --error: #b3261e;
+  /* Olivo, negro y blanco. Sin cremas ni beiges. */
+  --fondo: #ffffff;
+  --papel: #f3f4f3;
+  --papel-2: #e9ebe9;
+  --papel-3: #d8dcd9;
+  --blanco: #ffffff;
+  --negro: #0e100f;
+  --tinta: #0e100f;
+  --tinta-2: #3d4440;
+  --tinta-3: #78807b;
+  --olivo: #34493b;
+  --olivo-2: #4c6753;
+  --salvia: #a6b8aa;
+  --arcilla: #4c6753;
+  --arcilla-2: #34493b;
+  --arcilla-suave: #e2eae3;
+  --lavanda: #e9ece9;
+  --lavanda-2: #34493b;
+  --exito: #2f6f4c;
+  --error: #a3271d;
+  --f-titulo: 'Gilda Display', 'Didot', Georgia, serif;
+  --f-firma: 'Bodoni Moda', 'Didot', 'Bodoni 72', Georgia, serif;
+  --f-texto: 'Jost', 'Futura', 'Century Gothic', system-ui, sans-serif;
 
-  --f-titulo: 'Instrument Serif', 'Times New Roman', serif;
-  --f-texto: 'Onest', system-ui, -apple-system, 'Segoe UI', sans-serif;
-
-  --r-chico: 12px;
-  --r: 20px;
-  --r-grande: 32px;
-  --sombra: 0 1px 2px rgb(29 43 38 / 5%), 0 8px 24px -12px rgb(29 43 38 / 18%);
-  --sombra-alta: 0 2px 4px rgb(29 43 38 / 6%), 0 24px 48px -20px rgb(29 43 38 / 30%);
-  --ancho: 1240px;
-  --gutter: clamp(16px, 4vw, 40px);
+  --r-chico: 14px;
+  --r: 22px;
+  --r-grande: 36px;
+  --muesca: 30px;
+  --marco: 14px;
+  --sombra: 0 1px 2px rgb(23 32 27 / 4%), 0 12px 32px -18px rgb(23 32 27 / 22%);
+  --sombra-alta: 0 2px 6px rgb(23 32 27 / 5%), 0 30px 60px -28px rgb(23 32 27 / 38%);
+  --ancho: 1320px;
+  --gutter: clamp(18px, 4vw, 48px);
   --curva: cubic-bezier(.2, .7, .2, 1);
+
+  /* Alias de la primera versión del tema. */
+  --piedra: var(--fondo);
+  --piedra-2: var(--papel-2);
+  --piedra-3: var(--papel-3);
+  --terracota: var(--arcilla);
+  --terracota-2: var(--arcilla-2);
+  --terracota-suave: var(--arcilla-suave);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
   margin: 0;
-  background: var(--piedra);
+  background: var(--fondo);
   color: var(--tinta);
   font-family: var(--f-texto);
-  font-size: 17px;
+  font-size: 18px;
+  font-weight: 400;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -52,86 +66,105 @@ img, video, svg { max-width: 100%; height: auto; }
 img { display: block; }
 
 h1, h2, h3, h4 {
-  margin: 0 0 .5em;
+  margin: 0 0 .45em;
   color: var(--tinta);
   font-family: var(--f-titulo);
+  font-optical-sizing: auto;
   font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -.01em;
+  line-height: 1.06;
+  letter-spacing: -.012em;
 }
-h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
-h2 { font-size: clamp(2rem, 3.4vw, 2.9rem); }
-h3 { font-size: 1.6rem; }
-h4 { font-size: 1.3rem; }
-h1 em, h2 em { font-style: italic; color: inherit; }
+h1 { font-size: clamp(2.8rem, 5.4vw, 5rem); }
+h2 { font-size: clamp(2.2rem, 3.8vw, 3.5rem); }
+h3 { font-size: 1.7rem; }
+h4 { font-size: 1.35rem; }
+/* El énfasis usa la cursiva Bodoni de la marca. */
+h1 em, h2 em, h3 em { font-family: var(--f-firma); font-optical-sizing: auto; font-style: italic; font-weight: 400; letter-spacing: -.02em; }
 
 p { margin: 0 0 1em; }
-a { color: var(--olivo-2); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-a:hover { color: var(--terracota); }
-:focus-visible { outline: 3px solid var(--terracota); outline-offset: 3px; border-radius: 6px; }
-
+a { color: var(--olivo-2); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+a:hover { color: var(--arcilla); }
+:focus-visible { outline: 3px solid var(--arcilla); outline-offset: 3px; border-radius: 8px; }
 strong { font-weight: 600; }
-hr { border: 0; height: 1px; background: var(--piedra-3); margin: 2rem 0; }
-::selection { background: var(--terracota-suave); }
+hr { border: 0; height: 1px; background: var(--papel-3); margin: 2rem 0; }
+::selection { background: var(--arcilla-suave); }
 
-.visually-hidden {
-  position: absolute !important; clip: rect(1px, 1px, 1px, 1px); overflow: hidden;
-  height: 1px; width: 1px; word-wrap: normal;
-}
+.visually-hidden { position: absolute !important; clip: rect(1px, 1px, 1px, 1px); overflow: hidden; height: 1px; width: 1px; word-wrap: normal; }
 .visually-hidden.focusable:focus { position: static !important; clip: auto; overflow: visible; height: auto; width: auto; }
-.saltar:focus { position: fixed !important; top: 12px; left: 12px; z-index: 100; background: var(--blanco); padding: 10px 18px; border-radius: 999px; box-shadow: var(--sombra); }
+.saltar:focus { position: fixed !important; top: 12px; left: 12px; z-index: 200; background: var(--blanco); padding: 10px 18px; border-radius: 999px; box-shadow: var(--sombra); }
+.filtros-svg { position: absolute; width: 0; height: 0; }
 
 .contenedor { width: 100%; max-width: calc(var(--ancho) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
 
-/* Iconos Hugeicons en línea */
 .icono { width: 1.25em; height: 1.25em; flex: none; }
 
 /* Botones píldora */
 .boton, .button, button.button, input.button, .form-submit, .webform-button--submit, .webform-button--next, .webform-button--previous {
-  display: inline-flex; align-items: center; justify-content: center; gap: .5em;
-  min-height: 48px; padding: .75em 1.5em;
+  display: inline-flex; align-items: center; justify-content: center; gap: .55em;
+  min-height: 50px; padding: .8em 1.6em;
   border: 0; border-radius: 999px;
   background: var(--olivo); color: var(--blanco);
-  font: 600 .98rem/1.1 var(--f-texto); letter-spacing: .005em;
+  font: 500 1rem/1.1 var(--f-texto); letter-spacing: .01em;
   text-decoration: none; cursor: pointer;
-  transition: background .25s var(--curva), transform .25s var(--curva), box-shadow .25s var(--curva), color .25s;
+  transition: background .25s, color .25s, transform .25s var(--curva), box-shadow .25s;
   -webkit-appearance: none; appearance: none;
 }
-.boton:hover, .button:hover, .form-submit:hover, .webform-button--submit:hover { background: var(--tinta); color: var(--blanco); transform: translateY(-1px); box-shadow: var(--sombra); }
-.boton:active, .button:active, .form-submit:active { transform: translateY(0); }
-.boton .icono { width: 1.1em; height: 1.1em; transition: transform .25s var(--curva); }
-.boton:hover .icono { transform: translateX(3px); }
-
-.boton--acento, .button--primary, .form-submit.button--primary, .webform-button--submit { background: var(--terracota); }
-.boton--acento:hover, .button--primary:hover, .webform-button--submit:hover { background: var(--terracota-2); }
+.boton:hover, .button:hover, .form-submit:hover, .webform-button--submit:hover { background: var(--tinta); color: var(--blanco); transform: translateY(-1px); }
+.boton .icono { width: 1.1em; height: 1.1em; transition: transform .3s var(--curva); }
+.boton:hover .icono { transform: translate(2px, -2px); }
+.boton--grande { min-height: 58px; padding: .9em 1.9em; font-size: 1.06rem; }
+.boton--acento, .button--primary, .webform-button--submit { background: var(--arcilla); }
+.boton--acento:hover, .button--primary:hover, .webform-button--submit:hover { background: var(--arcilla-2); }
 .boton--oscuro { background: var(--tinta); }
-.boton--oscuro:hover { background: var(--olivo); }
+.boton--oscuro:hover { background: var(--olivo-2); }
 .boton--claro { background: var(--blanco); color: var(--tinta); }
-.boton--claro:hover { background: var(--piedra); color: var(--tinta); }
-.boton--fantasma { background: rgb(255 255 255 / 12%); color: inherit; }
-.boton--fantasma:hover { background: rgb(255 255 255 / 22%); color: inherit; }
+.boton--claro:hover { background: var(--papel-2); color: var(--tinta); }
 .boton--chico { min-height: 40px; padding: .55em 1.1em; font-size: .92rem; }
 .button--danger { background: var(--error); }
-.button--small { min-height: 36px; padding: .45em 1em; font-size: .88rem; }
+.button--small { min-height: 38px; padding: .45em 1em; font-size: .9rem; }
 
-.icono-boton {
-  display: inline-grid; place-items: center; width: 44px; height: 44px;
-  border: 0; border-radius: 999px; background: transparent; color: inherit; cursor: pointer;
-  transition: background .2s;
-}
-.icono-boton:hover { background: rgb(29 43 38 / 8%); color: inherit; }
+/* Botón de cuenta: proporcional a la barra */
+.boton--cuenta { min-height: 52px; padding: .8em 1.5em; font-size: 1.05rem; background: var(--tinta); }
+.boton--cuenta .icono { width: 1.2em; height: 1.2em; }
+.boton--cuenta:hover { background: var(--olivo); }
 
-.enlace-flecha { display: inline-flex; align-items: center; gap: .4em; font-weight: 600; color: var(--olivo-2); text-decoration: none; }
+.icono-boton { display: inline-grid; place-items: center; width: 48px; height: 48px; border: 0; border-radius: 999px; background: transparent; color: inherit; cursor: pointer; transition: background .2s; }
+.icono-boton:hover { background: rgb(23 32 27 / 7%); color: inherit; }
+.icono-boton .icono { width: 22px; height: 22px; }
+
+.enlace-flecha { display: inline-flex; align-items: center; gap: .45em; font-weight: 500; color: var(--tinta); text-decoration: none; }
 .enlace-flecha .icono { width: 1.1em; height: 1.1em; transition: transform .25s var(--curva); }
+.enlace-flecha:hover { color: var(--arcilla); }
 .enlace-flecha:hover .icono { transform: translateX(4px); }
-.enlace-flecha--claro { color: var(--blanco); }
-.enlace-flecha--claro:hover { color: var(--terracota-suave); }
 
-.etiqueta { display: inline-flex; align-items: center; padding: .2em .75em; border-radius: 999px; background: var(--piedra-2); color: var(--tinta-2); font-size: .78rem; font-weight: 600; }
-.etiqueta--acento { background: var(--terracota-suave); color: var(--terracota-2); }
+.etiqueta { display: inline-flex; align-items: center; padding: .25em .85em; border-radius: 999px; background: var(--papel-2); color: var(--tinta-2); font-size: .8rem; font-weight: 500; letter-spacing: .02em; }
+.etiqueta--acento { background: var(--negro); color: var(--blanco); }
 
-/* Revelado al hacer scroll (lo activa provenza.js) */
-.js .revela { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--curva) var(--retraso, 0ms), transform .8s var(--curva) var(--retraso, 0ms); }
+/* Vidrio líquido real: refracción en los bordes, brillo especular y sombra.
+   Chrome/Edge aplican el mapa de desplazamiento; el resto, desenfoque. */
+.vidrio, .marco__avisos .provenza-urgent a {
+  position: relative; isolation: isolate;
+  background: rgb(255 255 255 / 9%);
+  -webkit-backdrop-filter: blur(16px) saturate(170%) brightness(1.08);
+  backdrop-filter: blur(16px) saturate(170%) brightness(1.08);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 55%),
+    inset 0 -1px 1px rgb(255 255 255 / 16%),
+    inset 1px 0 1px rgb(255 255 255 / 22%),
+    inset -1px 0 1px rgb(255 255 255 / 10%),
+    0 10px 34px -12px rgb(0 0 0 / 35%);
+}
+@supports (backdrop-filter: url(#vidrio-liquido)) and (not (-webkit-touch-callout: none)) {
+  .vidrio, .marco__avisos .provenza-urgent a { backdrop-filter: url(#vidrio-liquido) blur(2.5px) saturate(175%) brightness(1.1); }
+}
+.vidrio::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(135deg, rgb(255 255 255 / 34%) 0%, rgb(255 255 255 / 6%) 32%, rgb(255 255 255 / 0%) 60%, rgb(255 255 255 / 12%) 100%);
+  mix-blend-mode: overlay;
+}
+
+/* Revelado al hacer scroll */
+.js .revela { opacity: 0; transform: translateY(26px); transition: opacity .9s var(--curva) var(--retraso, 0ms), transform .9s var(--curva) var(--retraso, 0ms); }
 .js .revela.es-visible { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .js .revela { opacity: 1; transform: none; transition: none; }

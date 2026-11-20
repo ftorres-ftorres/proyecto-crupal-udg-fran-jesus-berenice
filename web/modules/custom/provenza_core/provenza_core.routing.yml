@@ -391,3 +391,11 @@ provenza_core.tutorial_credits:
     _title: 'Créditos y actualizaciones'
   requirements:
     _access: 'TRUE'
+
+provenza_core.panel:
+  path: '/mi-panel'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\PanelController::summary'
+    _title: 'Mi panel'
+  requirements:
+    _user_is_logged_in: 'TRUE'

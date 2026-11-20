@@ -1,0 +1,7 @@
+{# Filtro de refracción para el vidrio líquido (Chrome/Edge). Los demás navegadores usan desenfoque. #}
+<svg class="filtros-svg" width="0" height="0" aria-hidden="true" focusable="false">
+  <filter id="vidrio-liquido" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feImage preserveAspectRatio="none" result="mapa" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='80' viewBox='0 0 240 80'%3E%3Cdefs%3E%3ClinearGradient id='r' x1='0' x2='1' y1='0' y2='0'%3E%3Cstop offset='0' stop-color='%23000'/%3E%3Cstop offset='1' stop-color='%23f00'/%3E%3C/linearGradient%3E%3ClinearGradient id='g' x1='0' x2='0' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23000'/%3E%3Cstop offset='1' stop-color='%230f0'/%3E%3C/linearGradient%3E%3Cfilter id='b'%3E%3CfeGaussianBlur stdDeviation='9'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='240' height='80' fill='url(%23r)'/%3E%3Crect width='240' height='80' fill='url(%23g)' style='mix-blend-mode:screen'/%3E%3Crect x='16' y='14' width='208' height='52' rx='26' fill='%23808000' filter='url(%23b)'/%3E%3C/svg%3E"/>
+    <feDisplacementMap in="SourceGraphic" in2="mapa" scale="38" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>

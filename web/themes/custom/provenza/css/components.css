@@ -4,16 +4,10 @@
 .provenza-urgent h3 { position: absolute; clip: rect(1px, 1px, 1px, 1px); width: 1px; height: 1px; overflow: hidden; }
 .provenza-urgent ul { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .provenza-urgent li a {
-  display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px 8px 12px;
-  border-radius: 999px; background: var(--terracota-suave); color: var(--terracota-2);
-  font-size: .9rem; font-weight: 600; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px;
+  border-radius: 999px; background: var(--arcilla); color: var(--blanco);
+  font-size: .95rem; font-weight: 500; text-decoration: none;
 }
-.provenza-urgent li a::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--terracota); box-shadow: 0 0 0 0 rgb(185 88 58 / 60%); animation: pulso 1.8s infinite; }
-@keyframes pulso { 70% { box-shadow: 0 0 0 10px rgb(185 88 58 / 0%); } 100% { box-shadow: 0 0 0 0 rgb(185 88 58 / 0%); } }
-.destacado--portada .provenza-urgent li a { background: rgb(255 255 255 / 16%); color: var(--blanco); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-.destacado--portada .provenza-urgent li a::before { background: #ffb59c; }
-.destacado--portada .provenza-urgent li a:hover { background: rgb(255 255 255 / 26%); }
-.destacado--portada { top: 104px; }
 .destacado > div > div + div { margin-top: 12px; }
 
 /* Listados */
@@ -155,7 +149,6 @@ tbody tr:hover td { background: var(--terracota-suave); }
 
 /* Estados de trámite */
 .estado { display: inline-flex; align-items: center; gap: 6px; padding: .3em .85em; border-radius: 999px; background: var(--piedra-2); color: var(--tinta-2); font-size: .82rem; font-weight: 600; white-space: nowrap; }
-.estado::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
 .estado--recibida, .estado--solicitada { background: var(--lavanda); color: var(--lavanda-2); }
 .estado--en_revision, .estado--asignada, .estado--en_proceso, .estado--en_investigacion { background: #fbf0d9; color: #8a5a07; }
 .estado--resuelta, .estado--aprobada, .estado--realizada, .estado--accion_tomada, .estado--cerrada { background: #e3efe7; color: #2f7a52; }
@@ -240,3 +233,20 @@ tbody tr:hover td { background: var(--terracota-suave); }
 .glosario dt { font-family: var(--f-titulo); font-size: 1.5rem; margin-bottom: 4px; }
 .glosario dd { margin: 0; color: var(--tinta-2); }
 @media (max-width: 760px) { .glosario { grid-template-columns: 1fr; } }
+
+/* Alerta de aviso urgente (barra superior, se puede cerrar) */
+.alerta { display: flex; align-items: center; gap: 16px; margin: var(--marco) var(--marco) 0; padding: 10px 10px 10px 12px; border-radius: 999px; background: var(--tinta); color: rgb(255 253 248 / 80%); }
+.alerta[hidden] { display: none; }
+.alerta__icono { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 999px; background: var(--arcilla); color: var(--blanco); }
+.alerta__icono .icono { width: 20px; height: 20px; }
+.alerta__texto { flex: 1; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin: 0; font-size: 1rem; }
+.alerta__texto strong { color: var(--blanco); font-weight: 500; }
+.alerta__enlace { flex: none; padding: 9px 18px; border-radius: 999px; background: var(--blanco); color: var(--tinta); font-size: .95rem; font-weight: 500; text-decoration: none; }
+.alerta__enlace:hover { background: var(--arcilla-suave); color: var(--tinta); }
+.alerta__cerrar { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 999px; background: transparent; color: rgb(255 253 248 / 70%); cursor: pointer; }
+.alerta__cerrar:hover { background: rgb(255 255 255 / 10%); color: var(--blanco); }
+.alerta__cerrar .icono { width: 18px; height: 18px; }
+.pagina--panel .alerta { max-width: 1480px; margin-inline: auto; }
+.marco__mensajes { position: absolute; z-index: 5; top: 110px; left: 50%; transform: translateX(-50%); width: min(640px, calc(100% - 40px)); }
+.marco__mensajes .provenza-urgent, .destacado .provenza-urgent, .panel .provenza-urgent { display: none; }
+@media (max-width: 640px) { .alerta { border-radius: 24px; align-items: flex-start; } .alerta__texto span { display: none; } .alerta__enlace { padding: 9px 14px; } }

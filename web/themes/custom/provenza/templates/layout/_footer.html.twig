@@ -1,37 +1,36 @@
 <footer class="pie" role="contentinfo">
-  <div class="contenedor pie__rejilla">
-    <div class="pie__marca">
-      {% include '@provenza/layout/_marca.html.twig' %}
-      <p>Portal de Colonos del Condominio Residencial AC. Un solo lugar para solicitudes, reservaciones, visitas y avisos.</p>
+  <div class="pie__rejilla">
+    <div class="pie__col pie__intro">
+      <p>Portal de Colonos del Condominio Residencial AC. Avisos, instalaciones y trámites de Provenza Residencial en un solo lugar.</p>
+      {% include '@provenza/layout/_cuenta.html.twig' %}
     </div>
     <div class="pie__col">
-      <h2>Portal</h2>
+      <h2>Residencial</h2>
       <ul>
-        <li><a href="/solicitudes">Solicitudes de servicio</a></li>
         <li><a href="/instalaciones">Instalaciones</a></li>
-        <li><a href="/seguridad">Seguridad y acceso</a></li>
-        <li><a href="/quejas">Quejas y sugerencias</a></li>
+        <li><a href="/comunidad/avisos">Avisos</a></li>
+        <li><a href="/comunidad/calendario">Calendario</a></li>
+        <li><a href="/comunidad/cuotas-y-tarifas">Cuotas y tarifas</a></li>
       </ul>
     </div>
     <div class="pie__col">
-      <h2>Comunidad</h2>
+      <h2>Colonos</h2>
       <ul>
-        <li><a href="/comunidad/avisos">Avisos</a></li>
-        <li><a href="/comunidad/cuotas-y-tarifas">Cuotas y tarifas</a></li>
-        <li><a href="/comunidad/calendario">Calendario</a></li>
+        <li><a href="/mi-panel">Mi panel</a></li>
+        <li><a href="/seguridad">Seguridad y acceso</a></li>
         <li><a href="/comunidad/preguntas-frecuentes">Preguntas frecuentes</a></li>
+        <li><a href="/comunidad/directorio">Directorio</a></li>
       </ul>
     </div>
-    <div class="pie__col pie__contacto">
+    <div class="pie__col">
       <h2>Contacto</h2>
-      <p>{{ source('@provenza/icons/ubicacion.svg') }}<span>Av. Adolfo López Mateos Sur 5555, Tlajomulco de Zúñiga, Jalisco, C.P. 45645</span></p>
-      <p>{{ source('@provenza/icons/telefono.svg') }}<a href="/seguridad/telefonos-de-emergencia">Teléfonos de caseta y emergencia</a></p>
-      <p>{{ source('@provenza/icons/correo.svg') }}<a href="/contacto">Escríbenos</a></p>
+      <p>Av. Adolfo López Mateos Sur 5555<br>Tlajomulco de Zúñiga, Jalisco<br>C.P. 45645</p>
+      <p><a href="/seguridad/telefonos-de-emergencia">Teléfonos de caseta</a><br><a href="/contacto">Escribir a Administración</a></p>
     </div>
   </div>
-  <div class="contenedor pie__legal">
+  <p class="pie__palabra" aria-hidden="true">Provenza</p>
+  <div class="pie__legal">
     {{ page.footer_top }}
-    {{ page.footer_bottom }}
-    <p class="pie__copy">© {{ anio }} Colonos del Condominio Residencial AC</p>
+    <p>© {{ anio }} Colonos del Condominio Residencial AC</p>
   </div>
 </footer>

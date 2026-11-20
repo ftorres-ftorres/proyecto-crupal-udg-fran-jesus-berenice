@@ -1,0 +1,5 @@
+{% if logueado %}
+  <a class="boton boton--cuenta" href="/mi-panel">{{ source('@provenza/icons/casa.svg') }}<span>Mi panel</span></a>
+{% else %}
+  <a class="boton boton--cuenta" href="{{ url_entrar }}">{{ source('@provenza/icons/entrar.svg') }}<span>Entrar</span></a>
+{% endif %}

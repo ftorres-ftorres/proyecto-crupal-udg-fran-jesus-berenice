@@ -92,13 +92,13 @@
     <div class="tarjetas">
       {% for a in items %}
         <a class="tarjeta revela{{ a.urgente ? ' tarjeta--urgente' }}" href="{{ a.url }}" style="--retraso: {{ (loop.index0 % 3) * 60 }}ms">
+          <span class="tarjeta__titulo">{{ a.titulo }}</span>
+          {% if a.resumen %}<span class="tarjeta__texto">{{ a.resumen }}</span>{% endif %}
           <span class="tarjeta__meta">
             {% if a.urgente %}<span class="etiqueta etiqueta--acento">Urgente</span>{% endif %}
             {% if a.categoria %}<span class="etiqueta">{{ a.categoria }}</span>{% endif %}
             <span>{{ a.fecha }}</span>
           </span>
-          <span class="tarjeta__titulo">{{ a.titulo }}</span>
-          {% if a.resumen %}<span class="tarjeta__texto">{{ a.resumen }}</span>{% endif %}
           <span class="enlace-flecha">Leer{{ source('@provenza/icons/flecha.svg') }}</span>
         </a>
       {% endfor %}

@@ -1,8 +1,8 @@
 global:
-  version: 1.0
+  version: 2.0
   css:
     base:
-      'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Onest:wght@400;500;600;700&display=swap': { type: external, minified: true }
+      'https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@1,6..96,400..600&family=Gilda+Display&family=Jost:wght@300..600&display=swap': { type: external, minified: true }
       css/base.css: {}
     layout:
       css/layout.css: {}
@@ -10,6 +10,8 @@ global:
       css/components.css: {}
       css/home.css: {}
       css/forms.css: {}
+      css/panel.css: {}
+      css/acceso.css: {}
   js:
     js/provenza.js: {}
   dependencies:

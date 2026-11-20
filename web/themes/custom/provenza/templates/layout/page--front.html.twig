@@ -1,6 +1,42 @@
 <a href="#contenido" class="visually-hidden focusable saltar">Saltar al contenido</a>
-{% include '@provenza/layout/_header.html.twig' %}
-{% if page.highlighted %}<div class="destacado destacado--portada">{{ page.highlighted }}</div>{% endif %}
+{% include '@provenza/layout/_alerta.html.twig' %}
+{% include '@provenza/layout/_vidrio.html.twig' %}
+{% include '@provenza/layout/_barra.html.twig' with { fija: false } %}
+{% include '@provenza/layout/_menu-movil.html.twig' %}
+<section class="marco marco--hero" aria-label="Provenza Residencial">
+  <div class="marco__fondo">
+  <video class="marco__video" autoplay muted loop playsinline preload="auto" poster="{{ poster_hero }}" data-video-hero>
+    <source src="{{ video_hero }}" type="video/mp4">
+  </video>
+  <div class="marco__velo"></div>
+  </div>
+  {% include '@provenza/layout/_nav.html.twig' %}
+  {% if page.highlighted %}<div class="marco__mensajes">{{ page.highlighted }}</div>{% endif %}
+  <div class="hero">
+    <h1 class="hero__titulo">Vivir en <em>Provenza</em></h1>
+    <p class="hero__texto">El portal de Colonos del Condominio Residencial. Instalaciones, avisos y todos tus trámites desde tu panel.</p>
+    <div class="hero__botones">
+      {% if logueado %}
+        <a class="boton boton--claro boton--grande" href="/mi-panel">Ir a mi panel{{ source('@provenza/icons/flecha_diag.svg') }}</a>
+      {% else %}
+        <a class="boton boton--claro boton--grande" href="{{ url_entrar }}">Entrar a mi panel{{ source('@provenza/icons/flecha_diag.svg') }}</a>
+      {% endif %}
+      <a class="boton boton--vidrio boton--grande vidrio" href="/instalaciones">Conocer las instalaciones</a>
+    </div>
+  </div>
+  <div class="muesca muesca--inf-izq">
+    <form class="buscador" action="/buscar" method="get" role="search">
+      <label class="visually-hidden" for="buscador-portada">Buscar en el portal</label>
+      <span class="buscador__icono">{{ source('@provenza/icons/buscar.svg') }}</span>
+      <input id="buscador-portada" name="q" type="search" placeholder="Horarios, reglamentos, tarifas" autocomplete="off">
+      <button class="boton boton--oscuro" type="submit">Buscar</button>
+    </form>
+  </div>
+  <button class="sonido vidrio" type="button" data-sonido aria-pressed="false">
+    <span class="sonido__icono sonido__icono--off">{{ source('@provenza/icons/volumen.svg') }}</span>
+    <span class="sonido__texto">Escuchar el video</span>
+  </button>
+</section>
 <main id="contenido" class="principal-portada" tabindex="-1">
   {{ page.content }}
   {{ page.content_below }}

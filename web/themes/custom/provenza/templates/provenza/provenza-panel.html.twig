@@ -1,0 +1,79 @@
+<div class="resumen">
+  <div class="resumen__hola">
+    <h2>{{ saludo }}, <em>{{ nombre }}</em></h2>
+    {% if casa %}<p>{{ source('@provenza/icons/casa.svg') }}{{ casa }}</p>{% endif %}
+  </div>
+
+  <section class="resumen__bloque" aria-labelledby="nuevo-tramite">
+    <h3 id="nuevo-tramite">Nuevo trámite</h3>
+    <div class="acciones">
+      {% for a in acciones %}
+        <a class="accion" href="{{ a.url }}">
+          <span class="accion__icono">{{ source('@provenza/icons/' ~ a.icono ~ '.svg') }}</span>
+          <span class="accion__titulo">{{ a.titulo }}</span>
+          <span class="accion__texto">{{ a.texto }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <div class="resumen__rejilla">
+    <section class="tarjeta-panel" aria-labelledby="recientes-titulo">
+      <div class="tarjeta-panel__cabeza">
+        <h3 id="recientes-titulo">Trámites recientes</h3>
+        <a class="enlace-flecha" href="/solicitudes/mis-solicitudes">Ver solicitudes{{ source('@provenza/icons/flecha.svg') }}</a>
+      </div>
+      {% if recientes %}
+        <ul class="lista-tramites">
+          {% for r in recientes %}
+            <li>
+              <a href="{{ r.url }}">
+                <span class="lista-tramites__info">
+                  <span class="lista-tramites__titulo">{{ r.titulo }}</span>
+                  <span class="lista-tramites__meta">{{ r.tipo }}{% if r.folio %}, {{ r.folio }}{% endif %}</span>
+                </span>
+                <span class="estado estado--{{ r.estado }}">{{ r.estado_texto }}</span>
+                <span class="lista-tramites__fecha">{{ r.fecha }}</span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="vacio-texto">Todavía no tienes trámites. Empieza con uno de arriba.</p>
+      {% endif %}
+    </section>
+
+    <div class="resumen__columna">
+      <section class="tarjeta-panel tarjeta-panel--oscura" aria-labelledby="reserva-titulo">
+        <h3 id="reserva-titulo">Próxima reservación</h3>
+        {% if reservacion %}
+          <a class="reserva" href="{{ reservacion.url }}">
+            <span class="reserva__fecha"><strong>{{ reservacion.dia }}</strong>{{ reservacion.mes }}</span>
+            <span class="reserva__info"><span>{{ reservacion.titulo }}</span><small>{{ reservacion.hora }}{% if reservacion.invitados %}, {{ reservacion.invitados }} invitados{% endif %}</small></span>
+          </a>
+          <span class="estado estado--{{ reservacion.estado }}">{{ reservacion.estado_texto }}</span>
+        {% else %}
+          <p>No tienes reservaciones próximas.</p>
+          <a class="boton boton--claro" href="/form/reservar-salon">Reservar el salón</a>
+        {% endif %}
+      </section>
+      <section class="tarjeta-panel" aria-labelledby="pases-titulo">
+        <div class="tarjeta-panel__cabeza">
+          <h3 id="pases-titulo">Pases de visita</h3>
+          <a class="enlace-flecha" href="/seguridad/mis-autorizaciones">Todos{{ source('@provenza/icons/flecha.svg') }}</a>
+        </div>
+        {% for p in pases %}
+          <a class="pase" href="{{ p.url }}"><span class="pase__icono">{{ source('@provenza/icons/qr.svg') }}</span><span><strong>{{ p.nombre }}</strong><small>{{ p.ventana }}</small></span></a>
+        {% else %}
+          <p class="vacio-texto">Sin pases vigentes.</p>
+        {% endfor %}
+      </section>
+      <section class="tarjeta-panel" aria-labelledby="avisos-panel">
+        <h3 id="avisos-panel">Avisos</h3>
+        {% for a in avisos %}
+          <a class="aviso-mini" href="{{ a.url }}">{% if a.urgente %}<span class="etiqueta etiqueta--acento">Urgente</span>{% endif %}{{ a.titulo }}</a>
+        {% endfor %}
+      </section>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="menu-movil" id="menu-movil" data-menu-movil hidden>
+  <div class="menu-movil__cabeza">
+    {% include '@provenza/layout/_marca.html.twig' %}
+    <button class="icono-boton" type="button" data-cerrar-menu aria-label="Cerrar menú">{{ source('@provenza/icons/cerrar.svg') }}</button>
+  </div>
+  <nav class="menu-movil__nav" aria-label="Menú">{% include '@provenza/layout/_menu.html.twig' %}</nav>
+  <div class="menu-movil__pie">{% include '@provenza/layout/_cuenta.html.twig' %}</div>
+</div>

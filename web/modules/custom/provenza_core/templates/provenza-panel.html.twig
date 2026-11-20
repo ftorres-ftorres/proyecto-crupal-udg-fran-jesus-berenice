@@ -1,0 +1,6 @@
+{# Plantilla base del panel; el tema Provenza la reemplaza. #}
+<div class="provenza-panel">
+  <h2>{{ saludo }}, {{ nombre }}</h2>
+  <ul>{% for a in acciones %}<li><a href="{{ a.url }}">{{ a.titulo }}</a></li>{% endfor %}</ul>
+  <ul>{% for r in recientes %}<li><a href="{{ r.url }}">{{ r.folio }} {{ r.titulo }}</a> {{ r.estado_texto }}</li>{% endfor %}</ul>
+</div>

@@ -43,6 +43,12 @@ function provenza_core_theme($existing, $type, $theme, $path): array {
         'filters' => [],
       ],
     ],
+    'provenza_panel' => [
+      'variables' => [
+        'saludo' => '', 'nombre' => '', 'casa' => '', 'acciones' => [],
+        'recientes' => [], 'reservacion' => NULL, 'pases' => [], 'avisos' => [],
+      ],
+    ],
     'provenza_listing' => [
       'variables' => ['bundle' => '', 'intro' => '', 'items' => []],
     ],
@@ -664,8 +670,12 @@ function provenza_core_form_pages(): void {
   // Aquí solo se publica cada formulario como página.
   foreach (array_keys($paths) as $id) {
     $webform = \Drupal\webform\Entity\Webform::load($id);
-    if ($webform && !$webform->getSetting('page')) {
+    if ($webform) {
+      // Los trámites son solo para cuentas autenticadas: quien no tiene
+      // sesión se envía al inicio de sesión y regresa al formulario.
       $webform->setSetting('page', TRUE);
+      $webform->setSetting('form_login', TRUE);
+      $webform->setSetting('form_login_message', 'Inicia sesión con tu cuenta de colono para continuar con este trámite.');
       $webform->save();
     }
   }

@@ -1,0 +1,12 @@
+{# Pestañas con muesca del marco y navegación central de vidrio líquido. #}
+<div class="muesca muesca--sup-izq">{% include '@provenza/layout/_marca.html.twig' %}</div>
+<nav class="nav-vidrio vidrio" id="menu-principal" aria-label="Menú principal" data-menu>
+  {% include '@provenza/layout/_menu.html.twig' %}
+</nav>
+<div class="muesca muesca--sup-der">
+  <a class="icono-boton" href="/buscar" aria-label="Buscar en el sitio">{{ source('@provenza/icons/buscar.svg') }}</a>
+  {% include '@provenza/layout/_cuenta.html.twig' %}
+  <button class="icono-boton boton-menu" type="button" aria-controls="menu-movil" aria-expanded="false" data-abrir-menu>
+    <span class="visually-hidden">Abrir menú</span>{{ source('@provenza/icons/menu.svg') }}
+  </button>
+</div>

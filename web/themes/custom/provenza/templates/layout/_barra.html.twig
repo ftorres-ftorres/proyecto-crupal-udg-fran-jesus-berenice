@@ -1,0 +1,14 @@
+{# Barra compacta: flota al hacer scroll en páginas públicas; fija en el panel. #}
+<header class="barra{{ fija ? ' barra--fija' : ' barra--flotante' }}" data-barra>
+  <div class="barra__interior">
+    {% include '@provenza/layout/_marca.html.twig' %}
+    <nav class="barra__nav" aria-label="Menú principal">{% include '@provenza/layout/_menu.html.twig' %}</nav>
+    <div class="barra__acciones">
+      <a class="icono-boton" href="/buscar" aria-label="Buscar en el sitio">{{ source('@provenza/icons/buscar.svg') }}</a>
+      {% include '@provenza/layout/_cuenta.html.twig' %}
+      <button class="icono-boton boton-menu" type="button" aria-controls="menu-movil" aria-expanded="false" data-abrir-menu>
+        <span class="visually-hidden">Abrir menú</span>{{ source('@provenza/icons/menu.svg') }}
+      </button>
+    </div>
+  </div>
+</header>

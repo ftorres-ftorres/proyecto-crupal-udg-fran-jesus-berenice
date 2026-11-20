@@ -34,12 +34,40 @@ function provenza_facility_photo(?string $code, bool $small = FALSE): string {
 function provenza_preprocess_html(array &$variables): void {
   $route = \Drupal::routeMatch()->getRouteName() ?? '';
   $variables['attributes']['class'][] = 'ruta--' . str_replace(['.', '_'], '-', $route);
-  if (\Drupal::service('path.matcher')->isFrontPage() || $route === 'provenza_core.home') {
-    $variables['attributes']['class'][] = 'es-portada';
-  }
+  $variables['attributes']['class'][] = 'pagina--' . provenza_page_kind();
   if (str_starts_with(\Drupal::service('path.current')->getPath(), '/asi-lo-construimos')) {
     $variables['attributes']['class'][] = 'es-tutorial';
   }
+}
+
+/**
+ * Rutas que se muestran dentro del panel del colono.
+ */
+function provenza_panel_routes(): array {
+  return [
+    'provenza_core.panel', 'provenza_core.mis_solicitudes', 'provenza_core.mis_quejas',
+    'provenza_core.mis_reservaciones', 'provenza_core.mis_autorizaciones', 'provenza_core.mis_vehiculos',
+    'provenza_core.mi_domicilio', 'provenza_core.notificaciones', 'provenza_core.seguridad',
+    'provenza_core.reporte_confidencial', 'provenza_core.qr', 'provenza_core.mis_asignaciones',
+    'entity.webform.canonical', 'entity.webform.confirmation', 'entity.user.edit_form',
+  ];
+}
+
+/**
+ * Tipo de página: portada, panel, acceso (login) o interior.
+ */
+function provenza_page_kind(): string {
+  $route = \Drupal::routeMatch()->getRouteName() ?? '';
+  if (\Drupal::service('path.matcher')->isFrontPage() || $route === 'provenza_core.home') {
+    return 'portada';
+  }
+  if (in_array($route, ['user.login', 'user.register', 'user.pass', 'user.reset.form'], TRUE)) {
+    return 'acceso';
+  }
+  if (in_array($route, provenza_panel_routes(), TRUE) && \Drupal::currentUser()->isAuthenticated()) {
+    return 'panel';
+  }
+  return 'interior';
 }
 
 /**
@@ -47,12 +75,68 @@ function provenza_preprocess_html(array &$variables): void {
  */
 function provenza_preprocess_page(array &$variables): void {
   $route = \Drupal::routeMatch()->getRouteName() ?? '';
-  $variables['es_portada'] = \Drupal::service('path.matcher')->isFrontPage() || $route === 'provenza_core.home';
-  $variables['ruta_tema'] = base_path() . \Drupal::service('extension.list.theme')->getPath('provenza');
+  $tema = base_path() . \Drupal::service('extension.list.theme')->getPath('provenza');
+  $kind = provenza_page_kind();
+  $variables['tipo_pagina'] = $kind;
+  $variables['es_portada'] = $kind === 'portada';
+  $variables['ruta_tema'] = $tema;
+  $variables['video_hero'] = $tema . '/media/provenza-hero.mp4';
+  $variables['poster_hero'] = $tema . '/media/provenza-hero-poster.webp';
+  $variables['anio'] = date('Y');
+
   $account = \Drupal::currentUser();
   $variables['logueado'] = $account->isAuthenticated();
-  $variables['nombre_usuario'] = $account->isAuthenticated() ? $account->getDisplayName() : '';
-  $variables['anio'] = date('Y');
+  $nombre = '';
+  if ($account->isAuthenticated()) {
+    $user = \Drupal\user\Entity\User::load($account->id());
+    $nombre = $user && $user->hasField('field_nombre_completo') && !$user->get('field_nombre_completo')->isEmpty()
+      ? (string) $user->get('field_nombre_completo')->value
+      : $account->getDisplayName();
+  }
+  $variables['nombre_usuario'] = $nombre;
+  $variables['nombre_corto'] = $nombre ? strtok($nombre, ' ') : '';
+  $variables['url_entrar'] = Url::fromRoute('user.login', [], ['query' => ['destination' => '/mi-panel']])->toString();
+  $variables['#cache']['contexts'][] = 'user';
+  $variables['#cache']['contexts'][] = 'url.path';
+  $variables['#cache']['tags'][] = 'node_list:aviso';
+  $variables['#cache']['tags'][] = 'config:system.menu.main';
+  $variables['menu_links'] = provenza_main_menu_links();
+  $variables['es_resumen'] = $route === 'provenza_core.panel';
+
+  // Avisos urgentes: se muestran como alerta en la parte superior.
+  $variables['alertas'] = [];
+  $nids = \Drupal::entityTypeManager()->getStorage('node')->getQuery()->accessCheck(TRUE)
+    ->condition('type', 'aviso')->condition('status', 1)->condition('field_urgente', 1)
+    ->sort('created', 'DESC')->range(0, 1)->execute();
+  foreach (Node::loadMultiple($nids) as $aviso) {
+    $texto = trim(strip_tags((string) $aviso->get('body')->value));
+    $variables['alertas'][] = [
+      'id' => 'aviso-' . $aviso->id() . '-' . $aviso->getChangedTime(),
+      'titulo' => $aviso->label(),
+      'resumen' => mb_strimwidth($texto, 0, 90, '…'),
+      'url' => $aviso->toUrl()->toString(),
+    ];
+  }
+
+  if ($kind === 'panel') {
+    $variables['panel_nav'] = \Drupal\provenza_core\Controller\PanelController::navigation();
+    $webform = \Drupal::routeMatch()->getParameter('webform');
+    if ($webform && ($pasos = provenza_form_help($webform->id()))) {
+      $variables['ayuda_formulario'] = $pasos;
+    }
+    return;
+  }
+  if ($kind === 'acceso') {
+    $textos = [
+      'user.login' => ['Bienvenido de vuelta', 'Entra con el correo que registraste con Administración.'],
+      'user.register' => ['Solicita tu alta', 'Administración revisa tu número de casa y te confirma por correo.'],
+      'user.pass' => ['Recupera tu acceso', 'Te enviamos un enlace para crear una contraseña nueva.'],
+      'user.reset.form' => ['Crea tu contraseña', 'Un paso más y entras a tu panel.'],
+    ];
+    [$variables['acceso_titulo'], $variables['acceso_texto']] = $textos[$route] ?? $textos['user.login'];
+    $variables['acceso_ruta'] = $route;
+    return;
+  }
 
   // Imagen de cabecera por sección para las páginas interiores.
   $path = \Drupal::service('path.current')->getPath();
@@ -63,32 +147,23 @@ function provenza_preprocess_page(array &$variables): void {
     '/solicitudes' => 'alumbrado',
     '/quejas' => 'casas',
     '/comunidad' => 'casas',
-    '/form/solicitud-servicio' => 'alumbrado',
-    '/form/recoleccion-especial' => 'residuos',
-    '/form/reservar-salon' => 'salon',
-    '/form/registrar-visita' => 'acceso',
-    '/form/reportar-incidente' => 'acceso',
-    '/form/queja-sugerencia' => 'casas',
     '/contacto' => 'fuentes',
-    '/user' => 'casas',
+    '/asi-lo-construimos' => 'jardines',
+    '/buscar' => 'hero',
+    '/mapa-del-sitio' => 'hero',
   ];
-  $foto = NULL;
+  $foto = 'hero';
   foreach ($secciones as $prefijo => $archivo) {
     if (str_starts_with($alias, $prefijo)) {
       $foto = $archivo;
     }
   }
-  $webform = \Drupal::routeMatch()->getParameter('webform');
-  if ($webform && ($pasos = provenza_form_help($webform->id()))) {
-    $variables['ayuda_formulario'] = $pasos;
-  }
-
   $node = \Drupal::routeMatch()->getParameter('node');
   if ($node instanceof NodeInterface && $node->bundle() === 'instalacion' && $node->hasField('field_codigo_instalacion')) {
     $variables['foto_cabecera'] = provenza_facility_photo($node->get('field_codigo_instalacion')->value);
   }
-  elseif ($foto) {
-    $variables['foto_cabecera'] = $variables['ruta_tema'] . '/images/fotos/' . $foto . '.webp';
+  else {
+    $variables['foto_cabecera'] = $tema . '/images/fotos/' . $foto . '.webp';
   }
 }
 
@@ -110,13 +185,15 @@ function provenza_preprocess_provenza_home(array &$variables): void {
     $instalaciones[] = [
       'titulo' => $node->label(),
       'url' => $node->toUrl()->toString(),
-      'foto' => provenza_facility_photo($code, TRUE),
-      'horario' => $node->hasField('field_horarios') ? (string) $node->get('field_horarios')->value : '',
+      'foto' => provenza_facility_photo($code),
+      'horario' => $node->hasField('field_horarios') ? str_replace('–', ' a ', (string) $node->get('field_horarios')->value) : '',
+      'capacidad' => $node->hasField('field_capacidad') ? (int) $node->get('field_capacidad')->value : 0,
+      'descripcion' => $node->hasField('body') ? trim(strip_tags((string) $node->get('body')->value)) : '',
       'peso' => array_search($code, $orden, TRUE) === FALSE ? 99 : array_search($code, $orden, TRUE),
     ];
   }
   usort($instalaciones, fn ($a, $b) => $a['peso'] <=> $b['peso']);
-  $variables['instalaciones'] = array_slice($instalaciones, 0, 4);
+  $variables['instalaciones'] = $instalaciones;
 
   // Avisos recientes.
   $nids = $storage->getQuery()->accessCheck(TRUE)
@@ -131,6 +208,7 @@ function provenza_preprocess_provenza_home(array &$variables): void {
       'fecha' => \Drupal::service('date.formatter')->format($node->getCreatedTime(), 'custom', 'j \d\e F'),
       'resumen' => mb_strimwidth($cuerpo, 0, 120, '…'),
       'urgente' => $node->hasField('field_urgente') && (bool) $node->get('field_urgente')->value,
+      'foto' => provenza_aviso_photo($node->label() . ' ' . $cuerpo),
     ];
   }
   $variables['avisos'] = $avisos;
@@ -148,7 +226,9 @@ function provenza_preprocess_provenza_home(array &$variables): void {
       'url' => $node->toUrl()->toString(),
       'dia' => $ts ? $formatter->format($ts, 'custom', 'j', 'America/Mexico_City') : '',
       'mes' => $ts ? mb_substr($formatter->format($ts, 'custom', 'F', 'America/Mexico_City'), 0, 3) : '',
-      'hora' => $ts ? $formatter->format($ts, 'custom', 'H:i', 'America/Mexico_City') . ' h' : '',
+      'hora' => $ts ? $formatter->format($ts, 'custom', 'l, H:i', 'America/Mexico_City') . ' h' : '',
+      'lugar' => $node->hasField('field_ubicacion') ? (string) $node->get('field_ubicacion')->value : '',
+      'foto' => provenza_aviso_photo($node->label() . ' ' . ($node->hasField('body') ? strip_tags((string) $node->get('body')->value) : '')),
     ];
   }
   $variables['eventos'] = $eventos;
@@ -164,7 +244,7 @@ function provenza_preprocess_provenza_home(array &$variables): void {
     ];
   }
   $variables['tarifas'] = array_slice($tarifas, 0, 5);
-  $variables['audio_bienvenida'] = $tema . '/media/bienvenida.mp3';
+  $variables['acciones'] = \Drupal\provenza_core\Controller\PanelController::actions();
   $variables['url_registro'] = Url::fromRoute('user.register')->toString();
   $variables['#cache']['tags'][] = 'node_list';
 }
@@ -173,8 +253,15 @@ function provenza_preprocess_provenza_home(array &$variables): void {
  * Implements hook_theme_suggestions_page_alter().
  */
 function provenza_theme_suggestions_page_alter(array &$suggestions, array $variables): void {
-  if ((\Drupal::routeMatch()->getRouteName() ?? '') === 'provenza_core.home') {
+  $kind = provenza_page_kind();
+  if ($kind === 'portada') {
     $suggestions[] = 'page__front';
+  }
+  elseif ($kind === 'panel') {
+    $suggestions[] = 'page__panel';
+  }
+  elseif ($kind === 'acceso') {
+    $suggestions[] = 'page__acceso';
   }
 }
 
@@ -326,4 +413,55 @@ function provenza_form_help(string $id): ?array {
     'reportar_incidente' => ['Describe qué pasó y dónde', 'Agrega fotos si es seguro hacerlo', 'Ante una emergencia llama primero a caseta o al 911'],
   ];
   return $ayuda[$id] ?? NULL;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for user_login_form.
+ */
+function provenza_form_user_login_form_alter(array &$form): void {
+  $form['pass']['#suffix'] = '<a class="acceso__olvido" href="' . Url::fromRoute('user.pass')->toString() . '">¿Olvidaste tu contraseña?</a>';
+  $form['actions']['submit']['#value'] = 'Entrar a mi panel';
+}
+
+/**
+ * Foto editada que acompaña a un aviso según su tema.
+ */
+function provenza_aviso_photo(string $texto): string {
+  $texto = mb_strtolower($texto);
+  $mapa = ['asamblea' => 'salon', 'jard' => 'jardines', 'fumig' => 'jardines', 'alberca' => 'alberca', 'salón' => 'salon', 'salon' => 'salon', 'gimnasio' => 'gimnasio', 'luz' => 'alumbrado', 'alumbrado' => 'alumbrado', 'basura' => 'residuos', 'residuo' => 'residuos', 'acceso' => 'acceso', 'caseta' => 'acceso', 'agua' => 'fuentes'];
+  foreach ($mapa as $clave => $foto) {
+    if (str_contains($texto, $clave)) {
+      return base_path() . \Drupal::service('extension.list.theme')->getPath('provenza') . '/images/fotos/' . $foto . '.webp';
+    }
+  }
+  return base_path() . \Drupal::service('extension.list.theme')->getPath('provenza') . '/images/fotos/casas.webp';
+}
+
+/**
+ * Enlaces del menú principal ya filtrados por acceso.
+ */
+function provenza_main_menu_links(): array {
+  $tree_service = \Drupal::menuTree();
+  $params = $tree_service->getCurrentRouteMenuTreeParameters('main');
+  $params->setMaxDepth(1);
+  $tree = $tree_service->load('main', $params);
+  $tree = $tree_service->transform($tree, [
+    ['callable' => 'menu.default_tree_manipulators:checkAccess'],
+    ['callable' => 'menu.default_tree_manipulators:generateIndexAndSort'],
+  ]);
+  $links = [];
+  $actual = \Drupal::service('path.current')->getPath();
+  $alias = \Drupal::service('path_alias.manager')->getAliasByPath($actual);
+  foreach ($tree as $element) {
+    if (!$element->link->isEnabled() || ($element->access && !$element->access->isAllowed())) {
+      continue;
+    }
+    $url = $element->link->getUrlObject()->toString();
+    $links[] = [
+      'titulo' => $element->link->getTitle(),
+      'url' => $url,
+      'activo' => $element->inActiveTrail || str_starts_with($alias, $url),
+    ];
+  }
+  return $links;
 }

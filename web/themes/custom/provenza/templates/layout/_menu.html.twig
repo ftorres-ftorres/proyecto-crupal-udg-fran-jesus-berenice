@@ -1,0 +1,1 @@
+<ul class="menu-principal">{% for l in menu_links %}<li class="menu-principal__item{{ l.activo ? ' es-activo' }}"><a class="menu-principal__enlace" href="{{ l.url }}"{{ l.activo ? ' aria-current="page"' }}>{{ l.titulo }}</a></li>{% endfor %}</ul>

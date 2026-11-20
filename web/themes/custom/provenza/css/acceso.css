@@ -1,0 +1,58 @@
+/* ---------- Inicio de sesión, registro y recuperación ---------- */
+.pagina--acceso { background: var(--fondo); }
+.acceso { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); gap: 16px; min-height: calc(100svh - 2 * var(--marco)); margin: var(--marco); padding: 16px; border-radius: var(--r-grande); background: var(--papel); box-shadow: var(--sombra); }
+.acceso__form { position: relative; display: grid; place-items: center; padding: 72px clamp(20px, 5vw, 64px) 40px; }
+.acceso__volver { position: absolute; top: 18px; left: 18px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; color: var(--tinta-2); font-size: .95rem; text-decoration: none; }
+.acceso__volver .icono { width: 18px; height: 18px; transform: scaleX(-1); }
+.acceso__volver:hover { background: var(--fondo); color: var(--tinta); }
+.acceso__caja { width: 100%; max-width: 440px; text-align: center; }
+.acceso__caja .marca { margin-bottom: 34px; }
+.acceso__caja .marca__ramita { width: 40px; height: 40px; }
+.acceso__caja .marca__nombre { font-size: 2.3rem; }
+.acceso__caja h1 { margin-bottom: 12px; font-size: clamp(2.3rem, 3.3vw, 3.1rem); line-height: 1.02; text-wrap: balance; }
+.acceso .provenza-urgent, .acceso nav.tabs, .acceso [aria-labelledby*=primary-tabs], .acceso ul.tabs, .acceso .block-local-tasks-block, .acceso h2.visually-hidden + ul { display: none; }
+.acceso__texto { margin-bottom: 34px; color: var(--tinta-2); font-size: 1.05rem; }
+.acceso__caja form { max-width: none; padding: 0; background: none; box-shadow: none; border-radius: 0; text-align: left; }
+
+/* Campos con etiqueta dentro de la caja */
+.acceso .form-item { position: relative; margin-bottom: 14px; }
+.acceso .form-item > label { position: absolute; z-index: 1; top: 11px; left: 20px; margin: 0; color: var(--tinta-3); font-size: .78rem; font-weight: 500; letter-spacing: .04em; pointer-events: none; }
+.acceso .form-item > label.form-required::after { display: none; }
+.acceso input[type=text], .acceso input[type=email], .acceso input[type=password] { height: 66px; padding: 28px 54px 10px 20px; border-radius: 16px; background: var(--fondo); font-size: 1.05rem; }
+.acceso input:focus { background: var(--blanco); }
+.acceso .form-item .description, .acceso .password-suggestions { display: none; }
+.acceso .ver-clave { position: absolute; top: 11px; right: 8px; display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 999px; background: transparent; color: var(--tinta-3); cursor: pointer; }
+.acceso .ver-clave:hover { background: var(--papel-2); color: var(--tinta); }
+.acceso .ver-clave .icono { width: 20px; height: 20px; }
+.acceso__olvido { display: block; margin: -2px 4px 22px auto; width: max-content; color: var(--tinta-2); font-size: .95rem; }
+.acceso .form-actions { margin-top: 6px; }
+.acceso .form-submit { width: 100%; min-height: 60px; font-size: 1.08rem; background: var(--tinta); }
+.acceso .form-submit:hover { background: var(--olivo-2); }
+.acceso__alterno { margin: 26px 0 0; color: var(--tinta-2); }
+.acceso__alterno a { color: var(--arcilla); font-weight: 500; }
+.acceso .messages { text-align: left; }
+.acceso fieldset { background: var(--fondo); text-align: left; }
+
+/* Panel visual con cortes cóncavos */
+.acceso__visual { position: relative; isolation: isolate; border-radius: var(--r-grande); }
+.acceso__medio { position: absolute; inset: 0; z-index: -1; overflow: hidden; border-radius: inherit; background: var(--olivo); }
+.acceso__medio video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.acceso__velo { position: absolute; inset: 0; background: linear-gradient(200deg, rgb(12 18 15 / 55%) 0%, rgb(12 18 15 / 0%) 45%), linear-gradient(0deg, rgb(12 18 15 / 35%) 0%, transparent 40%); }
+.acceso__corte { position: absolute; z-index: 2; background: var(--papel); }
+.acceso__corte::before, .acceso__corte::after { content: ''; position: absolute; width: var(--muesca); height: var(--muesca); }
+.acceso__corte--sup { top: -1px; left: -1px; width: 150px; height: 112px; border-bottom-right-radius: 48px; }
+.acceso__corte--sup::before { top: 0; left: 100%; background: radial-gradient(circle at 100% 100%, transparent calc(var(--muesca) - .5px), var(--papel) var(--muesca)); }
+.acceso__corte--sup::after { top: 100%; left: 0; background: radial-gradient(circle at 100% 100%, transparent calc(var(--muesca) - .5px), var(--papel) var(--muesca)); }
+.acceso__corte--inf { bottom: -1px; right: -1px; width: 170px; height: 120px; border-top-left-radius: 48px; }
+.acceso__corte--inf::before { bottom: 100%; right: 0; background: radial-gradient(circle at 0 0, transparent calc(var(--muesca) - .5px), var(--papel) var(--muesca)); }
+.acceso__corte--inf::after { bottom: 0; right: 100%; background: radial-gradient(circle at 0 0, transparent calc(var(--muesca) - .5px), var(--papel) var(--muesca)); }
+.acceso__frase { position: absolute; top: 36px; right: 40px; left: 200px; margin: 0; color: var(--blanco); font-family: var(--f-titulo); font-size: clamp(1.8rem, 2.6vw, 2.7rem); line-height: 1.08; text-align: right; text-wrap: balance; text-shadow: 0 2px 24px rgb(0 0 0 / 30%); }
+
+@media (max-width: 900px) {
+  .acceso { grid-template-columns: 1fr; padding: 10px; }
+  .acceso__visual { min-height: 260px; order: -1; }
+  .acceso__corte--sup { width: 110px; height: 76px; border-bottom-right-radius: 36px; }
+  .acceso__corte--inf { width: 120px; height: 70px; border-top-left-radius: 36px; }
+  .acceso__frase { left: 130px; right: 20px; top: 20px; font-size: 1.5rem; }
+  .acceso__form { padding-top: 64px; }
+}

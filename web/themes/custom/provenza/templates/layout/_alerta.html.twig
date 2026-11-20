@@ -1,0 +1,8 @@
+{% for a in alertas %}
+  <div class="alerta" role="alert" data-alerta="{{ a.id }}" hidden>
+    <span class="alerta__icono">{{ source('@provenza/icons/alerta.svg') }}</span>
+    <p class="alerta__texto"><strong>{{ a.titulo }}</strong>{% if a.resumen %}<span>{{ a.resumen }}</span>{% endif %}</p>
+    <a class="alerta__enlace" href="{{ a.url }}">Ver aviso</a>
+    <button class="alerta__cerrar" type="button" data-cerrar-alerta aria-label="Cerrar aviso">{{ source('@provenza/icons/cerrar.svg') }}</button>
+  </div>
+{% endfor %}

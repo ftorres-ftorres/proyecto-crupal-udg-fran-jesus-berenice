@@ -1,31 +1,23 @@
 <a href="#contenido" class="visually-hidden focusable saltar">Saltar al contenido</a>
-{% include '@provenza/layout/_header.html.twig' %}
-<section class="cabecera{{ foto_cabecera ? ' cabecera--foto' }}"{% if foto_cabecera %} style="--foto: url('{{ foto_cabecera }}')"{% endif %}>
-  <div class="contenedor cabecera__interior">
+{% include '@provenza/layout/_alerta.html.twig' %}
+{% include '@provenza/layout/_vidrio.html.twig' %}
+{% include '@provenza/layout/_barra.html.twig' with { fija: false } %}
+{% include '@provenza/layout/_menu-movil.html.twig' %}
+<section class="marco marco--interior" style="--foto: url('{{ foto_cabecera }}')">
+  <div class="marco__fondo"><div class="marco__foto"></div><div class="marco__velo"></div></div>
+  {% include '@provenza/layout/_nav.html.twig' %}
+  <div class="marco__titulo">
     {{ page.breadcrumb }}
     {{ page.header }}
   </div>
 </section>
 {% if page.highlighted %}<div class="contenedor destacado">{{ page.highlighted }}</div>{% endif %}
-<main id="contenido" class="principal contenedor{{ page.sidebar or ayuda_formulario ? ' principal--con-lateral' }}" tabindex="-1">
+<main id="contenido" class="principal contenedor{{ page.sidebar ? ' principal--con-lateral' }}" tabindex="-1">
   <div class="principal__cuerpo">
     {{ page.content_above }}
     {{ page.content }}
     {{ page.content_below }}
   </div>
-  {% if page.sidebar or ayuda_formulario %}
-    <aside class="principal__lateral" role="complementary">
-      {% if ayuda_formulario %}
-        <div class="ayuda">
-          <h2>Qué pasa después</h2>
-          <ol class="ayuda__pasos">
-            {% for paso in ayuda_formulario %}<li><span>{{ loop.index }}</span>{{ paso }}</li>{% endfor %}
-          </ol>
-          <p class="ayuda__nota">{{ source('@provenza/icons/telefono.svg') }}<span>¿Es urgente? Llama a caseta desde <a href="/seguridad/telefonos-de-emergencia">Teléfonos de emergencia</a>.</span></p>
-        </div>
-      {% endif %}
-      {{ page.sidebar }}
-    </aside>
-  {% endif %}
+  {% if page.sidebar %}<aside class="principal__lateral" role="complementary">{{ page.sidebar }}</aside>{% endif %}
 </main>
 {% include '@provenza/layout/_footer.html.twig' %}

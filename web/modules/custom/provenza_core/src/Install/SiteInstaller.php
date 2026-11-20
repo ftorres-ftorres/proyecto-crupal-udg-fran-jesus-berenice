@@ -910,13 +910,11 @@ YAML, 'incidente');
     $this->clearMenu('main');
     $this->clearMenu('footer');
 
+    // Menú público corto. Los trámites viven en Mi panel (/mi-panel).
     $main = [
-      ['Inicio', '/inicio'],
-      ['Solicitudes', '/solicitudes'],
-      ['Quejas y sugerencias', '/quejas'],
       ['Instalaciones', '/instalaciones'],
-      ['Seguridad y acceso', '/seguridad'],
       ['Comunidad', '/comunidad'],
+      ['Seguridad', '/seguridad'],
       ['Contacto', '/contacto'],
     ];
     foreach ($main as $i => [$title, $uri]) {
