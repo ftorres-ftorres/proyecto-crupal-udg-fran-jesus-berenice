@@ -595,3 +595,42 @@ function provenza_ics(array $e): string {
   $ics = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Provenza Residencial//Portal de colonos//ES\r\nBEGIN:VEVENT\r\nUID:evento-" . $e['id'] . "@provenza\r\nDTSTAMP:" . $f(time()) . "\r\nDTSTART:" . $f($e['ts']) . "\r\nDTEND:" . $f($e['fin']) . "\r\nSUMMARY:" . $e['titulo'] . "\r\nLOCATION:" . ($e['lugar'] ?: 'Provenza Residencial') . ", Tlajomulco de Zúñiga\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n";
   return 'data:text/calendar;charset=utf-8,' . rawurlencode($ics);
 }
+
+/**
+ * Implements hook_preprocess_provenza_calendar().
+ */
+function provenza_preprocess_provenza_calendar(array &$variables): void {
+  $request = \Drupal::request();
+  $tz = new \DateTimeZone('America/Mexico_City');
+  $year = (int) ($request->query->get('y') ?: date('Y'));
+  $month = (int) ($request->query->get('m') ?: date('n'));
+  $hoy = (new \DateTimeImmutable('now', $tz))->format('Y-m-d');
+  foreach ($variables['days'] as &$day) {
+    if (!empty($day['empty'])) {
+      continue;
+    }
+    $fecha = sprintf('%04d-%02d-%02d', $year, $month, $day['date']);
+    $day['fecha'] = $fecha;
+    $day['hoy'] = $fecha === $hoy;
+    $day['pasado'] = $fecha < $hoy;
+    $day['url'] = '/form/reservar-salon?fecha_inicio=' . $fecha . 'T18:00:00&fecha_fin=' . $fecha . 'T23:00:00';
+  }
+  unset($day);
+  // Datos del salón para la tarjeta lateral.
+  $variables['salon'] = NULL;
+  $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties(['type' => 'instalacion', 'field_codigo_instalacion' => 'salon']);
+  if ($salon = reset($nodes)) {
+    $tarifas = [];
+    foreach ($salon->get('field_tarifa')->referencedEntities() as $t) {
+      $tarifas[] = ['concepto' => $t->label(), 'monto' => number_format((float) $t->get('field_monto')->value, 0, '.', ',')];
+    }
+    $variables['salon'] = [
+      'url' => $salon->toUrl()->toString(),
+      'foto' => provenza_facility_photo('salon'),
+      'capacidad' => (int) $salon->get('field_capacidad')->value,
+      'horario' => str_replace('–', ' a ', (string) $salon->get('field_horarios')->value),
+      'tarifas' => $tarifas,
+    ];
+  }
+  $variables['#cache']['contexts'][] = 'url.query_args';
+}

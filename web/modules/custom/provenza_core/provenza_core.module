@@ -676,6 +676,10 @@ function provenza_core_form_pages(): void {
       $webform->setSetting('page', TRUE);
       $webform->setSetting('form_login', TRUE);
       $webform->setSetting('form_login_message', 'Inicia sesión con tu cuenta de colono para continuar con este trámite.');
+      // El calendario del salón abre la reservación con la fecha ya elegida.
+      if ($id === 'reservar_salon') {
+        $webform->setSetting('form_prepopulate', TRUE);
+      }
       $webform->save();
     }
   }

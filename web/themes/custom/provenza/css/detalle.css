@@ -104,3 +104,39 @@
 .js .cortina .foto-tarjeta__pie { opacity: 0; transform: translateY(16px); transition: opacity .6s, transform .8s var(--curva); transition-delay: calc(var(--retraso, 0ms) + .5s); }
 .js .cortina.es-visible .foto-tarjeta__pie { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .js .cortina::before { display: none; } .js .cortina img, .js .cortina .foto-tarjeta__pie { transform: none; opacity: 1; } }
+
+/* ---------- Disponibilidad del salón ---------- */
+.disponibilidad { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr); gap: 18px; align-items: start; }
+.mes--salon .mes__dia { min-height: 0; }
+.mes__estado { display: inline-flex; align-items: center; gap: 4px; font-size: .72rem; font-weight: 500; line-height: 1.1; }
+.mes__estado .icono { width: 12px; height: 12px; }
+.mes__dia--pasado { background: transparent; color: var(--papel-3); }
+.mes__dia--libre { background: var(--blanco); color: var(--tinta); transition: background .25s, color .25s, transform .25s var(--curva); }
+.mes__dia--libre .mes__estado { color: var(--olivo-2); opacity: 0; transform: translateY(4px); transition: opacity .25s, transform .25s; }
+.mes__dia--libre:hover { background: var(--olivo); color: var(--blanco); transform: translateY(-2px); }
+.mes__dia--libre:hover .mes__estado { color: var(--blanco); opacity: 1; transform: none; }
+.mes__dia--reservado { background: var(--negro); color: var(--blanco); }
+.mes__dia--reservado .mes__estado { color: rgb(255 255 255 / 72%); }
+.mes__dia--bloqueado { background: var(--salvia); color: var(--negro); }
+.leyenda { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 18px; color: var(--tinta-2); font-size: .92rem; }
+.leyenda span { display: inline-flex; align-items: center; gap: 8px; }
+.leyenda__muestra { width: 18px; height: 18px; border-radius: 6px; }
+.leyenda__muestra--libre { background: var(--blanco); box-shadow: inset 0 0 0 1px var(--papel-3); }
+.leyenda__muestra--bloqueado { background: var(--salvia); }
+.leyenda__muestra--reservado { background: var(--negro); }
+.salon-tarjeta { position: sticky; top: 110px; overflow: hidden; border-radius: var(--r-grande); background: var(--papel); }
+.salon-tarjeta__foto { display: block; aspect-ratio: 16 / 10; overflow: hidden; }
+.salon-tarjeta__foto img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--curva); }
+.salon-tarjeta__foto:hover img { transform: scale(1.05); }
+.salon-tarjeta__cuerpo { display: grid; gap: 16px; padding: 24px 26px 28px; }
+.salon-tarjeta__cuerpo h2 { margin: 0; font-size: 2.1rem; }
+.salon-tarjeta__datos { display: flex; flex-wrap: wrap; gap: 8px; }
+.salon-tarjeta__datos .chip { background: var(--blanco); }
+.salon-tarjeta__tarifas { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.salon-tarjeta__tarifas li { display: flex; justify-content: space-between; gap: 12px; padding: 12px 16px; border-radius: 14px; background: var(--blanco); }
+.salon-tarjeta__tarifas strong { font-family: var(--f-titulo); font-weight: 400; font-size: 1.3rem; }
+.salon-tarjeta .boton { width: 100%; }
+.salon-tarjeta__nota { margin: 0; color: var(--tinta-3); font-size: .9rem; text-align: center; }
+@media (max-width: 1000px) { .disponibilidad { grid-template-columns: 1fr; } .salon-tarjeta { position: static; } }
+@media (max-width: 560px) { .mes__estado { display: none; } }
+.mes--salon .mes__dia { aspect-ratio: auto; height: 84px; } .mes--salon .mes__dia--pasado { height: 84px; }

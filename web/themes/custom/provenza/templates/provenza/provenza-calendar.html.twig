@@ -1,0 +1,55 @@
+<div class="disponibilidad">
+  <section class="mes mes--salon" aria-label="Disponibilidad del salón en {{ month }}">
+    <div class="mes__cabeza">
+      <h2>{{ month }}</h2>
+      <div class="mes__nav">
+        <a class="icono-boton" href="{{ prev }}" aria-label="Mes anterior"><span class="mes__atras">{{ source('@provenza/icons/flecha.svg') }}</span></a>
+        <a class="icono-boton" href="{{ next }}" aria-label="Mes siguiente">{{ source('@provenza/icons/flecha.svg') }}</a>
+      </div>
+    </div>
+    <div class="mes__rejilla">
+      {% for s in ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'] %}<span class="mes__semana">{{ s }}</span>{% endfor %}
+      {% for day in days %}
+        {% if day.empty %}
+          <span class="mes__dia mes__dia--vacio"></span>
+        {% elseif day.pasado %}
+          <span class="mes__dia mes__dia--pasado"><span class="mes__numero">{{ day.date }}</span></span>
+        {% elseif day.status == 'libre' %}
+          <a class="mes__dia mes__dia--libre{{ day.hoy ? ' es-hoy' }}" href="{{ day.url }}" aria-label="Reservar el {{ day.date }}, libre">
+            <span class="mes__numero">{{ day.date }}</span>
+            <span class="mes__estado">Reservar{{ source('@provenza/icons/flecha_diag.svg') }}</span>
+          </a>
+        {% else %}
+          <span class="mes__dia mes__dia--{{ day.status }}{{ day.hoy ? ' es-hoy' }}">
+            <span class="mes__numero">{{ day.date }}</span>
+            <span class="mes__estado">{{ day.status == 'reservado' ? 'Reservado' : 'En revisión' }}</span>
+          </span>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="leyenda">
+      <span><i class="leyenda__muestra leyenda__muestra--libre"></i>Libre, toca el día para reservar</span>
+      <span><i class="leyenda__muestra leyenda__muestra--bloqueado"></i>En revisión</span>
+      <span><i class="leyenda__muestra leyenda__muestra--reservado"></i>Reservado</span>
+    </div>
+  </section>
+  {% if salon %}
+    <aside class="salon-tarjeta">
+      <a class="salon-tarjeta__foto" href="{{ salon.url }}"><img src="{{ salon.foto }}" alt="Salón de fiestas de Provenza Residencial" width="1200" height="900"></a>
+      <div class="salon-tarjeta__cuerpo">
+        <h2>Salón de fiestas</h2>
+        <div class="salon-tarjeta__datos">
+          <span class="chip chip--suave">{{ source('@provenza/icons/reloj.svg') }}{{ salon.horario }}</span>
+          {% if salon.capacidad %}<span class="chip chip--suave">{{ source('@provenza/icons/grupo.svg') }}Hasta {{ salon.capacidad }}</span>{% endif %}
+        </div>
+        {% if salon.tarifas %}
+          <ul class="salon-tarjeta__tarifas">
+            {% for t in salon.tarifas %}<li><span>{{ t.concepto }}</span><strong>${{ t.monto }}</strong></li>{% endfor %}
+          </ul>
+        {% endif %}
+        <a class="boton boton--oscuro boton--grande" href="/form/reservar-salon">Solicitar reservación{{ source('@provenza/icons/flecha_diag.svg') }}</a>
+        <p class="salon-tarjeta__nota">Administración aprueba cada solicitud y te avisa por correo.</p>
+      </div>
+    </aside>
+  {% endif %}
+</div>
