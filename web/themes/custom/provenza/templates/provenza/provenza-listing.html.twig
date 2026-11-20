@@ -13,12 +13,15 @@
   {% elseif bundle == 'instalacion' %}
     <div class="rejilla-fotos rejilla-fotos--listado">
       {% for i in items %}
-        <a class="foto-tarjeta foto-tarjeta--alta revela" href="{{ i.url }}" style="--retraso: {{ (loop.index0 % 4) * 70 }}ms">
+        <a class="foto-tarjeta foto-tarjeta--alta cortina" href="{{ i.url }}" style="--retraso: {{ (loop.index0 % 4) * 110 }}ms">
           <img src="{{ i.foto }}" alt="{{ i.titulo }}" loading="lazy" width="640" height="480">
           <span class="foto-tarjeta__pie">
             <span class="foto-tarjeta__titulo">{{ i.titulo }}</span>
-            <span class="foto-tarjeta__dato">{{ source('@provenza/icons/reloj.svg') }}{{ i.horario }}</span>
-            {% if i.capacidad %}<span class="foto-tarjeta__dato">{{ source('@provenza/icons/grupo.svg') }}Hasta {{ i.capacidad }} personas</span>{% endif %}
+            {% if i.resumen %}<span class="foto-tarjeta__texto">{{ i.resumen }}</span>{% endif %}
+            <span class="foto-tarjeta__datos">
+              <span class="foto-tarjeta__dato">{{ source('@provenza/icons/reloj.svg') }}<span>{{ i.horario }}</span></span>
+              {% if i.capacidad %}<span class="foto-tarjeta__dato">{{ source('@provenza/icons/grupo.svg') }}<span>Hasta {{ i.capacidad }}</span></span>{% endif %}
+            </span>
           </span>
         </a>
       {% endfor %}
@@ -46,19 +49,49 @@
     </div>
 
   {% elseif bundle == 'evento' %}
-    <div class="eventos eventos--listado">
-      {% for e in items %}
-        <a class="evento revela" href="{{ e.url }}">
-          <span class="evento__fecha"><strong>{{ e.dia }}</strong>{{ e.mes }}</span>
-          <span class="evento__info">
-            <span class="evento__titulo">{{ e.titulo }}</span>
-            <span class="evento__hora">{{ e.hora }}{% if e.lugar %}, {{ e.lugar }}{% endif %}</span>
-          </span>
-          {% if e.tipo %}<span class="etiqueta">{{ e.tipo }}</span>{% endif %}
-        </a>
-      {% endfor %}
+    {% set d = calendario.destacado %}
+    {% if d %}
+      <a class="evento-destacado revela" href="{{ d.url }}">
+        <span class="evento-destacado__medio"><img src="{{ d.foto }}" alt="" width="1200" height="900"><span class="evento-destacado__velo"></span></span>
+        <span class="evento-destacado__fecha"><strong>{{ d.dia }}</strong>{{ d.mes }}</span>
+        <span class="evento-destacado__cuerpo">
+          <span class="evento-destacado__cuando">{{ d.cuando }}</span>
+          <span class="evento-destacado__titulo">{{ d.titulo }}</span>
+          <span class="evento-destacado__datos">{{ d.semana }} {{ d.dia }} de {{ d.mes_largo }}, {{ d.hora }}{% if d.lugar %}, {{ d.lugar }}{% endif %}</span>
+        </span>
+        <span class="muesca muesca--evento" aria-hidden="true"><span>{{ source('@provenza/icons/flecha_diag.svg') }}</span></span>
+      </a>
+    {% endif %}
+    <div class="calendario">
+      <section class="mes" aria-label="{{ calendario.mes.titulo }}">
+        <div class="mes__cabeza">
+          <h2>{{ calendario.mes.titulo }}</h2>
+          <div class="mes__nav">
+            <a class="icono-boton" href="?mes={{ calendario.mes.anterior }}" aria-label="Mes anterior"><span class="mes__atras">{{ source('@provenza/icons/flecha.svg') }}</span></a>
+            <a class="icono-boton" href="?mes={{ calendario.mes.siguiente }}" aria-label="Mes siguiente">{{ source('@provenza/icons/flecha.svg') }}</a>
+          </div>
+        </div>
+        <div class="mes__rejilla">
+          {% for s in ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'] %}<span class="mes__semana">{{ s }}</span>{% endfor %}
+          {% for c in calendario.mes.celdas %}
+            {% if c.vacio %}
+              <span class="mes__dia mes__dia--vacio"></span>
+            {% elseif c.eventos %}
+              {% set e = c.eventos|first %}
+              <a class="mes__dia mes__dia--evento{{ c.hoy ? ' es-hoy' }}" href="{{ e.url }}" title="{{ e.titulo }}" style="--foto: url('{{ e.foto }}')">
+                <span class="mes__numero">{{ c.dia }}</span>
+                <span class="mes__nombre">{{ e.titulo }}</span>
+              </a>
+            {% else %}
+              <span class="mes__dia{{ c.hoy ? ' es-hoy' }}"><span class="mes__numero">{{ c.dia }}</span></span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
+      <aside class="calendario__lado">
+        {% include '@provenza/content/_proximas.html.twig' with { proximos: calendario.proximos, id: 'calendario' } %}
+      </aside>
     </div>
-
   {% elseif bundle == 'directorio' %}
     <div class="contactos">
       {% for c in items %}

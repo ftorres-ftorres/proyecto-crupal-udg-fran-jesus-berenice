@@ -162,6 +162,9 @@ function provenza_preprocess_page(array &$variables): void {
   if ($node instanceof NodeInterface && $node->bundle() === 'instalacion' && $node->hasField('field_codigo_instalacion')) {
     $variables['foto_cabecera'] = provenza_facility_photo($node->get('field_codigo_instalacion')->value);
   }
+  elseif ($node instanceof NodeInterface && in_array($node->bundle(), ['aviso', 'evento'], TRUE)) {
+    $variables['foto_cabecera'] = provenza_aviso_photo($node->label() . ' ' . strip_tags((string) $node->get('body')->value));
+  }
   else {
     $variables['foto_cabecera'] = $tema . '/images/fotos/' . $foto . '.webp';
   }
@@ -269,6 +272,20 @@ function provenza_theme_suggestions_page_alter(array &$suggestions, array $varia
  * Implements hook_preprocess_provenza_listing().
  */
 function provenza_preprocess_provenza_listing(array &$variables): void {
+  if ($variables['bundle'] === 'evento') {
+    $eventos = provenza_eventos();
+    $proximos = array_values(array_filter($eventos, fn ($e) => $e['proximo']));
+    $mes = \Drupal::request()->query->get('mes');
+    if (!$mes || !preg_match('/^\d{4}-\d{2}$/', $mes)) {
+      $mes = $proximos ? substr($proximos[0]['fecha'], 0, 7) : date('Y-m');
+    }
+    $variables['calendario'] = [
+      'destacado' => $proximos[0] ?? NULL,
+      'proximos' => array_slice($proximos, 0, 6),
+      'mes' => provenza_mes($eventos, $mes),
+    ];
+    $variables['#cache']['contexts'][] = 'url.query_args:mes';
+  }
   if ($variables['bundle'] === 'instalacion') {
     foreach ($variables['items'] as &$item) {
       $item['foto'] = provenza_facility_photo($item['codigo'] ?? NULL, TRUE);
@@ -287,6 +304,36 @@ function provenza_preprocess_node(array &$variables): void {
   /** @var \Drupal\node\NodeInterface $node */
   $node = $variables['node'];
   $variables['fecha_bonita'] = \Drupal::service('date.formatter')->format($node->getCreatedTime(), 'custom', 'j \d\e F \d\e Y', 'America/Mexico_City');
+  if ($variables['view_mode'] === 'full' && $node->bundle() === 'aviso') {
+    $variables['aviso'] = [
+      'texto' => trim(strip_tags((string) $node->get('body')->value)),
+      'categoria' => $node->get('field_categoria_aviso')->entity?->label() ?? '',
+      'urgente' => (bool) $node->get('field_urgente')->value,
+      'fecha' => $variables['fecha_bonita'],
+    ];
+    $variables['proximos'] = array_slice(array_values(array_filter(provenza_eventos(), fn ($e) => $e['proximo'])), 0, 3);
+    $otros = [];
+    $nids = \Drupal::entityTypeManager()->getStorage('node')->getQuery()->accessCheck(TRUE)
+      ->condition('type', 'aviso')->condition('status', 1)->condition('nid', $node->id(), '<>')
+      ->sort('created', 'DESC')->range(0, 3)->execute();
+    foreach (Node::loadMultiple($nids) as $o) {
+      $otros[] = ['titulo' => $o->label(), 'url' => $o->toUrl()->toString(), 'foto' => provenza_aviso_photo($o->label() . ' ' . strip_tags((string) $o->get('body')->value))];
+    }
+    $variables['otros_avisos'] = $otros;
+    $variables['#cache']['tags'][] = 'node_list';
+    return;
+  }
+  if ($variables['view_mode'] === 'full' && $node->bundle() === 'evento') {
+    $todos = provenza_eventos();
+    foreach ($todos as $e) {
+      if ($e['id'] === (int) $node->id()) {
+        $variables['evento'] = $e + ['ics' => provenza_ics($e), 'texto' => trim(strip_tags((string) $node->get('body')->value))];
+      }
+    }
+    $variables['proximos'] = array_slice(array_values(array_filter($todos, fn ($e) => $e['proximo'] && $e['id'] !== (int) $node->id())), 0, 3);
+    $variables['#cache']['tags'][] = 'node_list';
+    return;
+  }
   if ($node->bundle() !== 'instalacion' || $variables['view_mode'] !== 'full') {
     return;
   }
@@ -464,4 +511,87 @@ function provenza_main_menu_links(): array {
     ];
   }
   return $links;
+}
+/**
+ * Eventos publicados con todos los datos que usa el tema, en orden de fecha.
+ */
+function provenza_eventos(): array {
+  $storage = \Drupal::entityTypeManager()->getStorage('node');
+  $nids = $storage->getQuery()->accessCheck(TRUE)
+    ->condition('type', 'evento')->condition('status', 1)
+    ->sort('field_fecha_evento', 'ASC')->execute();
+  $fmt = \Drupal::service('date.formatter');
+  $tz = 'America/Mexico_City';
+  $hoy = new \DateTimeImmutable('today', new \DateTimeZone($tz));
+  $eventos = [];
+  foreach (Node::loadMultiple($nids) as $node) {
+    if ($node->get('field_fecha_evento')->isEmpty()) {
+      continue;
+    }
+    $ts = (int) $node->get('field_fecha_evento')->value;
+    $fin = (int) ($node->get('field_fecha_evento')->end_value ?? $ts + 3600);
+    $dia = (new \DateTimeImmutable('@' . $ts))->setTimezone(new \DateTimeZone($tz))->setTime(0, 0);
+    $faltan = (int) $hoy->diff($dia)->format('%r%a');
+    $cuerpo = trim(strip_tags((string) $node->get('body')->value));
+    $eventos[] = [
+      'id' => (int) $node->id(),
+      'titulo' => $node->label(),
+      'url' => $node->toUrl()->toString(),
+      'ts' => $ts,
+      'fin' => $fin,
+      'fecha' => $fmt->format($ts, 'custom', 'Y-m-d', $tz),
+      'dia' => $fmt->format($ts, 'custom', 'j', $tz),
+      'mes' => mb_substr($fmt->format($ts, 'custom', 'F', $tz), 0, 3),
+      'mes_largo' => mb_strtolower($fmt->format($ts, 'custom', 'F', $tz)),
+      'semana' => $fmt->format($ts, 'custom', 'l', $tz),
+      'hora' => $fmt->format($ts, 'custom', 'H:i', $tz) . ' h',
+      'hora_fin' => $fmt->format($fin, 'custom', 'H:i', $tz) . ' h',
+      'lugar' => (string) $node->get('field_ubicacion')->value,
+      'tipo' => $node->get('field_tipo_evento')->entity?->label() ?? '',
+      'resumen' => mb_strimwidth($cuerpo, 0, 140, '…'),
+      'foto' => provenza_aviso_photo($node->label() . ' ' . $cuerpo),
+      'faltan' => $faltan,
+      'cuando' => $faltan === 0 ? 'Hoy' : ($faltan === 1 ? 'Mañana' : ($faltan > 1 ? 'Faltan ' . $faltan . ' días' : 'Ya pasó')),
+      'proximo' => $faltan >= 0,
+    ];
+  }
+  return $eventos;
+}
+
+/**
+ * Cuadrícula de un mes (lunes a domingo) con los eventos de cada día.
+ */
+function provenza_mes(array $eventos, string $ym): array {
+  $tz = new \DateTimeZone('America/Mexico_City');
+  $inicio = \DateTimeImmutable::createFromFormat('!Y-m', $ym, $tz) ?: new \DateTimeImmutable('first day of this month', $tz);
+  $hoy = (new \DateTimeImmutable('now', $tz))->format('Y-m-d');
+  $por_dia = [];
+  foreach ($eventos as $e) {
+    $por_dia[$e['fecha']][] = $e;
+  }
+  $celdas = [];
+  for ($i = 1; $i < (int) $inicio->format('N'); $i++) {
+    $celdas[] = ['vacio' => TRUE];
+  }
+  $dias = (int) $inicio->format('t');
+  for ($d = 1; $d <= $dias; $d++) {
+    $fecha = $inicio->setDate((int) $inicio->format('Y'), (int) $inicio->format('n'), $d)->format('Y-m-d');
+    $celdas[] = ['dia' => $d, 'fecha' => $fecha, 'hoy' => $fecha === $hoy, 'eventos' => $por_dia[$fecha] ?? []];
+  }
+  $meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  return [
+    'titulo' => ucfirst($meses[(int) $inicio->format('n') - 1]) . ' ' . $inicio->format('Y'),
+    'celdas' => $celdas,
+    'anterior' => $inicio->modify('-1 month')->format('Y-m'),
+    'siguiente' => $inicio->modify('+1 month')->format('Y-m'),
+  ];
+}
+
+/**
+ * Enlace de descarga .ics para agregar un evento al calendario del teléfono.
+ */
+function provenza_ics(array $e): string {
+  $f = fn (int $ts) => gmdate('Ymd\THis\Z', $ts);
+  $ics = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Provenza Residencial//Portal de colonos//ES\r\nBEGIN:VEVENT\r\nUID:evento-" . $e['id'] . "@provenza\r\nDTSTAMP:" . $f(time()) . "\r\nDTSTART:" . $f($e['ts']) . "\r\nDTEND:" . $f($e['fin']) . "\r\nSUMMARY:" . $e['titulo'] . "\r\nLOCATION:" . ($e['lugar'] ?: 'Provenza Residencial') . ", Tlajomulco de Zúñiga\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n";
+  return 'data:text/calendar;charset=utf-8,' . rawurlencode($ics);
 }

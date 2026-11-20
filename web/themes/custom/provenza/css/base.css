@@ -170,3 +170,4 @@ hr { border: 0; height: 1px; background: var(--papel-3); margin: 2rem 0; }
   .js .revela { opacity: 1; transform: none; transition: none; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
+.boton--gris { background: var(--papel); color: var(--tinta); } .boton--gris:hover { background: var(--papel-2); color: var(--tinta); }

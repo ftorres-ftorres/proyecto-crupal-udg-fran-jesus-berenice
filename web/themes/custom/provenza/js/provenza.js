@@ -101,7 +101,7 @@
   // Revelado de bloques al entrar en pantalla.
   Drupal.behaviors.provenzaRevela = {
     attach(context) {
-      const elementos = once('provenza-revela', '.revela', context);
+      const elementos = once('provenza-revela', '.revela, .cortina', context);
       if (!elementos.length) {
         return;
       }

@@ -1,0 +1,13 @@
+<section class="proximas" aria-labelledby="proximas-{{ id|default('lateral') }}">
+  <h2 id="proximas-{{ id|default('lateral') }}">Próximas fechas</h2>
+  {% for e in proximos %}
+    <a class="proxima" href="{{ e.url }}">
+      <span class="proxima__foto"><img src="{{ e.foto }}" alt="" loading="lazy" width="160" height="120"></span>
+      <span class="proxima__fecha"><strong>{{ e.dia }}</strong>{{ e.mes }}</span>
+      <span class="proxima__info"><span class="proxima__titulo">{{ e.titulo }}</span><span class="proxima__cuando">{{ e.cuando }}, {{ e.hora }}</span></span>
+    </a>
+  {% else %}
+    <p class="vacio-texto">No hay fechas programadas.</p>
+  {% endfor %}
+  <a class="enlace-flecha" href="/comunidad/calendario">Ver calendario{{ source('@provenza/icons/flecha.svg') }}</a>
+</section>

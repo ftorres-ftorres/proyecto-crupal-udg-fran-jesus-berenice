@@ -1,0 +1,30 @@
+<article{{ attributes.addClass('detalle') }}>
+  <div class="detalle__principal">
+    <div class="detalle__chips">
+      {% if aviso.urgente %}<span class="chip chip--oscuro">{{ source('@provenza/icons/alerta.svg') }}Aviso urgente</span>{% endif %}
+      {% if aviso.categoria %}<span class="chip">{{ aviso.categoria }}</span>{% endif %}
+      <span class="chip chip--suave">{{ source('@provenza/icons/calendario.svg') }}Publicado el {{ aviso.fecha|lower }}</span>
+    </div>
+    <p class="detalle__lead revela">{{ aviso.texto }}</p>
+    <div class="detalle__acciones">
+      <a class="boton boton--oscuro" href="/comunidad/avisos">Todos los avisos{{ source('@provenza/icons/flecha.svg') }}</a>
+      <a class="boton boton--gris" href="/contacto">Preguntar a Administración</a>
+    </div>
+    {% if otros_avisos %}
+      <section class="otros" aria-labelledby="otros-avisos">
+        <h2 id="otros-avisos">Otros <em>avisos</em></h2>
+        <div class="otros__rejilla">
+          {% for o in otros_avisos %}
+            <a class="otro revela" href="{{ o.url }}" style="--retraso: {{ loop.index0 * 80 }}ms">
+              <span class="otro__foto"><img src="{{ o.foto }}" alt="" loading="lazy" width="640" height="480"></span>
+              <span class="otro__titulo">{{ o.titulo }}</span>
+            </a>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+  </div>
+  <aside class="detalle__lateral">
+    {% include '@provenza/content/_proximas.html.twig' with { proximos: proximos } %}
+  </aside>
+</article>

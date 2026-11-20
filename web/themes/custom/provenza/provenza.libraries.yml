@@ -12,6 +12,7 @@ global:
       css/forms.css: {}
       css/panel.css: {}
       css/acceso.css: {}
+      css/detalle.css: {}
   js:
     js/provenza.js: {}
   dependencies:

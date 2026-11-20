@@ -1,0 +1,28 @@
+<article{{ attributes.addClass('detalle') }}>
+  <div class="detalle__principal">
+    {% if evento %}
+      <div class="fecha-grande revela">
+        <span class="fecha-grande__dia">{{ evento.dia }}</span>
+        <span class="fecha-grande__datos">
+          <strong>{{ evento.semana }} {{ evento.dia }} de {{ evento.mes_largo }}</strong>
+          <span>{{ evento.hora }} a {{ evento.hora_fin }}{% if evento.lugar %}, {{ evento.lugar }}{% endif %}</span>
+        </span>
+        <span class="fecha-grande__cuando">{{ evento.cuando }}</span>
+      </div>
+      <div class="detalle__chips">
+        {% if evento.tipo %}<span class="chip">{{ evento.tipo }}</span>{% endif %}
+        {% if evento.lugar %}<span class="chip chip--suave">{{ source('@provenza/icons/ubicacion.svg') }}{{ evento.lugar }}</span>{% endif %}
+      </div>
+      {% if evento.texto %}<p class="detalle__lead revela">{{ evento.texto }}</p>{% endif %}
+      <div class="detalle__acciones">
+        <a class="boton boton--oscuro" href="{{ evento.ics }}" download="provenza-{{ evento.fecha }}.ics">{{ source('@provenza/icons/calendario.svg') }}Agregar a mi calendario</a>
+        <a class="boton boton--gris" href="/comunidad/calendario">Ver calendario completo</a>
+      </div>
+    {% else %}
+      <div class="prosa">{{ content|without('links') }}</div>
+    {% endif %}
+  </div>
+  <aside class="detalle__lateral">
+    {% include '@provenza/content/_proximas.html.twig' with { proximos: proximos } %}
+  </aside>
+</article>
