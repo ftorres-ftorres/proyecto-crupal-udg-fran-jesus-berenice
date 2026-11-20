@@ -23,6 +23,10 @@ ddev drush site:install standard --locale=es --existing-config -y \
   --account-mail=webmaster@provenza.local \
   --site-name='Portal de colonos · Provenza Residencial'
 ddev drush en provenza_core provenza_demo -y
+# Con --existing-config los hooks de instalación no crean contenido:
+ddev drush php:eval '\Drupal::classResolver(\Drupal\provenza_core\Install\SiteInstaller::class)->install(); provenza_core_form_pages();'
+ddev drush php:eval '\Drupal::classResolver(\Drupal\provenza_demo\DemoContentGenerator::class)->generate();'
+ddev drush php:eval 'node_access_rebuild();'
 ddev drush cr
 ```
 
@@ -68,3 +72,18 @@ ddev drush php:eval '\Drupal::classResolver(\Drupal\provenza_demo\DemoContentGen
 ```
 
 Configuración exportada en `config/sync`. Archivos privados en `private/`.
+
+## Tema Provenza
+
+Tema propio en `web/themes/custom/provenza` (base `stable9`).
+
+- Tipografías: Gilda Display (títulos), Bodoni Moda cursiva (marca y énfasis) y Jost (texto). Paleta olivo, negro y blanco. Iconos Hugeicons.
+- Portada con video, galería de instalaciones y agenda de avisos y eventos.
+- Login a pantalla dividida, calendario de eventos y de disponibilidad del salón (al tocar un día libre se abre la reservación con la fecha).
+- **Mi panel** (`/mi-panel`): resumen tipo widgets y dock lateral con todos los trámites. Sin sesión, cualquier trámite manda al inicio de sesión y regresa.
+
+### Multimedia
+
+- Fotos y clips de video de [Pexels](https://www.pexels.com) (licencia libre), recortados y corregidos de color con ffmpeg y exportados a WebP/MP4.
+- Video del hero (`media/provenza-hero.mp4`, 39 s): montaje de 12 clips con fundidos, narración en español de México y música original compuesta con ffmpeg (ducking y normalización a -16 LUFS).
+- Animaciones: entrada en cortina, galería expandible, barra flotante y vidrio líquido con refracción SVG. Respetan `prefers-reduced-motion`.
