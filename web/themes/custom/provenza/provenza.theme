@@ -634,3 +634,29 @@ function provenza_preprocess_provenza_calendar(array &$variables): void {
   }
   $variables['#cache']['contexts'][] = 'url.query_args';
 }
+
+/**
+ * Implements hook_preprocess_provenza_panel().
+ */
+function provenza_preprocess_provenza_panel(array &$variables): void {
+  $tz = new \DateTimeZone('America/Mexico_City');
+  $hoy = new \DateTimeImmutable('today', $tz);
+  $eventos = provenza_eventos();
+  $por_dia = [];
+  foreach ($eventos as $e) {
+    $por_dia[$e['fecha']][] = $e;
+  }
+  $nombres = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+  $semana = [];
+  for ($i = 0; $i < 7; $i++) {
+    $d = $hoy->modify("+$i day");
+    $f = $d->format('Y-m-d');
+    $semana[] = ['nombre' => $nombres[(int) $d->format('N') - 1], 'numero' => $d->format('j'), 'hoy' => $i === 0, 'evento' => !empty($por_dia[$f])];
+  }
+  $variables['semana'] = $semana;
+  $variables['eventos_semana'] = array_values(array_filter($eventos, fn ($e) => $e['faltan'] >= 0 && $e['faltan'] < 7));
+  $meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  $dias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+  $variables['fecha_hoy'] = ucfirst($dias[(int) $hoy->format('N') - 1]) . ' ' . $hoy->format('j') . ' de ' . $meses[(int) $hoy->format('n') - 1];
+  $variables['#cache']['tags'][] = 'node_list:evento';
+}

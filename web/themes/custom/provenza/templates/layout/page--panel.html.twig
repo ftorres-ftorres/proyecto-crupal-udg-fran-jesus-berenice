@@ -1,32 +1,27 @@
 <a href="#contenido" class="visually-hidden focusable saltar">Saltar al contenido</a>
+{% include '@provenza/layout/_vidrio.html.twig' %}
 {% include '@provenza/layout/_alerta.html.twig' %}
-{% include '@provenza/layout/_barra.html.twig' with { fija: true } %}
-{% include '@provenza/layout/_menu-movil.html.twig' %}
-<div class="panel">
-  <aside class="panel__lateral" aria-label="Mi panel">
-    <div class="panel__usuario">
-      <span class="panel__avatar" aria-hidden="true">{{ nombre_corto|first|upper }}</span>
-      <span><strong>{{ nombre_usuario }}</strong><small>Colono de Provenza</small></span>
+<div class="app">
+  <header class="app__barra">
+    {% include '@provenza/layout/_marca.html.twig' %}
+    <div class="app__usuario">
+      <a class="icono-boton" href="/buscar" aria-label="Buscar">{{ source('@provenza/icons/buscar.svg') }}</a>
+      <a class="app__perfil" href="/cuenta/mi-domicilio">
+        <span class="app__avatar" aria-hidden="true">{{ nombre_corto|first|upper }}</span>
+        <span class="app__nombre">{{ nombre_usuario }}</span>
+      </a>
+      <a class="icono-boton" href="{{ path('user.logout') }}" aria-label="Cerrar sesión"><span class="app__salir">{{ source('@provenza/icons/entrar.svg') }}</span></a>
     </div>
-    <nav class="panel__nav">
-      <ul>
-        {% for item in panel_nav %}
-          <li><a href="{{ item.url }}"{{ item.activo ? ' class="es-activo" aria-current="page"' }}>{{ source('@provenza/icons/' ~ item.icono ~ '.svg') }}{{ item.titulo }}</a></li>
-        {% endfor %}
-      </ul>
-    </nav>
-    <a class="panel__salir" href="{{ path('user.logout') }}">{{ source('@provenza/icons/entrar.svg') }}Cerrar sesión</a>
-  </aside>
-  <main id="contenido" class="panel__contenido" tabindex="-1">
+  </header>
+  <main id="contenido" class="app__contenido" tabindex="-1">
     {% if not es_resumen %}
-    <div class="panel__cabeza">
-      {{ page.breadcrumb }}
-      {{ page.header }}
-    </div>
+      <div class="app__cabeza">
+        {{ page.header }}
+      </div>
     {% endif %}
     {{ page.highlighted }}
-    <div class="panel__cuerpo{{ ayuda_formulario ? ' panel__cuerpo--ayuda' }}">
-      <div>
+    <div class="app__cuerpo{{ ayuda_formulario ? ' app__cuerpo--ayuda' }}">
+      <div class="app__principal">
         {{ page.content_above }}
         {{ page.content }}
       </div>
@@ -39,4 +34,16 @@
       {% endif %}
     </div>
   </main>
+  <nav class="dock" aria-label="Mi panel">
+    <ul>
+      {% for item in panel_nav %}
+        <li>
+          <a class="dock__item{{ item.activo ? ' es-activo' }}" href="{{ item.url }}"{{ item.activo ? ' aria-current="page"' }}>
+            {{ source('@provenza/icons/' ~ item.icono ~ '.svg') }}
+            <span class="dock__texto">{{ item.titulo }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
 </div>

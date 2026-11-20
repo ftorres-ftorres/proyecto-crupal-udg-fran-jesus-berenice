@@ -1,79 +1,88 @@
-<div class="resumen">
-  <div class="resumen__hola">
-    <h2>{{ saludo }}, <em>{{ nombre }}</em></h2>
-    {% if casa %}<p>{{ source('@provenza/icons/casa.svg') }}{{ casa }}</p>{% endif %}
-  </div>
-
-  <section class="resumen__bloque" aria-labelledby="nuevo-tramite">
-    <h3 id="nuevo-tramite">Nuevo trámite</h3>
-    <div class="acciones">
-      {% for a in acciones %}
-        <a class="accion" href="{{ a.url }}">
-          <span class="accion__icono">{{ source('@provenza/icons/' ~ a.icono ~ '.svg') }}</span>
-          <span class="accion__titulo">{{ a.titulo }}</span>
-          <span class="accion__texto">{{ a.texto }}</span>
-        </a>
-      {% endfor %}
+<div class="inicio-app">
+  <section class="hola">
+    <div>
+      <p class="hola__fecha">{{ fecha_hoy }}</p>
+      <h1 class="hola__titulo">{{ saludo }}, <em>{{ nombre }}</em></h1>
+      {% if casa %}<p class="hola__casa">{{ source('@provenza/icons/casa.svg') }}{{ casa }}</p>{% endif %}
     </div>
   </section>
 
-  <div class="resumen__rejilla">
-    <section class="tarjeta-panel" aria-labelledby="recientes-titulo">
-      <div class="tarjeta-panel__cabeza">
-        <h3 id="recientes-titulo">Trámites recientes</h3>
-        <a class="enlace-flecha" href="/solicitudes/mis-solicitudes">Ver solicitudes{{ source('@provenza/icons/flecha.svg') }}</a>
+  <section class="apps" aria-label="Nuevo trámite">
+    {% for a in acciones %}
+      <a class="app-icono" href="{{ a.url }}">
+        <span class="app-icono__forma">{{ source('@provenza/icons/' ~ a.icono ~ '.svg') }}</span>
+        <span class="app-icono__nombre">{{ a.titulo }}</span>
+      </a>
+    {% endfor %}
+  </section>
+
+  <div class="widgets">
+    <section class="widget widget--olivo widget--reserva" aria-labelledby="w-reserva">
+      <div class="widget__cabeza"><h2 id="w-reserva">Próxima reservación</h2>{{ source('@provenza/icons/fiesta.svg') }}</div>
+      {% if reservacion %}
+        <a class="reserva-w" href="{{ reservacion.url }}">
+          <span class="reserva-w__dia">{{ reservacion.dia }}</span>
+          <span class="reserva-w__info">
+            <strong>{{ reservacion.titulo }}</strong>
+            {% set partes = reservacion.hora|split(', ') %}<span>{{ partes|first }} {{ reservacion.dia }} de {{ reservacion.mes|lower }}, {{ partes|last }}</span>
+            {% if reservacion.invitados %}<span>{{ reservacion.invitados }} invitados</span>{% endif %}
+          </span>
+        </a>
+        <span class="pildora pildora--clara">{{ reservacion.estado_texto }}</span>
+      {% else %}
+        <p>No tienes reservaciones próximas.</p>
+        <a class="pildora pildora--clara" href="/instalaciones/salon-de-fiestas/calendario">Ver fechas libres</a>
+      {% endif %}
+    </section>
+
+    <section class="widget widget--semana" aria-labelledby="w-semana">
+      <div class="widget__cabeza"><h2 id="w-semana">Esta semana</h2><a class="flecha-circulo" href="/comunidad/calendario" aria-label="Ver calendario">{{ source('@provenza/icons/flecha_diag.svg') }}</a></div>
+      <div class="semana">
+        {% for d in semana %}
+          <span class="semana__dia{{ d.hoy ? ' es-hoy' }}{{ d.evento ? ' con-evento' }}"><small>{{ d.nombre }}</small><strong>{{ d.numero }}</strong></span>
+        {% endfor %}
       </div>
+      {% for e in eventos_semana|slice(0, 2) %}
+        <a class="semana__evento" href="{{ e.url }}"><strong>{{ e.titulo }}</strong><span>{{ e.semana }}, {{ e.hora }}</span></a>
+      {% else %}
+        <p class="widget__vacio">Sin eventos en los próximos siete días.</p>
+      {% endfor %}
+    </section>
+
+    <section class="widget widget--negro widget--pases" aria-labelledby="w-pases">
+      <div class="widget__cabeza"><h2 id="w-pases">Pases de visita</h2>{{ source('@provenza/icons/qr.svg') }}</div>
+      {% for p in pases %}
+        <a class="pase-w" href="{{ p.url }}"><strong>{{ p.nombre }}</strong><span>{{ p.ventana }}</span></a>
+      {% else %}
+        <p>No tienes pases vigentes.</p>
+      {% endfor %}
+      <a class="pildora pildora--clara" href="/form/registrar-visita">Nuevo pase</a>
+    </section>
+
+    <section class="widget widget--tramites" aria-labelledby="w-tramites">
+      <div class="widget__cabeza"><h2 id="w-tramites">Trámites recientes</h2><a class="flecha-circulo" href="/solicitudes/mis-solicitudes" aria-label="Ver solicitudes">{{ source('@provenza/icons/flecha_diag.svg') }}</a></div>
       {% if recientes %}
-        <ul class="lista-tramites">
+        <ul class="filas">
           {% for r in recientes %}
             <li>
               <a href="{{ r.url }}">
-                <span class="lista-tramites__info">
-                  <span class="lista-tramites__titulo">{{ r.titulo }}</span>
-                  <span class="lista-tramites__meta">{{ r.tipo }}{% if r.folio %}, {{ r.folio }}{% endif %}</span>
-                </span>
+                <span class="filas__icono">{{ source('@provenza/icons/' ~ (r.tipo == 'Solicitud' ? 'solicitud' : (r.tipo == 'Queja' ? 'queja' : (r.tipo == 'Visita' ? 'qr' : 'calendario'))) ~ '.svg') }}</span>
+                <span class="filas__info"><strong>{{ r.titulo }}</strong><span>{{ r.tipo }}{% if r.folio %}, {{ r.folio }}{% endif %}</span></span>
                 <span class="estado estado--{{ r.estado }}">{{ r.estado_texto }}</span>
-                <span class="lista-tramites__fecha">{{ r.fecha }}</span>
               </a>
             </li>
           {% endfor %}
         </ul>
       {% else %}
-        <p class="vacio-texto">Todavía no tienes trámites. Empieza con uno de arriba.</p>
+        <p class="widget__vacio">Todavía no tienes trámites.</p>
       {% endif %}
     </section>
 
-    <div class="resumen__columna">
-      <section class="tarjeta-panel tarjeta-panel--oscura" aria-labelledby="reserva-titulo">
-        <h3 id="reserva-titulo">Próxima reservación</h3>
-        {% if reservacion %}
-          <a class="reserva" href="{{ reservacion.url }}">
-            <span class="reserva__fecha"><strong>{{ reservacion.dia }}</strong>{{ reservacion.mes }}</span>
-            <span class="reserva__info"><span>{{ reservacion.titulo }}</span><small>{{ reservacion.hora }}{% if reservacion.invitados %}, {{ reservacion.invitados }} invitados{% endif %}</small></span>
-          </a>
-          <span class="estado estado--{{ reservacion.estado }}">{{ reservacion.estado_texto }}</span>
-        {% else %}
-          <p>No tienes reservaciones próximas.</p>
-          <a class="boton boton--claro" href="/form/reservar-salon">Reservar el salón</a>
-        {% endif %}
-      </section>
-      <section class="tarjeta-panel" aria-labelledby="pases-titulo">
-        <div class="tarjeta-panel__cabeza">
-          <h3 id="pases-titulo">Pases de visita</h3>
-          <a class="enlace-flecha" href="/seguridad/mis-autorizaciones">Todos{{ source('@provenza/icons/flecha.svg') }}</a>
-        </div>
-        {% for p in pases %}
-          <a class="pase" href="{{ p.url }}"><span class="pase__icono">{{ source('@provenza/icons/qr.svg') }}</span><span><strong>{{ p.nombre }}</strong><small>{{ p.ventana }}</small></span></a>
-        {% else %}
-          <p class="vacio-texto">Sin pases vigentes.</p>
-        {% endfor %}
-      </section>
-      <section class="tarjeta-panel" aria-labelledby="avisos-panel">
-        <h3 id="avisos-panel">Avisos</h3>
-        {% for a in avisos %}
-          <a class="aviso-mini" href="{{ a.url }}">{% if a.urgente %}<span class="etiqueta etiqueta--acento">Urgente</span>{% endif %}{{ a.titulo }}</a>
-        {% endfor %}
-      </section>
-    </div>
+    <section class="widget widget--avisos" aria-labelledby="w-avisos">
+      <div class="widget__cabeza"><h2 id="w-avisos">Avisos</h2><a class="flecha-circulo" href="/comunidad/avisos" aria-label="Todos los avisos">{{ source('@provenza/icons/flecha_diag.svg') }}</a></div>
+      {% for a in avisos %}
+        <a class="aviso-w" href="{{ a.url }}">{% if a.urgente %}<span class="pildora pildora--negra">Urgente</span>{% endif %}<span>{{ a.titulo }}</span></a>
+      {% endfor %}
+    </section>
   </div>
 </div>
