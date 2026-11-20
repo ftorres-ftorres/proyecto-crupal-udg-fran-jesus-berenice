@@ -150,3 +150,19 @@
 }
 .widget h2 { color: inherit; }
 .pagina--panel .alerta { width: min(calc(1240px - 2 * var(--gutter)), calc(100% - 2 * var(--gutter))); max-width: none; margin: 16px auto 0; }
+
+/* Dock vertical a la izquierda */
+@media (min-width: 761px) {
+  .app { padding-bottom: 60px; padding-left: 104px; }
+  .dock { left: 20px; top: 50%; bottom: auto; transform: translateY(-50%); max-width: none; max-height: calc(100svh - 40px); padding: 8px; border-radius: 30px; }
+  .dock ul { flex-direction: column; overflow: visible; }
+  .dock__item { justify-content: center; width: 58px; height: 54px; padding: 0; }
+  .dock__item:hover { transform: translateX(3px); }
+  .dock__item.es-activo { padding: 0; }
+  .dock__texto, .dock__item.es-activo .dock__texto { position: absolute; left: calc(100% + 14px); top: 50%; bottom: auto; transform: translate(-4px, -50%); padding: 7px 12px; border-radius: 12px; background: var(--negro); color: #fff; font-size: .85rem; font-weight: 500; opacity: 0; pointer-events: none; }
+  .dock__item:hover .dock__texto { opacity: 1; transform: translate(0, -50%); }
+  .dock__item.es-activo:hover .dock__texto { opacity: 1; }
+}
+@media (min-width: 761px) {
+  .pagina--panel .alerta { --ancho-alerta: min(calc(1240px - 2 * var(--gutter)), calc(100% - 104px - 2 * var(--gutter))); width: var(--ancho-alerta); margin-left: calc(104px + (100% - 104px - var(--ancho-alerta)) / 2); margin-right: 0; }
+}
