@@ -1,0 +1,19 @@
+uuid: ebcae091-72bf-4a59-ace0-dac8f92b7d4e
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_comentario_calificacion
+field_name: field_comentario_calificacion
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

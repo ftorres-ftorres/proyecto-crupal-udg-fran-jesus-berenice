@@ -1,0 +1,19 @@
+portal:
+  css:
+    theme:
+      css/provenza.css: {}
+  js:
+    js/provenza.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - core/drupal.ajax
+
+caseta:
+  css:
+    theme:
+      css/caseta.css: {}
+  js:
+    js/caseta.js: {}
+  dependencies:
+    - provenza_core/portal

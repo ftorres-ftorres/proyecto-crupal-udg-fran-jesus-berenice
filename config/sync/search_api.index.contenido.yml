@@ -1,0 +1,70 @@
+uuid: f248136f-d193-4f55-aeba-99298646ca5f
+langcode: es
+status: true
+dependencies:
+  config:
+    - search_api.server.provenza_db
+  module:
+    - node
+id: contenido
+name: 'Contenido público y permitido'
+description: null
+read_only: false
+field_settings:
+  status:
+    label: Publicado
+    datasource_id: 'entity:node'
+    property_path: status
+    type: boolean
+    dependencies:
+      module:
+        - node
+  title:
+    label: Título
+    datasource_id: 'entity:node'
+    property_path: title
+    type: text
+    dependencies:
+      module:
+        - node
+datasource_settings:
+  'entity:node':
+    bundles:
+      default: true
+      selected:
+        - modulo_documentado
+    languages:
+      default: true
+      selected: {  }
+    plugin_id: 'entity:node'
+    settings:
+      bundles:
+        default: true
+        selected:
+          - modulo_documentado
+      languages:
+        default: true
+        selected: {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  custom_value: {  }
+  entity_type: {  }
+  language_with_fallback: {  }
+  rendered_item:
+    weights:
+      add_properties: 0
+    roles:
+      - anonymous
+    view_mode:
+      'entity:node':
+        default: teaser
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  cron_limit: 50
+  delete_on_fail: true
+  index_directly: true
+  track_changes_in_references: true
+server: provenza_db

@@ -1,0 +1,21 @@
+uuid: 5ebb46d2-fae1-48be-aa24-ae7ba7785ca1
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tipo_autorizacion
+    - node.type.visita
+  module:
+    - options
+id: node.visita.field_tipo_autorizacion
+field_name: field_tipo_autorizacion
+entity_type: node
+bundle: visita
+label: 'Tipo de autorización'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

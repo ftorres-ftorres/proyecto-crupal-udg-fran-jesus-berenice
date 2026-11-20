@@ -1,0 +1,19 @@
+uuid: d2971c09-3fbd-42db-a06f-ba1df2f0f15f
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_detalle_tecnico
+field_name: field_detalle_tecnico
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

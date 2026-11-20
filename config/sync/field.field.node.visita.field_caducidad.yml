@@ -1,0 +1,21 @@
+uuid: 263e2545-c3db-4874-9488-5a6757fad99f
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_caducidad
+    - node.type.visita
+  module:
+    - datetime
+id: node.visita.field_caducidad
+field_name: field_caducidad
+entity_type: node
+bundle: visita
+label: Caducidad
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

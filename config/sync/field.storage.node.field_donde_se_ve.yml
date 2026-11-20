@@ -1,0 +1,19 @@
+uuid: a25a1213-d316-493e-81a1-fb7f1a5dce21
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_donde_se_ve
+field_name: field_donde_se_ve
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

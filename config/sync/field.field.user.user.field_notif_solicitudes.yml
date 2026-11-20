@@ -1,0 +1,22 @@
+uuid: e8020281-1b65-4f67-b63d-a63a5117cc7a
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_notif_solicitudes
+  module:
+    - user
+id: user.user.field_notif_solicitudes
+field_name: field_notif_solicitudes
+entity_type: user
+bundle: user
+label: 'Avisarme de mis solicitudes'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Activado
+  off_label: Desactivado
+field_type: boolean

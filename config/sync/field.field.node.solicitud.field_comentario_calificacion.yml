@@ -1,0 +1,19 @@
+uuid: 67f42334-a4b7-475a-b41b-a4902aeab2f4
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_comentario_calificacion
+    - node.type.solicitud
+id: node.solicitud.field_comentario_calificacion
+field_name: field_comentario_calificacion
+entity_type: node
+bundle: solicitud
+label: 'Comentario de calificación'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

@@ -1,0 +1,30 @@
+uuid: 8ab26235-dffb-4219-be93-b7722241c08d
+langcode: es
+status: true
+dependencies:
+  module:
+    - file
+    - image
+    - node
+id: node.field_captura
+field_name: field_captura
+entity_type: node
+type: image
+settings:
+  target_type: file
+  display_field: false
+  display_default: true
+  uri_scheme: public
+  default_image:
+    uuid: null
+    alt: ''
+    title: ''
+    width: null
+    height: null
+module: image
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

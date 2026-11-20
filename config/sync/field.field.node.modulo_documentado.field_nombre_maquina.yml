@@ -1,0 +1,19 @@
+uuid: a2904315-d566-4309-bc3c-9045eac2743a
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_nombre_maquina
+    - node.type.modulo_documentado
+id: node.modulo_documentado.field_nombre_maquina
+field_name: field_nombre_maquina
+entity_type: node
+bundle: modulo_documentado
+label: 'Nombre de máquina'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

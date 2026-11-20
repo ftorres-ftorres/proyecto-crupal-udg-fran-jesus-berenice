@@ -1,0 +1,15 @@
+uuid: 4edbd806-60f4-451a-aa84-e06ee5dbb175
+langcode: es
+status: true
+dependencies:
+  config:
+    - flag.flag.prioridad
+  module:
+    - flag
+id: flag_action.prioridad_flag
+label: 'Marcar prioridad'
+type: node
+plugin: 'flag_action:prioridad_flag'
+configuration:
+  flag_id: prioridad
+  flag_action: flag

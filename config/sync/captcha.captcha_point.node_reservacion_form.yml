@@ -1,0 +1,7 @@
+uuid: e7b0f77a-9980-444a-8ce3-217986645bbe
+langcode: es
+status: false
+dependencies: {  }
+formId: node_reservacion_form
+captchaType: default
+label: node_reservacion_form

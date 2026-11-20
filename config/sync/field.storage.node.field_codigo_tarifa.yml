@@ -1,0 +1,21 @@
+uuid: acd77fba-ee6f-43c6-a2a4-147583e73099
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_codigo_tarifa
+field_name: field_codigo_tarifa
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

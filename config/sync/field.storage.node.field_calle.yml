@@ -1,0 +1,21 @@
+uuid: 96282b3e-e5f6-4b21-836c-6479199568ed
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_calle
+field_name: field_calle
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

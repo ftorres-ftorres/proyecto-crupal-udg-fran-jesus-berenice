@@ -1,0 +1,21 @@
+uuid: 44919989-c293-47ce-a78a-0535e6a935cb
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_fecha_inicio
+    - node.type.reservacion
+  module:
+    - datetime
+id: node.reservacion.field_fecha_inicio
+field_name: field_fecha_inicio
+entity_type: node
+bundle: reservacion
+label: Inicio
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

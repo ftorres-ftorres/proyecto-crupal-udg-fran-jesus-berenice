@@ -1,0 +1,42 @@
+uuid: 38a01114-d60f-45fe-a4cb-8e895daf23e6
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_codigo_instalacion
+field_name: field_codigo_instalacion
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: salon
+      label: 'Salón de fiestas'
+    -
+      value: gym
+      label: Gimnasio
+    -
+      value: alberca
+      label: Alberca
+    -
+      value: trotapista
+      label: 'Trotapista y áreas verdes'
+    -
+      value: juegos
+      label: 'Juegos infantiles'
+    -
+      value: fuentes
+      label: Fuentes
+    -
+      value: jardines
+      label: Jardines
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

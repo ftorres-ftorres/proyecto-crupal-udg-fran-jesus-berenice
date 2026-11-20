@@ -1,0 +1,19 @@
+uuid: 272e26b7-7893-4b71-8e9a-0222bd2fb00b
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tipo_evento_txt
+    - node.type.reservacion
+id: node.reservacion.field_tipo_evento_txt
+field_name: field_tipo_evento_txt
+entity_type: node
+bundle: reservacion
+label: 'Tipo de evento'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

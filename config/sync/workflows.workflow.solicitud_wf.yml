@@ -1,0 +1,332 @@
+uuid: f287b41a-c846-4fac-bd3a-4568d66c7ec0
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.solicitud
+  module:
+    - content_moderation
+id: solicitud_wf
+label: 'Solicitudes de servicio'
+type: content_moderation
+type_settings:
+  states:
+    asignada:
+      label: Asignada
+      weight: 2
+      published: true
+      default_revision: true
+    cerrada:
+      label: Cerrada
+      weight: 5
+      published: true
+      default_revision: true
+    draft:
+      label: Borrador
+      weight: -10
+      published: false
+      default_revision: false
+    en_proceso:
+      label: 'En proceso'
+      weight: 3
+      published: true
+      default_revision: true
+    en_revision:
+      label: 'En revisión'
+      weight: 1
+      published: true
+      default_revision: true
+    published:
+      label: Publicado
+      weight: -9
+      published: true
+      default_revision: true
+    rechazada:
+      label: Rechazada
+      weight: 6
+      published: true
+      default_revision: true
+    recibida:
+      label: Recibida
+      weight: 0
+      published: true
+      default_revision: true
+    resuelta:
+      label: Resuelta
+      weight: 4
+      published: true
+      default_revision: true
+  transitions:
+    a_en_proceso:
+      label: 'Poner en proceso'
+      from:
+        - asignada
+      to: en_proceso
+      weight: 90
+    a_resuelta:
+      label: 'Marcar resuelta'
+      from:
+        - en_proceso
+      to: resuelta
+      weight: 91
+    crear:
+      label: Crear
+      from: {  }
+      to: recibida
+      weight: 0
+    de_asignada_a_cerrada:
+      label: Cerrada
+      from:
+        - asignada
+      to: cerrada
+      weight: 17
+    de_asignada_a_en_proceso:
+      label: 'En proceso'
+      from:
+        - asignada
+      to: en_proceso
+      weight: 15
+    de_asignada_a_en_revision:
+      label: 'En revisión'
+      from:
+        - asignada
+      to: en_revision
+      weight: 14
+    de_asignada_a_rechazada:
+      label: Rechazada
+      from:
+        - asignada
+      to: rechazada
+      weight: 18
+    de_asignada_a_recibida:
+      label: Recibida
+      from:
+        - asignada
+      to: recibida
+      weight: 13
+    de_asignada_a_resuelta:
+      label: Resuelta
+      from:
+        - asignada
+      to: resuelta
+      weight: 16
+    de_cerrada_a_asignada:
+      label: Asignada
+      from:
+        - cerrada
+      to: asignada
+      weight: 33
+    de_cerrada_a_en_proceso:
+      label: 'En proceso'
+      from:
+        - cerrada
+      to: en_proceso
+      weight: 34
+    de_cerrada_a_en_revision:
+      label: 'En revisión'
+      from:
+        - cerrada
+      to: en_revision
+      weight: 32
+    de_cerrada_a_rechazada:
+      label: Rechazada
+      from:
+        - cerrada
+      to: rechazada
+      weight: 36
+    de_cerrada_a_recibida:
+      label: Recibida
+      from:
+        - cerrada
+      to: recibida
+      weight: 31
+    de_cerrada_a_resuelta:
+      label: Resuelta
+      from:
+        - cerrada
+      to: resuelta
+      weight: 35
+    de_en_proceso_a_asignada:
+      label: Asignada
+      from:
+        - en_proceso
+      to: asignada
+      weight: 21
+    de_en_proceso_a_cerrada:
+      label: Cerrada
+      from:
+        - en_proceso
+      to: cerrada
+      weight: 23
+    de_en_proceso_a_en_revision:
+      label: 'En revisión'
+      from:
+        - en_proceso
+      to: en_revision
+      weight: 20
+    de_en_proceso_a_rechazada:
+      label: Rechazada
+      from:
+        - en_proceso
+      to: rechazada
+      weight: 24
+    de_en_proceso_a_recibida:
+      label: Recibida
+      from:
+        - en_proceso
+      to: recibida
+      weight: 19
+    de_en_proceso_a_resuelta:
+      label: Resuelta
+      from:
+        - en_proceso
+      to: resuelta
+      weight: 22
+    de_en_revision_a_asignada:
+      label: Asignada
+      from:
+        - en_revision
+      to: asignada
+      weight: 8
+    de_en_revision_a_cerrada:
+      label: Cerrada
+      from:
+        - en_revision
+      to: cerrada
+      weight: 11
+    de_en_revision_a_en_proceso:
+      label: 'En proceso'
+      from:
+        - en_revision
+      to: en_proceso
+      weight: 9
+    de_en_revision_a_rechazada:
+      label: Rechazada
+      from:
+        - en_revision
+      to: rechazada
+      weight: 12
+    de_en_revision_a_recibida:
+      label: Recibida
+      from:
+        - en_revision
+      to: recibida
+      weight: 7
+    de_en_revision_a_resuelta:
+      label: Resuelta
+      from:
+        - en_revision
+      to: resuelta
+      weight: 10
+    de_rechazada_a_asignada:
+      label: Asignada
+      from:
+        - rechazada
+      to: asignada
+      weight: 39
+    de_rechazada_a_cerrada:
+      label: Cerrada
+      from:
+        - rechazada
+      to: cerrada
+      weight: 42
+    de_rechazada_a_en_proceso:
+      label: 'En proceso'
+      from:
+        - rechazada
+      to: en_proceso
+      weight: 40
+    de_rechazada_a_en_revision:
+      label: 'En revisión'
+      from:
+        - rechazada
+      to: en_revision
+      weight: 38
+    de_rechazada_a_recibida:
+      label: Recibida
+      from:
+        - rechazada
+      to: recibida
+      weight: 37
+    de_rechazada_a_resuelta:
+      label: Resuelta
+      from:
+        - rechazada
+      to: resuelta
+      weight: 41
+    de_recibida_a_asignada:
+      label: Asignada
+      from:
+        - recibida
+      to: asignada
+      weight: 2
+    de_recibida_a_cerrada:
+      label: Cerrada
+      from:
+        - recibida
+      to: cerrada
+      weight: 5
+    de_recibida_a_en_proceso:
+      label: 'En proceso'
+      from:
+        - recibida
+      to: en_proceso
+      weight: 3
+    de_recibida_a_en_revision:
+      label: 'En revisión'
+      from:
+        - recibida
+      to: en_revision
+      weight: 1
+    de_recibida_a_rechazada:
+      label: Rechazada
+      from:
+        - recibida
+      to: rechazada
+      weight: 6
+    de_recibida_a_resuelta:
+      label: Resuelta
+      from:
+        - recibida
+      to: resuelta
+      weight: 4
+    de_resuelta_a_asignada:
+      label: Asignada
+      from:
+        - resuelta
+      to: asignada
+      weight: 27
+    de_resuelta_a_cerrada:
+      label: Cerrada
+      from:
+        - resuelta
+      to: cerrada
+      weight: 29
+    de_resuelta_a_en_proceso:
+      label: 'En proceso'
+      from:
+        - resuelta
+      to: en_proceso
+      weight: 28
+    de_resuelta_a_en_revision:
+      label: 'En revisión'
+      from:
+        - resuelta
+      to: en_revision
+      weight: 26
+    de_resuelta_a_rechazada:
+      label: Rechazada
+      from:
+        - resuelta
+      to: rechazada
+      weight: 30
+    de_resuelta_a_recibida:
+      label: Recibida
+      from:
+        - resuelta
+      to: recibida
+      weight: 25
+  entity_types:
+    node:
+      - solicitud
+  default_moderation_state: recibida

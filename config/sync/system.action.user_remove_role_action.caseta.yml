@@ -1,0 +1,14 @@
+uuid: c73760a2-0153-4d7e-bb31-ccb035393e24
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.caseta
+  module:
+    - user
+id: user_remove_role_action.caseta
+label: 'Elimina el rol Caseta / Seguridad al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: caseta

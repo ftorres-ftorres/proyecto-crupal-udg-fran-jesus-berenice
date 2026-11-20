@@ -1,0 +1,7 @@
+uuid: f509aac9-0d53-420c-a320-55d43de5af9f
+langcode: es
+status: false
+dependencies: {  }
+formId: node_aviso_form
+captchaType: default
+label: node_aviso_form

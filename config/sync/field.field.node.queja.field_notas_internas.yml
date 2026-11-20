@@ -1,0 +1,22 @@
+uuid: 6b50fac1-8f76-469a-8865-94e145a0575d
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_notas_internas
+    - node.type.queja
+  module:
+    - text
+id: node.queja.field_notas_internas
+field_name: field_notas_internas
+entity_type: node
+bundle: queja
+label: 'Notas internas'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

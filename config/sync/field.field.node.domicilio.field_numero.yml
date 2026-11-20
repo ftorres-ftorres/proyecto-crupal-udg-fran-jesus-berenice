@@ -1,0 +1,19 @@
+uuid: 73e0eb0a-0c85-4783-8a61-88db01905a79
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_numero
+    - node.type.domicilio
+id: node.domicilio.field_numero
+field_name: field_numero
+entity_type: node
+bundle: domicilio
+label: Número
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

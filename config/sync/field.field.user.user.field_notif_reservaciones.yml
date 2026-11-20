@@ -1,0 +1,22 @@
+uuid: 51b2714e-da06-4ad8-8b8e-b59487156a58
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_notif_reservaciones
+  module:
+    - user
+id: user.user.field_notif_reservaciones
+field_name: field_notif_reservaciones
+entity_type: user
+bundle: user
+label: 'Avisarme de reservaciones'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Activado
+  off_label: Desactivado
+field_type: boolean

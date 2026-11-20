@@ -1,0 +1,21 @@
+uuid: 87913f22-ad25-47fd-b55f-1ffd420157c4
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_fecha_recoleccion
+    - node.type.solicitud
+  module:
+    - datetime
+id: node.solicitud.field_fecha_recoleccion
+field_name: field_fecha_recoleccion
+entity_type: node
+bundle: solicitud
+label: 'Fecha de recolección especial'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

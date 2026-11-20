@@ -1,0 +1,7 @@
+uuid: fb1f916b-7013-4c2a-a80a-75c9f6dd48b7
+langcode: es
+status: true
+dependencies: {  }
+formId: webform_submission_queja_sugerencia_add_form
+captchaType: recaptcha_v3/provenza
+label: 'Queja o sugerencia'

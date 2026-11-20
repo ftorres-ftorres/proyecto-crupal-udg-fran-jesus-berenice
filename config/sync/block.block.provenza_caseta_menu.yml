@@ -1,0 +1,35 @@
+uuid: 222bf0e6-2299-46fd-9408-3310b4dd3c7f
+langcode: es
+status: true
+dependencies:
+  config:
+    - system.menu.guardhouse
+  module:
+    - system
+    - user
+  theme:
+    - olivero
+id: provenza_caseta_menu
+theme: olivero
+region: sidebar
+weight: -9
+provider: null
+plugin: 'system_menu_block:guardhouse'
+settings:
+  id: 'system_menu_block:guardhouse'
+  label: ''
+  label_display: ''
+  provider: system
+  level: 1
+  depth: 1
+  expand_all_items: false
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      caseta: caseta
+      administracion: administracion
+      webmaster: webmaster

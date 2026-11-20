@@ -1,0 +1,32 @@
+uuid: 6e18a56c-be2e-4146-ab13-28c8a274c388
+langcode: es
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - workflows.workflow.solicitud_wf
+  module:
+    - contact
+    - content_moderation
+    - filter
+    - flag
+    - media
+    - node
+    - provenza_core
+    - system
+id: mantenimiento
+label: Mantenimiento
+weight: 7
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access site-wide contact form'
+  - 'access user profiles'
+  - 'flag guardar'
+  - 'unflag guardar'
+  - 'update assigned requests'
+  - 'use solicitud_wf transition a_en_proceso'
+  - 'use solicitud_wf transition a_resuelta'
+  - 'use text format basic_html'
+  - 'view media'
+  - 'view own unpublished content'

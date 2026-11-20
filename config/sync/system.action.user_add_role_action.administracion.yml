@@ -1,0 +1,14 @@
+uuid: f3286e59-fff6-4e50-8bf2-a95af3a6c12e
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.administracion
+  module:
+    - user
+id: user_add_role_action.administracion
+label: 'Añade el rol Administración al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: administracion

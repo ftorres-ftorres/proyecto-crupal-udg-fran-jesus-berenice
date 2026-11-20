@@ -1,0 +1,24 @@
+uuid: b7320795-3c3e-435d-9289-85f2546b539a
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.page
+  module:
+    - node
+id: provenza_page
+label: 'URL page'
+type: 'canonical_entities:node'
+pattern: '/[node:title]'
+selection_criteria:
+  28ee64cc-cbfe-4ea0-ad33-ebc6d7908fc3:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      page: page
+    uuid: 04a7c6d2-dbe4-4534-bf07-0e99a0215d69
+selection_logic: and
+weight: -5
+relationships: {  }

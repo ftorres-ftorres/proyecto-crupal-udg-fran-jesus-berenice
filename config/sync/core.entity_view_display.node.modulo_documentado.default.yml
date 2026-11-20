@@ -1,0 +1,130 @@
+uuid: 43481cb7-5a04-4558-a4f1-2a8039b2acb7
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.node.modulo_documentado.body
+    - field.field.node.modulo_documentado.field_captura
+    - field.field.node.modulo_documentado.field_categoria_modulo
+    - field.field.node.modulo_documentado.field_detalle_tecnico
+    - field.field.node.modulo_documentado.field_donde_se_ve
+    - field.field.node.modulo_documentado.field_enlace_proyecto
+    - field.field.node.modulo_documentado.field_nombre_maquina
+    - field.field.node.modulo_documentado.field_pasos
+    - field.field.node.modulo_documentado.field_resumen
+    - field.field.node.modulo_documentado.field_version_modulo
+    - node.type.modulo_documentado
+    - responsive_image.styles.wide
+  module:
+    - link
+    - responsive_image
+    - text
+    - user
+id: node.modulo_documentado.default
+targetEntityType: node
+bundle: modulo_documentado
+mode: default
+content:
+  body:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_captura:
+    type: responsive_image
+    label: above
+    settings:
+      responsive_image_style: wide
+      image_link: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_categoria_modulo:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_detalle_tecnico:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_donde_se_ve:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_enlace_proyecto:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_nombre_maquina:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_pasos:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  field_resumen:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  field_version_modulo:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 14
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  langcode: true
+  layout_builder__layout: true
+  path: true
+  publish_on: true
+  search_api_excerpt: true
+  unpublish_on: true

@@ -1,0 +1,7 @@
+name: Provenza Demo
+type: module
+description: 'Datos de ejemplo para la prueba de concepto del portal de colonos.'
+package: Provenza
+core_version_requirement: ^11
+dependencies:
+  - provenza_core:provenza_core

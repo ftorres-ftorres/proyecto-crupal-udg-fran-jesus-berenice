@@ -1,0 +1,24 @@
+uuid: a51751f8-478d-4001-8455-65bad25112c8
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.modulo_documentado
+  module:
+    - text
+id: node.modulo_documentado.body
+field_name: body
+entity_type: node
+bundle: modulo_documentado
+label: Contenido
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+  required_summary: false
+  allowed_formats: {  }
+field_type: text_with_summary

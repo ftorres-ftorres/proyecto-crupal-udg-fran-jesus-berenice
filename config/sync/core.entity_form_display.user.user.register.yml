@@ -1,0 +1,77 @@
+uuid: 4b431716-6797-440c-b65b-fa1ce1b9dc75
+langcode: es
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.user.register
+    - field.field.user.user.field_contacto_emergencia_nom
+    - field.field.user.user.field_contacto_emergencia_tel
+    - field.field.user.user.field_domicilio
+    - field.field.user.user.field_last_password_reset
+    - field.field.user.user.field_mascotas
+    - field.field.user.user.field_nombre_completo
+    - field.field.user.user.field_notif_avisos
+    - field.field.user.user.field_notif_reservaciones
+    - field.field.user.user.field_notif_solicitudes
+    - field.field.user.user.field_numero_casa
+    - field.field.user.user.field_password_expiration
+    - field.field.user.user.field_pending_expire_sent
+    - field.field.user.user.field_relacion
+    - field.field.user.user.field_telefono
+    - field.field.user.user.field_vehiculos
+    - field.field.user.user.user_picture
+  module:
+    - telephone
+    - user
+id: user.user.register
+targetEntityType: user
+bundle: user
+mode: register
+content:
+  account:
+    weight: -10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_nombre_completo:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_numero_casa:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_telefono:
+    type: telephone_default
+    weight: 1
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  contact: true
+  field_contacto_emergencia_nom: true
+  field_contacto_emergencia_tel: true
+  field_domicilio: true
+  field_last_password_reset: true
+  field_mascotas: true
+  field_notif_avisos: true
+  field_notif_reservaciones: true
+  field_notif_solicitudes: true
+  field_password_expiration: true
+  field_pending_expire_sent: true
+  field_relacion: true
+  field_vehiculos: true
+  langcode: true
+  language: true
+  path: true
+  timezone: true
+  user_picture: true

@@ -1,0 +1,23 @@
+uuid: 40a9173e-91f1-4d42-b2ad-37a134dee176
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_monto
+    - node.type.tarifa
+id: node.tarifa.field_monto
+field_name: field_monto
+entity_type: node
+bundle: tarifa
+label: 'Monto (MXN)'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: $
+  suffix: ''
+field_type: decimal

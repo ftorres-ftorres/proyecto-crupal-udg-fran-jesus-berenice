@@ -1,0 +1,19 @@
+uuid: 9d5fbe76-5f46-455c-8571-5515072d22d0
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_nombre_mascota
+    - paragraphs.paragraphs_type.mascota
+id: paragraph.mascota.field_nombre_mascota
+field_name: field_nombre_mascota
+entity_type: paragraph
+bundle: mascota
+label: Nombre
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

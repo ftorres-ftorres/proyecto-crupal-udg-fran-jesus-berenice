@@ -1,0 +1,19 @@
+uuid: 59624160-64c9-4830-9d3b-f86ebfcd6d94
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+    - smart_date
+id: node.field_fecha_evento
+field_name: field_fecha_evento
+entity_type: node
+type: smartdate
+settings: {  }
+module: smart_date
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

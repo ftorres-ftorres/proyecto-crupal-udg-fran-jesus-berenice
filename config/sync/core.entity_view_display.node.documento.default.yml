@@ -1,0 +1,90 @@
+uuid: e30468f0-9abe-41a1-aae8-af2811d01181
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.node.documento.body
+    - field.field.node.documento.field_archivo
+    - field.field.node.documento.field_audiencia
+    - field.field.node.documento.field_fecha_documento
+    - field.field.node.documento.field_tipo_documento
+    - node.type.documento
+  module:
+    - datetime
+    - entity_print
+    - file
+    - options
+    - text
+    - user
+third_party_settings:
+  entity_print:
+    pdf_label: 'Descargar PDF'
+id: node.documento.default
+targetEntityType: node
+bundle: documento
+mode: default
+content:
+  body:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  entity_print_view_pdf:
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 50
+    region: content
+  field_archivo:
+    type: file_default
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_audiencia:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_fecha_documento:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_tipo_documento:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  flag_guardar:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_word_docx: true
+  langcode: true
+  layout_builder__layout: true
+  path: true
+  publish_on: true
+  search_api_excerpt: true
+  unpublish_on: true

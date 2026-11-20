@@ -1,0 +1,20 @@
+uuid: 0114cef4-4dd8-4bbc-a619-56ec41b389f1
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.field_tipo_queja
+field_name: field_tipo_queja
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

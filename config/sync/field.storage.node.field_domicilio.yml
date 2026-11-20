@@ -1,0 +1,19 @@
+uuid: 69d9d5b4-38ca-4c5b-be33-c74940861119
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_domicilio
+field_name: field_domicilio
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,29 @@
+# Drupal
+/web/sites/*/files
+/web/sites/*/private
+/web/sites/*/settings.local.php
+/web/sites/*/services.local.yml
+/web/sites/simpletest
+/private/*
+!/private/.gitkeep
+
+# Composer (se reinstalan con composer install)
+/vendor/
+/web/core/
+/web/modules/contrib/
+/web/themes/contrib/
+/web/profiles/contrib/
+/web/libraries/
+
+# DDEV
+.ddev/.gitignore
+.ddev/db_snapshots
+.ddev/xhprof
+.ddev/xhgui
+
+# OS / IDE
+.DS_Store
+.idea
+.vscode
+*.swp
+*~

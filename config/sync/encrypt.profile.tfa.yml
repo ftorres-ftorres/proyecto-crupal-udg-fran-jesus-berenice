@@ -1,0 +1,13 @@
+uuid: e884ca80-9f7f-4d16-86d4-6f29d6d135b6
+langcode: es
+status: true
+dependencies:
+  config:
+    - key.key.tfa_key
+  module:
+    - real_aes
+id: tfa
+label: 'Cifrado TFA'
+encryption_method: real_aes
+encryption_method_configuration: {  }
+encryption_key: tfa_key

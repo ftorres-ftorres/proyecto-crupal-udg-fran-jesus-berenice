@@ -1,0 +1,24 @@
+uuid: 871194fc-cac3-4b2f-aacf-4dc672ac7e35
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.tarifa
+  module:
+    - node
+id: provenza_tarifa
+label: 'URL tarifa'
+type: 'canonical_entities:node'
+pattern: '/comunidad/cuotas-y-tarifas/[node:title]'
+selection_criteria:
+  2ff7fcf6-30b4-445f-afea-c8943bb2eb43:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      tarifa: tarifa
+    uuid: f5c65ab8-d01a-4afd-aae7-8ed02d91140f
+selection_logic: and
+weight: -5
+relationships: {  }

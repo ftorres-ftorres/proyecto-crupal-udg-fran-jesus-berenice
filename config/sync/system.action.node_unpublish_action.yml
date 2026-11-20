@@ -1,0 +1,13 @@
+uuid: 0ce75637-5ca8-4f7a-80e2-7ab8a01fedfc
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: C7X8h9FWlwkQ9y5mnU2JzgaZICAdc6HFbPVbhvjlAYE
+id: node_unpublish_action
+label: 'Anular la publicación del contenido'
+type: node
+plugin: 'entity:unpublish_action:node'
+configuration: {  }

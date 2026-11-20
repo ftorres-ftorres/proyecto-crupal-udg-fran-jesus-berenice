@@ -1,0 +1,14 @@
+uuid: 05ee079c-2b39-4f65-8295-7f3a5193e93b
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.administracion
+  module:
+    - user
+id: user_remove_role_action.administracion
+label: 'Elimina el rol Administración al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: administracion

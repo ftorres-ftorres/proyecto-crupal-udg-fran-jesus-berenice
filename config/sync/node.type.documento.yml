@@ -1,0 +1,11 @@
+uuid: 0d37a510-b0c8-47ce-a336-a9a6f4d9814d
+langcode: es
+status: true
+dependencies: {  }
+name: Documento
+type: documento
+description: null
+help: null
+new_revision: true
+preview_mode: 0
+display_submitted: false

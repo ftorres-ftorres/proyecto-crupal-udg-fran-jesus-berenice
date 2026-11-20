@@ -1,0 +1,66 @@
+uuid: 68d84d9f-db35-4e00-a5b4-e19bcc397b55
+langcode: es
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.user.compact
+    - field.field.user.user.field_contacto_emergencia_nom
+    - field.field.user.user.field_contacto_emergencia_tel
+    - field.field.user.user.field_domicilio
+    - field.field.user.user.field_last_password_reset
+    - field.field.user.user.field_mascotas
+    - field.field.user.user.field_nombre_completo
+    - field.field.user.user.field_notif_avisos
+    - field.field.user.user.field_notif_reservaciones
+    - field.field.user.user.field_notif_solicitudes
+    - field.field.user.user.field_numero_casa
+    - field.field.user.user.field_password_expiration
+    - field.field.user.user.field_pending_expire_sent
+    - field.field.user.user.field_relacion
+    - field.field.user.user.field_telefono
+    - field.field.user.user.field_vehiculos
+    - field.field.user.user.user_picture
+    - image.style.thumbnail
+  module:
+    - image
+    - user
+_core:
+  default_config_hash: l0SHKaTcmotRxHn_b46mtoCaIHxqgnhaT3uFH8a3c-I
+id: user.user.compact
+targetEntityType: user
+bundle: user
+mode: compact
+content:
+  user_picture:
+    type: image
+    label: hidden
+    settings:
+      image_link: content
+      image_style: thumbnail
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  field_contacto_emergencia_nom: true
+  field_contacto_emergencia_tel: true
+  field_domicilio: true
+  field_last_password_reset: true
+  field_mascotas: true
+  field_nombre_completo: true
+  field_notif_avisos: true
+  field_notif_reservaciones: true
+  field_notif_solicitudes: true
+  field_numero_casa: true
+  field_password_expiration: true
+  field_pending_expire_sent: true
+  field_relacion: true
+  field_telefono: true
+  field_vehiculos: true
+  langcode: true
+  member_for: true
+  search_api_excerpt: true

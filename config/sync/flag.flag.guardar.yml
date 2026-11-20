@@ -1,0 +1,35 @@
+uuid: 1ab23706-aa9b-440b-8fe7-b11fa92d7f29
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+id: guardar
+label: Guardar
+bundles:
+  - documento
+  - faq
+entity_type: node
+global: false
+flag_short: Guardar
+flag_long: ''
+flag_message: Guardado.
+unflag_short: 'Quitar de guardados'
+unflag_long: ''
+unflag_message: 'Eliminado de guardados.'
+unflag_denied_text: ''
+flood_control_active: false
+flood_control_limit: 10
+flood_control_window: 3600
+weight: 0
+flag_type: 'entity:node'
+link_type: reload
+flagTypeConfig:
+  show_in_links: {  }
+  show_as_field: true
+  show_on_form: false
+  show_contextual_link: false
+  extra_permissions: {  }
+linkTypeConfig: {  }
+is_anon_enabled: false
+cron_batch_size: 0

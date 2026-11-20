@@ -1,0 +1,185 @@
+uuid: db0323f7-2e41-4611-9089-5d04671a60cc
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.reservacion
+  module:
+    - content_moderation
+id: reservacion_wf
+label: Reservaciones
+type: content_moderation
+type_settings:
+  states:
+    aprobada:
+      label: Aprobada
+      weight: 1
+      published: true
+      default_revision: true
+    cancelada:
+      label: Cancelada
+      weight: 4
+      published: true
+      default_revision: true
+    draft:
+      label: Borrador
+      weight: -10
+      published: false
+      default_revision: false
+    published:
+      label: Publicado
+      weight: -9
+      published: true
+      default_revision: true
+    realizada:
+      label: Realizada
+      weight: 2
+      published: true
+      default_revision: true
+    rechazada:
+      label: Rechazada
+      weight: 3
+      published: true
+      default_revision: true
+    solicitada:
+      label: Solicitada
+      weight: 0
+      published: true
+      default_revision: true
+  transitions:
+    a_cancelada:
+      label: Cancelar
+      from:
+        - solicitada
+        - aprobada
+      to: cancelada
+      weight: 90
+    crear:
+      label: Crear
+      from: {  }
+      to: solicitada
+      weight: 0
+    de_aprobada_a_cancelada:
+      label: Cancelada
+      from:
+        - aprobada
+      to: cancelada
+      weight: 8
+    de_aprobada_a_realizada:
+      label: Realizada
+      from:
+        - aprobada
+      to: realizada
+      weight: 6
+    de_aprobada_a_rechazada:
+      label: Rechazada
+      from:
+        - aprobada
+      to: rechazada
+      weight: 7
+    de_aprobada_a_solicitada:
+      label: Solicitada
+      from:
+        - aprobada
+      to: solicitada
+      weight: 5
+    de_cancelada_a_aprobada:
+      label: Aprobada
+      from:
+        - cancelada
+      to: aprobada
+      weight: 18
+    de_cancelada_a_realizada:
+      label: Realizada
+      from:
+        - cancelada
+      to: realizada
+      weight: 19
+    de_cancelada_a_rechazada:
+      label: Rechazada
+      from:
+        - cancelada
+      to: rechazada
+      weight: 20
+    de_cancelada_a_solicitada:
+      label: Solicitada
+      from:
+        - cancelada
+      to: solicitada
+      weight: 17
+    de_realizada_a_aprobada:
+      label: Aprobada
+      from:
+        - realizada
+      to: aprobada
+      weight: 10
+    de_realizada_a_cancelada:
+      label: Cancelada
+      from:
+        - realizada
+      to: cancelada
+      weight: 12
+    de_realizada_a_rechazada:
+      label: Rechazada
+      from:
+        - realizada
+      to: rechazada
+      weight: 11
+    de_realizada_a_solicitada:
+      label: Solicitada
+      from:
+        - realizada
+      to: solicitada
+      weight: 9
+    de_rechazada_a_aprobada:
+      label: Aprobada
+      from:
+        - rechazada
+      to: aprobada
+      weight: 14
+    de_rechazada_a_cancelada:
+      label: Cancelada
+      from:
+        - rechazada
+      to: cancelada
+      weight: 16
+    de_rechazada_a_realizada:
+      label: Realizada
+      from:
+        - rechazada
+      to: realizada
+      weight: 15
+    de_rechazada_a_solicitada:
+      label: Solicitada
+      from:
+        - rechazada
+      to: solicitada
+      weight: 13
+    de_solicitada_a_aprobada:
+      label: Aprobada
+      from:
+        - solicitada
+      to: aprobada
+      weight: 1
+    de_solicitada_a_cancelada:
+      label: Cancelada
+      from:
+        - solicitada
+      to: cancelada
+      weight: 4
+    de_solicitada_a_realizada:
+      label: Realizada
+      from:
+        - solicitada
+      to: realizada
+      weight: 2
+    de_solicitada_a_rechazada:
+      label: Rechazada
+      from:
+        - solicitada
+      to: rechazada
+      weight: 3
+  entity_types:
+    node:
+      - reservacion
+  default_moderation_state: solicitada

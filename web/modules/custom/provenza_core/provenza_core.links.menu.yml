@@ -1,0 +1,60 @@
+provenza_core.admin:
+  title: 'Panel Provenza'
+  description: 'Bandeja unificada, residentes y reportes del condominio.'
+  route_name: provenza_core.admin
+  parent: system.admin
+  weight: -20
+
+provenza_core.queue:
+  title: 'Bandeja unificada'
+  route_name: view.provenza_bandeja.page_1
+  parent: provenza_core.admin
+  weight: 0
+
+provenza_core.residents:
+  title: 'Residentes y domicilios'
+  route_name: provenza_core.residents
+  parent: provenza_core.admin
+  weight: 10
+
+provenza_core.reports:
+  title: 'Reportes y tableros'
+  route_name: provenza_core.reports
+  parent: provenza_core.admin
+  weight: 20
+
+provenza_core.audit:
+  title: 'Auditoría'
+  route_name: provenza_core.audit
+  parent: provenza_core.admin
+  weight: 30
+
+provenza_core.mail_templates:
+  title: 'Plantillas de correo'
+  route_name: provenza_core.mail_templates
+  parent: provenza_core.admin
+  weight: 40
+
+provenza_core.register:
+  title: Registrarme
+  route_name: user.register
+  menu_name: account
+  weight: 5
+
+provenza_core.mi_domicilio:
+  title: 'Mi domicilio'
+  route_name: provenza_core.mi_domicilio
+  menu_name: account
+  weight: -8
+
+provenza_core.notificaciones:
+  title: Notificaciones
+  route_name: provenza_core.notificaciones
+  menu_name: account
+  weight: -6
+
+provenza_core.seguridad:
+  title: 'Seguridad de la cuenta'
+  route_name: provenza_core.seguridad
+  menu_name: account
+  weight: -4

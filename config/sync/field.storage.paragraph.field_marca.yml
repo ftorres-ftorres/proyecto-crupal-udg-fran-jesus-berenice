@@ -1,0 +1,21 @@
+uuid: 71ec4221-6cfe-4f85-9aea-98c725c063ed
+langcode: es
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.field_marca
+field_name: field_marca
+entity_type: paragraph
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

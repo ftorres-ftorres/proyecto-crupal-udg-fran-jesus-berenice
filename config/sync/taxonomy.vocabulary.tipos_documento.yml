@@ -1,0 +1,9 @@
+uuid: f906f07b-313f-4859-8503-9bf30e628e86
+langcode: es
+status: true
+dependencies: {  }
+name: 'Tipos de documento'
+vid: tipos_documento
+description: null
+weight: 0
+new_revision: false

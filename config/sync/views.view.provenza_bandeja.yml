@@ -1,0 +1,328 @@
+uuid: 541665c1-f631-4c27-9178-437fc0e4f043
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_folio
+    - node.type.incidente
+    - node.type.queja
+    - node.type.reservacion
+    - node.type.solicitud
+    - workflows.workflow.queja_wf
+    - workflows.workflow.reservacion_wf
+    - workflows.workflow.solicitud_wf
+  module:
+    - better_exposed_filters
+    - content_moderation
+    - csv_serialization
+    - node
+    - rest
+    - serialization
+    - user
+    - views_bulk_operations
+    - views_data_export
+id: provenza_bandeja
+label: 'Bandeja unificada'
+module: views
+description: 'Solicitudes, quejas, reservaciones e incidentes.'
+tag: ''
+base_table: node_field_data
+base_field: nid
+display:
+  default:
+    id: default
+    display_title: Default
+    display_plugin: default
+    position: 0
+    display_options:
+      title: 'Bandeja unificada'
+      fields:
+        views_bulk_operations_bulk_form:
+          id: views_bulk_operations_bulk_form
+          table: views
+          field: views_bulk_operations_bulk_form
+          plugin_id: views_bulk_operations_bulk_form
+          label: Acciones
+          batch: false
+          form_step: true
+          buttons: true
+          action_title: Acción
+          selected_actions:
+            -
+              action_id: provenza_assign_maintenance
+              preconfiguration:
+                label_override: 'Asignar a mantenimiento'
+            -
+              action_id: provenza_change_state
+              preconfiguration:
+                label_override: 'Cambiar estado'
+        field_folio:
+          id: field_folio
+          table: node__field_folio
+          field: field_folio
+          entity_type: node
+          entity_field: field_folio
+          plugin_id: field
+          label: Folio
+          type: string
+          settings:
+            link_to_entity: false
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: field
+          label: Tipo
+          type: entity_reference_label
+          settings:
+            link: false
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          entity_type: node
+          entity_field: title
+          plugin_id: field
+          label: Título
+          type: string
+          settings:
+            link_to_entity: true
+        moderation_state:
+          id: moderation_state
+          table: node_field_data
+          field: moderation_state
+          entity_type: node
+          plugin_id: field
+          label: Estado
+          type: content_moderation_state
+        created:
+          id: created
+          table: node_field_data
+          field: created
+          entity_type: node
+          entity_field: created
+          plugin_id: field
+          label: Fecha
+          type: timestamp
+          settings:
+            date_format: short
+      pager:
+        type: full
+        options:
+          items_per_page: 50
+      exposed_form:
+        type: bef
+        options:
+          submit_button: Filtrar
+          reset_button: true
+          reset_button_label: 'Quitar filtros'
+          exposed_sorts_label: 'Ordenar por'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: ''
+          text_input_required_format: basic_html
+          bef:
+            general:
+              autosubmit: false
+              autosubmit_exclude_textfield: true
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: false
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Opciones avanzadas'
+              secondary_open: false
+              reset_button_always_show: false
+            filter:
+              type_1:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: |-
+                      solicitud|Solicitudes
+                      queja|Quejas
+                      reservacion|Reservaciones
+                      incidente|Incidentes
+              moderation_state:
+                plugin_id: default
+                advanced:
+                  sort_options: true
+      access:
+        type: perm
+        options:
+          perm: 'access provenza admin'
+      cache:
+        type: tag
+        options: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          plugin_id: text
+          content:
+            value: 'No hay elementos.'
+            format: basic_html
+      sorts:
+        created:
+          id: created
+          table: node_field_data
+          field: created
+          entity_type: node
+          entity_field: created
+          plugin_id: date
+          order: DESC
+      filters:
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            solicitud: solicitud
+            queja: queja
+            reservacion: reservacion
+            incidente: incidente
+          exposed: false
+        type_1:
+          id: type_1
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            solicitud: solicitud
+            queja: queja
+            reservacion: reservacion
+            incidente: incidente
+          exposed: true
+          expose:
+            operator_id: type_1_op
+            label: Tipo
+            identifier: tipo
+            required: false
+            multiple: false
+            reduce: true
+        moderation_state:
+          id: moderation_state
+          table: node_field_data
+          field: moderation_state
+          entity_type: node
+          plugin_id: moderation_state_filter
+          operator: in
+          value:
+            solicitud_wf-recibida: solicitud_wf-recibida
+            solicitud_wf-en_revision: solicitud_wf-en_revision
+            solicitud_wf-asignada: solicitud_wf-asignada
+            solicitud_wf-en_proceso: solicitud_wf-en_proceso
+            solicitud_wf-resuelta: solicitud_wf-resuelta
+            solicitud_wf-cerrada: solicitud_wf-cerrada
+            solicitud_wf-rechazada: solicitud_wf-rechazada
+            queja_wf-recibida: queja_wf-recibida
+            queja_wf-en_investigacion: queja_wf-en_investigacion
+            queja_wf-accion_tomada: queja_wf-accion_tomada
+            queja_wf-cerrada: queja_wf-cerrada
+            reservacion_wf-solicitada: reservacion_wf-solicitada
+            reservacion_wf-aprobada: reservacion_wf-aprobada
+            reservacion_wf-realizada: reservacion_wf-realizada
+            reservacion_wf-rechazada: reservacion_wf-rechazada
+            reservacion_wf-cancelada: reservacion_wf-cancelada
+          exposed: true
+          expose:
+            operator_id: moderation_state_op
+            label: Estado
+            identifier: estado
+            required: false
+            multiple: false
+            reduce: true
+      style:
+        type: table
+        options:
+          columns: {  }
+          default: '-1'
+          info: {  }
+      row:
+        type: fields
+      query:
+        type: views_query
+        options: {  }
+      display_extenders: {  }
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_folio'
+        - 'config:workflow_list'
+  data_export_1:
+    id: data_export_1
+    display_title: CSV
+    display_plugin: data_export
+    position: 2
+    display_options:
+      style:
+        type: data_export
+        options:
+          formats:
+            csv: csv
+          csv_settings:
+            delimiter: ','
+            enclosure: '"'
+            escape_char: \
+            strip_tags: true
+            trim: true
+            encoding: utf8
+      display_extenders: {  }
+      path: admin/provenza/bandeja/csv
+      displays:
+        page_1: page_1
+        default: '0'
+      filename: bandeja-provenza.csv
+      automatic_download: true
+      export_method: standard
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - request_format
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_folio'
+        - 'config:workflow_list'
+  page_1:
+    id: page_1
+    display_title: Página
+    display_plugin: page
+    position: 1
+    display_options:
+      display_extenders: {  }
+      path: admin/provenza/bandeja
+      menu:
+        type: none
+        title: 'Bandeja unificada'
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_folio'
+        - 'config:workflow_list'

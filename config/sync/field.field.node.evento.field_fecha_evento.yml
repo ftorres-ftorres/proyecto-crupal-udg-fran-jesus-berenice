@@ -1,0 +1,21 @@
+uuid: 03301852-2d55-4c01-a3f5-0ef32aecaf89
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_fecha_evento
+    - node.type.evento
+  module:
+    - smart_date
+id: node.evento.field_fecha_evento
+field_name: field_fecha_evento
+entity_type: node
+bundle: evento
+label: Fecha
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: smartdate

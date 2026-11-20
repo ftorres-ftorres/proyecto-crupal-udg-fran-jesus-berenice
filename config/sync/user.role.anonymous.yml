@@ -1,0 +1,25 @@
+uuid: 5caf1285-a1fe-4b6c-bfd3-abdfd1bf5c40
+langcode: es
+status: true
+dependencies:
+  config:
+    - filter.format.restricted_html
+  module:
+    - contact
+    - entity_print
+    - filter
+    - media
+    - system
+_core:
+  default_config_hash: Tus1ZTNXKIOnrennR1hnTbc7wUPBXHTUm5UdCpEhJSk
+id: anonymous
+label: 'Usuario anónimo'
+weight: 0
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access site-wide contact form'
+  - 'entity print access bundle documento'
+  - 'entity print access bundle reservacion'
+  - 'use text format restricted_html'
+  - 'view media'

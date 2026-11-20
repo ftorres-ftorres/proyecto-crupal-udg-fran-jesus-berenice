@@ -1,0 +1,22 @@
+access provenza admin:
+  title: 'Acceder al panel de administración de Provenza'
+  restrict access: true
+access caseta view:
+  title: 'Acceder a la vista de caseta'
+view confidential complaints:
+  title: 'Ver identidad en quejas confidenciales'
+  restrict access: true
+assign service requests:
+  title: 'Asignar solicitudes de servicio'
+manage provenza residents:
+  title: 'Gestionar residentes y domicilios'
+  restrict access: true
+view management reports:
+  title: 'Ver reportes y tableros'
+view all tracking content:
+  title: 'Ver todas las solicitudes, quejas, reservaciones e incidentes'
+  restrict access: true
+update assigned requests:
+  title: 'Actualizar solicitudes asignadas'
+manage household members:
+  title: 'Gestionar familiares del domicilio'

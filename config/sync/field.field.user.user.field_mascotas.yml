@@ -1,0 +1,26 @@
+uuid: 2e41e71f-fb70-48f9-bbb3-4475d2145b40
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_mascotas
+    - paragraphs.paragraphs_type.mascota
+  module:
+    - entity_reference_revisions
+    - user
+id: user.user.field_mascotas
+field_name: field_mascotas
+entity_type: user
+bundle: user
+label: Mascotas
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      mascota: mascota
+field_type: entity_reference_revisions

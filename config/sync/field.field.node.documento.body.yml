@@ -1,0 +1,24 @@
+uuid: 9a990179-0f03-4ba5-b95a-1a696c28f339
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.documento
+  module:
+    - text
+id: node.documento.body
+field_name: body
+entity_type: node
+bundle: documento
+label: Contenido
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+  required_summary: false
+  allowed_formats: {  }
+field_type: text_with_summary

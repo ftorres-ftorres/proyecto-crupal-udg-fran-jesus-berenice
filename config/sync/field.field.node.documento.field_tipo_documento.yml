@@ -1,0 +1,24 @@
+uuid: 4440bb65-df22-4511-8ef6-2534afb5ff98
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tipo_documento
+    - node.type.documento
+    - taxonomy.vocabulary.tipos_documento
+id: node.documento.field_tipo_documento
+field_name: field_tipo_documento
+entity_type: node
+bundle: documento
+label: Tipo
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      tipos_documento: tipos_documento
+field_type: entity_reference

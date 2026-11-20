@@ -1,0 +1,26 @@
+uuid: b8f7c7de-cfd3-4655-b7fc-8a6ed7de6ef3
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_vehiculos
+    - paragraphs.paragraphs_type.vehiculo
+  module:
+    - entity_reference_revisions
+    - user
+id: user.user.field_vehiculos
+field_name: field_vehiculos
+entity_type: user
+bundle: user
+label: Vehículos
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      vehiculo: vehiculo
+field_type: entity_reference_revisions

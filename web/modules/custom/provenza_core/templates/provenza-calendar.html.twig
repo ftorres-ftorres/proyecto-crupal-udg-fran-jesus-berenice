@@ -1,0 +1,28 @@
+<div class="provenza-calendar">
+  <div class="provenza-calendar__nav">
+    <a href="{{ prev }}">Mes anterior</a>
+    <h2>{{ month }}</h2>
+    <a href="{{ next }}">Mes siguiente</a>
+  </div>
+  <div class="provenza-calendar__grid" role="grid" aria-label="Disponibilidad del salón">
+    {% for d in ['L', 'M', 'X', 'J', 'V', 'S', 'D'] %}
+      <div class="provenza-calendar__dow">{{ d }}</div>
+    {% endfor %}
+    {% for day in days %}
+      {% if day.empty %}
+        <div class="provenza-calendar__day is-empty"></div>
+      {% else %}
+        <div class="provenza-calendar__day is-{{ day.status }}" title="{{ day.label }}">
+          <span>{{ day.date }}</span>
+          <small>{{ day.label }}</small>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <ul class="provenza-calendar__legend">
+    {% for key, label in legend %}
+      <li class="is-{{ key }}">{{ label }}</li>
+    {% endfor %}
+  </ul>
+  <p><a class="button button--primary" href="/form/reservar-salon">Solicitar reservación</a></p>
+</div>

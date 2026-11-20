@@ -1,0 +1,14 @@
+uuid: 2b2a0107-b123-42ef-988d-d290c96f1051
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.mesa_directiva
+  module:
+    - user
+id: user_remove_role_action.mesa_directiva
+label: 'Elimina el rol Mesa directiva al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: mesa_directiva

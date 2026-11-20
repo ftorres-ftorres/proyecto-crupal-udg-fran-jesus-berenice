@@ -1,0 +1,10 @@
+uuid: ac0f34c8-8631-453e-a73e-361ef9a5dbae
+langcode: es
+status: true
+dependencies: {  }
+id: mascota
+label: Mascota
+icon_uuid: null
+icon_default: null
+description: null
+behavior_plugins: {  }

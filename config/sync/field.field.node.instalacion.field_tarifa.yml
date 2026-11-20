@@ -1,0 +1,24 @@
+uuid: 43577dc4-af4c-4772-94fc-8825470ce6ab
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tarifa
+    - node.type.instalacion
+    - node.type.tarifa
+id: node.instalacion.field_tarifa
+field_name: field_tarifa
+entity_type: node
+bundle: instalacion
+label: 'Tarifas relacionadas'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      tarifa: tarifa
+field_type: entity_reference

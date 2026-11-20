@@ -1,0 +1,23 @@
+uuid: 2d215e39-8fb6-42c0-bba7-d13472e938e2
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_invitados
+    - node.type.reservacion
+id: node.reservacion.field_invitados
+field_name: field_invitados
+entity_type: node
+bundle: reservacion
+label: 'Número de invitados'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

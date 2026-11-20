@@ -1,0 +1,24 @@
+uuid: 534b0679-d12e-4673-8cf0-2e8072584c70
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.modulo_documentado
+  module:
+    - node
+id: provenza_modulo_documentado
+label: 'URL modulo_documentado'
+type: 'canonical_entities:node'
+pattern: '/asi-lo-construimos/modulos/[node:title]'
+selection_criteria:
+  ee402e0d-e3f2-40eb-b6e4-208e3bab0c17:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      modulo_documentado: modulo_documentado
+    uuid: 08b49f7f-c70c-4351-bb24-c05a403a15d5
+selection_logic: and
+weight: -5
+relationships: {  }

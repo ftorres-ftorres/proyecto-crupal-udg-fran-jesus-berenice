@@ -1,0 +1,16 @@
+mail_templates:
+  solicitud_status:
+    subject: 'Solicitud [node:field_folio:value]: [node:moderation_state]'
+    body: "Hola [user:display-name],\n\nTu solicitud con folio [node:field_folio:value] cambió a estado: [node:moderation_state].\n\nPuedes ver el seguimiento en: [node:url]\n\nPortal de colonos · Provenza Residencial"
+  queja_status:
+    subject: 'Queja [node:field_folio:value]: [node:moderation_state]'
+    body: "Hola [user:display-name],\n\nTu queja o sugerencia con folio [node:field_folio:value] cambió a estado: [node:moderation_state].\n\nResolución: [node:field_mensaje_resolucion:value]\n\nPortal de colonos · Provenza Residencial"
+  reservacion_status:
+    subject: 'Reservación [node:field_folio:value]: [node:moderation_state]'
+    body: "Hola [user:display-name],\n\nTu reservación del salón de fiestas ([node:field_folio:value]) cambió a estado: [node:moderation_state].\n\nConsulta los detalles en: [node:url]\n\nPortal de colonos · Provenza Residencial"
+  asignacion:
+    subject: 'Se te asignó la solicitud [node:field_folio:value]'
+    body: "Hola [user:display-name],\n\nSe te asignó la solicitud [node:field_folio:value].\n\n[node:url]\n\nPortal de colonos · Provenza Residencial"
+  aviso:
+    subject: 'Aviso: [node:title]'
+    body: "Hola [user:display-name],\n\nHay un aviso nuevo en Provenza Residencial:\n\n[node:title]\n\n[node:url]\n\nPortal de colonos · Provenza Residencial"

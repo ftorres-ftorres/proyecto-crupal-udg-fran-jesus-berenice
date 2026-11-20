@@ -1,0 +1,21 @@
+uuid: 1d49f4e0-b213-4926-8108-ec87b3850f76
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_estado_visita
+    - node.type.visita
+  module:
+    - options
+id: node.visita.field_estado_visita
+field_name: field_estado_visita
+entity_type: node
+bundle: visita
+label: Estado
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

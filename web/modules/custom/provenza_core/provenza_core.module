@@ -1,0 +1,645 @@
+<?php
+
+/**
+ * @file
+ * Portal de colonos de Provenza Residencial.
+ */
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
+use Drupal\user\UserInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function provenza_core_theme($existing, $type, $theme, $path): array {
+  return [
+    'provenza_home' => [
+      'variables' => [
+        'urgent' => [],
+        'tiles' => [],
+        'events' => [],
+        'login' => [],
+        'is_resident' => FALSE,
+      ],
+    ],
+    'provenza_calendar' => [
+      'variables' => [
+        'year' => NULL,
+        'month' => NULL,
+        'days' => [],
+        'prev' => NULL,
+        'next' => NULL,
+        'legend' => [],
+      ],
+    ],
+    'provenza_caseta' => [
+      'variables' => [
+        'visits' => [],
+        'filters' => [],
+      ],
+    ],
+    'provenza_tiles' => [
+      'variables' => ['items' => []],
+    ],
+    'provenza_module_card' => [
+      'variables' => ['title' => '', 'summary' => '', 'url' => '', 'category' => '', 'image' => ''],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function provenza_core_theme_registry_alter(array &$theme_registry): void {
+  if (isset($theme_registry['export_icon'])) {
+    $theme_registry['export_icon']['path'] = \Drupal::service('extension.list.module')->getPath('provenza_core') . '/templates';
+    $theme_registry['export_icon']['template'] = 'export-icon';
+  }
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function provenza_core_page_attachments(array &$attachments): void {
+  $attachments['#attached']['library'][] = 'provenza_core/portal';
+}
+
+/**
+ * Implements hook_mail().
+ */
+function provenza_core_mail($key, &$message, $params): void {
+  $message['headers']['Content-Type'] = 'text/plain; charset=UTF-8; format=flowed; delsp=yes';
+  $message['subject'] = $params['subject'] ?? $key;
+  $message['body'][] = $params['body'] ?? '';
+}
+
+/**
+ * Implements hook_node_grants().
+ */
+function provenza_core_node_grants(AccountInterface $account, $op): array {
+  $grants = [
+    'provenza_public' => [0],
+  ];
+  if ($account->isAnonymous()) {
+    return $grants;
+  }
+  $grants['provenza_author'] = [(int) $account->id()];
+  $house_id = provenza_core_user_house_id($account);
+  if ($house_id) {
+    $grants['provenza_house'] = [$house_id];
+  }
+  $roles = $account->getRoles();
+  if (array_intersect($roles, ['administracion', 'webmaster', 'administrator'])) {
+    $grants['provenza_staff'] = [1];
+  }
+  if (in_array('caseta', $roles, TRUE)) {
+    $grants['provenza_caseta'] = [1];
+  }
+  if (in_array('mantenimiento', $roles, TRUE)) {
+    $grants['provenza_assignee'] = [(int) $account->id()];
+  }
+  if (in_array('mesa_directiva', $roles, TRUE)) {
+    $grants['provenza_board'] = [1];
+  }
+  foreach ($roles as $role) {
+    $grants['provenza_role'][] = $role === 'authenticated' ? 0 : crc32($role);
+  }
+  return $grants;
+}
+
+/**
+ * Implements hook_node_access_records().
+ */
+function provenza_core_node_access_records(NodeInterface $node): array {
+  $grants = [];
+  $bundle = $node->bundle();
+  $house_id = $node->hasField('field_domicilio') && !$node->get('field_domicilio')->isEmpty()
+    ? (int) $node->get('field_domicilio')->target_id
+    : 0;
+  $uid = (int) $node->getOwnerId();
+
+  $public = [
+    'aviso', 'instalacion', 'tarifa', 'faq', 'page', 'evento',
+    'directorio', 'modulo_documentado',
+  ];
+
+  if (in_array($bundle, $public, TRUE)) {
+    $grants[] = provenza_core_grant('provenza_public', 0);
+  }
+
+  if ($bundle === 'documento') {
+    $audiences = [];
+    if ($node->hasField('field_audiencia') && !$node->get('field_audiencia')->isEmpty()) {
+      foreach ($node->get('field_audiencia') as $item) {
+        $audiences[] = $item->value;
+      }
+    }
+    if (!$audiences || in_array('visitante', $audiences, TRUE) || in_array('publico', $audiences, TRUE)) {
+      $grants[] = provenza_core_grant('provenza_public', 0);
+    }
+    foreach ($audiences as $role) {
+      $grants[] = provenza_core_grant('provenza_role', crc32($role));
+    }
+    $grants[] = provenza_core_grant('provenza_staff', 1);
+    $grants[] = provenza_core_grant('provenza_board', 1);
+  }
+
+  if (in_array($bundle, ['solicitud', 'queja', 'reservacion', 'visita', 'incidente', 'domicilio'], TRUE)) {
+    if ($uid) {
+      $grants[] = provenza_core_grant('provenza_author', $uid, 1, 1);
+    }
+    $confidential = $bundle === 'queja' && $node->hasField('field_confidencial') && $node->get('field_confidencial')->value;
+    if ($house_id && !$confidential) {
+      $grants[] = provenza_core_grant('provenza_house', $house_id);
+    }
+    $grants[] = provenza_core_grant('provenza_staff', 1, 1, 1);
+    if ($bundle === 'visita' || $bundle === 'incidente') {
+      $grants[] = provenza_core_grant('provenza_caseta', 1, 1);
+    }
+    if ($bundle === 'solicitud' && $node->hasField('field_asignado') && !$node->get('field_asignado')->isEmpty()) {
+      $grants[] = provenza_core_grant('provenza_assignee', (int) $node->get('field_asignado')->target_id, 1, 1);
+    }
+    if (in_array($bundle, ['solicitud', 'reservacion', 'incidente', 'visita'], TRUE)) {
+      $grants[] = provenza_core_grant('provenza_board', 1);
+    }
+  }
+
+  return $grants;
+}
+
+/**
+ * Builds a node grant row.
+ */
+function provenza_core_grant(string $realm, int $gid, int $view = 1, int $update = 0, int $delete = 0): array {
+  return [
+    'realm' => $realm,
+    'gid' => $gid,
+    'grant_view' => $view,
+    'grant_update' => $update,
+    'grant_delete' => $delete,
+    'priority' => 0,
+  ];
+}
+
+/**
+ * House node id linked to an account.
+ */
+/**
+ * Formats a stored datetime in America/Mexico_City as dd/mm/aaaa HH:mm.
+ */
+function provenza_core_format_datetime(?string $value): string {
+  if (!$value) {
+    return '—';
+  }
+  $ts = strtotime($value . ' UTC') ?: strtotime($value);
+  if (!$ts) {
+    return $value;
+  }
+  return \Drupal::service('date.formatter')->format($ts, 'custom', 'd/m/Y H:i', 'America/Mexico_City');
+}
+
+function provenza_core_user_house_id(AccountInterface $account): int {
+  if ($account->isAnonymous()) {
+    return 0;
+  }
+  $user = $account instanceof UserInterface ? $account : \Drupal::entityTypeManager()->getStorage('user')->load($account->id());
+  if (!$user || !$user->hasField('field_domicilio') || $user->get('field_domicilio')->isEmpty()) {
+    return 0;
+  }
+  return (int) $user->get('field_domicilio')->target_id;
+}
+
+/**
+ * Implements hook_node_access().
+ */
+function provenza_core_node_access(NodeInterface $node, $op, AccountInterface $account) {
+  if ($op !== 'view' || $node->bundle() !== 'queja') {
+    return AccessResult::neutral();
+  }
+  if ($node->hasField('field_confidencial') && $node->get('field_confidencial')->value) {
+    if ($account->id() == $node->getOwnerId() || $account->hasPermission('view confidential complaints')) {
+      return AccessResult::allowed()->cachePerUser()->addCacheableDependency($node);
+    }
+    return AccessResult::forbidden()->cachePerUser()->addCacheableDependency($node);
+  }
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function provenza_core_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode): void {
+  if ($entity instanceof NodeInterface && $entity->bundle() === 'instalacion' && $view_mode === 'full') {
+    $build['provenza_actions'] = provenza_core_facility_actions($entity);
+  }
+  if ($entity instanceof NodeInterface && $entity->bundle() === 'modulo_documentado' && isset($build['field_detalle_tecnico'])) {
+    $build['field_detalle_tecnico']['#prefix'] = '<details class="provenza-tech"><summary>Detalle técnico</summary>';
+    $build['field_detalle_tecnico']['#suffix'] = '</details>';
+  }
+  if ($entity instanceof NodeInterface && $entity->bundle() === 'queja') {
+    $account = \Drupal::currentUser();
+    $confidential = $entity->hasField('field_confidencial') && $entity->get('field_confidencial')->value;
+    $can_see_reporter = $account->hasPermission('view confidential complaints') || (int) $account->id() === (int) $entity->getOwnerId();
+    if ($confidential && !$can_see_reporter) {
+      unset($build['uid'], $build['field_nombre_completo'], $build['field_domicilio']);
+    }
+    if (!$account->hasPermission('view confidential complaints')) {
+      unset($build['field_notas_internas']);
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_view_alter().
+ */
+function provenza_core_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display): void {
+  if (isset($build['entity_print_view_pdf']['#title'])) {
+    $build['entity_print_view_pdf']['#title'] = t('Descargar PDF');
+  }
+}
+
+/**
+ * Links on facility pages used by the resident flows.
+ */
+function provenza_core_facility_actions(NodeInterface $node): array {
+  $code = $node->hasField('field_codigo_instalacion') ? (string) $node->get('field_codigo_instalacion')->value : '';
+  $links = [];
+  if ($code === 'salon') {
+    $links = [
+      ['Calendario de disponibilidad', '/instalaciones/salon-de-fiestas/calendario'],
+      ['Solicitar reservación', '/form/reservar-salon'],
+      ['Mis reservaciones', '/instalaciones/salon-de-fiestas/mis-reservaciones'],
+      ['Reglas y tarifas', $node->toUrl()->toString()],
+    ];
+  }
+  elseif ($code === 'alberca') {
+    $pass = '/comunidad/cuotas-y-tarifas';
+    $nids = \Drupal::entityTypeManager()->getStorage('node')->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('type', 'tarifa')
+      ->condition('field_codigo_tarifa', 'pase_alberca')
+      ->range(0, 1)
+      ->execute();
+    if ($nids) {
+      $rate = \Drupal\node\Entity\Node::load(reset($nids));
+      if ($rate) {
+        $pass = $rate->toUrl()->toString();
+      }
+    }
+    $links = [
+      ['Reglas y horarios', $node->toUrl()->toString()],
+      ['Pases de invitado', $pass],
+      ['Reportar un problema', '/form/solicitud-servicio'],
+    ];
+  }
+  if (!$links) {
+    return [];
+  }
+  $items = [];
+  foreach ($links as [$title, $href]) {
+    $items[] = ['#markup' => '<a class="provenza-tile" href="' . $href . '">' . $title . '</a>'];
+  }
+  return [
+    '#prefix' => '<nav class="provenza-facility-actions" aria-label="Acciones de la instalación"><div class="provenza-tiles">',
+    '#suffix' => '</div></nav>',
+    'items' => $items,
+    '#weight' => 20,
+  ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for user register.
+ */
+function provenza_core_form_user_register_form_alter(array &$form, FormStateInterface $form_state): void {
+  $form['account']['mail']['#description'] = t('Se usará como nombre de usuario para iniciar sesión.');
+  foreach (['language', 'timezone', 'path', 'contact'] as $key) {
+    if (isset($form[$key])) {
+      $form[$key]['#access'] = FALSE;
+    }
+  }
+  provenza_core_relax_captcha_locally($form);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for the login form.
+ */
+function provenza_core_form_user_login_form_alter(array &$form, FormStateInterface $form_state): void {
+  $form['name']['#title'] = t('Correo');
+  $form['name']['#description'] = t('El correo con el que te registraste.');
+  $form['pass']['#title'] = t('Contraseña');
+  $form['actions']['submit']['#value'] = t('Iniciar sesión');
+  array_unshift($form['#validate'], 'provenza_core_login_with_email');
+}
+
+/**
+ * Accepts the registered email on the login form.
+ */
+function provenza_core_login_with_email(array &$form, FormStateInterface $form_state): void {
+  $name = trim((string) $form_state->getValue('name'));
+  if ($name === '' || !str_contains($name, '@')) {
+    return;
+  }
+  $users = \Drupal::entityTypeManager()->getStorage('user')->loadByProperties(['mail' => $name]);
+  $account = $users ? reset($users) : NULL;
+  if ($account instanceof UserInterface) {
+    $form_state->setValue('name', $account->getAccountName());
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for the site-wide contact form.
+ */
+function provenza_core_form_contact_message_feedback_form_alter(array &$form, FormStateInterface $form_state): void {
+  if (isset($form['name'][0]['value'])) {
+    $form['name'][0]['value']['#title'] = t('Nombre');
+  }
+  elseif (isset($form['name'])) {
+    $form['name']['#title'] = t('Nombre');
+  }
+  if (isset($form['mail'][0]['value'])) {
+    $form['mail'][0]['value']['#title'] = t('Correo');
+  }
+  elseif (isset($form['mail'])) {
+    $form['mail']['#title'] = t('Correo');
+  }
+  if (isset($form['subject'][0]['value'])) {
+    $form['subject'][0]['value']['#title'] = t('Asunto');
+  }
+  elseif (isset($form['subject'])) {
+    $form['subject']['#title'] = t('Asunto');
+  }
+  if (isset($form['message'][0]['value'])) {
+    $form['message'][0]['value']['#title'] = t('Mensaje');
+  }
+  elseif (isset($form['message'])) {
+    $form['message']['#title'] = t('Mensaje');
+  }
+  if (isset($form['actions']['submit'])) {
+    $form['actions']['submit']['#value'] = t('Enviar');
+  }
+  provenza_core_relax_captcha_locally($form);
+}
+
+/**
+ * Implements hook_form_alter() for the complaint webform.
+ */
+function provenza_core_form_webform_submission_queja_sugerencia_add_form_alter(array &$form, FormStateInterface $form_state): void {
+  if (\Drupal::request()->query->get('confidencial')) {
+    if (isset($form['elements']['confidencial'])) {
+      $form['elements']['confidencial']['#default_value'] = 1;
+    }
+    elseif (isset($form['confidencial'])) {
+      $form['confidencial']['#default_value'] = 1;
+    }
+  }
+  provenza_core_relax_captcha_locally($form);
+}
+
+/**
+ * Lets demo forms submit on DDEV when reCAPTCHA test keys cannot talk to Google.
+ */
+function provenza_core_relax_captcha_locally(array &$form): void {
+  $host = \Drupal::request()->getHost();
+  if (!str_contains($host, 'ddev.site') && !str_contains($host, 'localhost')) {
+    return;
+  }
+  if (isset($form['captcha'])) {
+    $form['captcha']['#captcha_validate'] = 'provenza_core_captcha_always_pass';
+  }
+}
+
+/**
+ * CAPTCHA callback used only on local hosts.
+ */
+function provenza_core_captcha_always_pass(): bool {
+  return TRUE;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for node forms.
+ */
+function provenza_core_form_node_form_alter(array &$form, FormStateInterface $form_state): void {
+  $node = $form_state->getFormObject()->getEntity();
+  if ($node instanceof NodeInterface && in_array($node->bundle(), ['solicitud', 'queja', 'reservacion', 'visita', 'incidente'], TRUE)) {
+    if (isset($form['field_folio'])) {
+      $form['field_folio']['#disabled'] = TRUE;
+    }
+  }
+}
+
+/**
+ * Implements hook_menu_links_discovered_alter().
+ */
+function provenza_core_menu_links_discovered_alter(&$links): void {
+  if (isset($links['user.page'])) {
+    $links['user.page']['title'] = 'Mi perfil';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for menu.
+ */
+function provenza_core_preprocess_menu(array &$variables): void {
+  if (($variables['menu_name'] ?? '') !== 'account') {
+    return;
+  }
+  foreach ($variables['items'] as &$item) {
+    $url = $item['url'] ?? NULL;
+    if (!$url instanceof \Drupal\Core\Url || !$url->isRouted()) {
+      continue;
+    }
+    $route = $url->getRouteName();
+    $item['title'] = match ($route) {
+      'user.login' => 'Iniciar sesión',
+      'user.logout' => 'Cerrar sesión',
+      'user.page' => 'Mi perfil',
+      'user.register' => 'Registrarme',
+      default => $item['title'],
+    };
+  }
+}
+
+/**
+ * Implements hook_query_TAG_alter() to keep the tutorial out of core Search.
+ */
+function provenza_core_query_search_alter(\Drupal\Core\Database\Query\AlterableInterface $query): void {
+  try {
+    $query->condition('n.type', 'modulo_documentado', '<>');
+  }
+  catch (\Throwable $e) {
+    // Core Search query shape may differ; the public UI uses /buscar.
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for html.
+ */
+function provenza_core_preprocess_html(array &$variables): void {
+  $route = \Drupal::routeMatch()->getRouteName() ?? '';
+  if (str_starts_with((string) $route, 'provenza_core.tutorial') || str_contains(\Drupal::request()->getPathInfo(), '/asi-lo-construimos')) {
+    $variables['head_title']['title'] = $variables['page']['#title'] ?? 'Así lo construimos';
+    $variables['#attached']['html_head'][] = [
+      [
+        '#tag' => 'meta',
+        '#attributes' => ['name' => 'robots', 'content' => 'noindex, nofollow'],
+      ],
+      'provenza_noindex',
+    ];
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node.
+ */
+function provenza_core_preprocess_node(array &$variables): void {
+  $node = $variables['node'];
+  if ($node->bundle() === 'modulo_documentado') {
+    $variables['#attached']['html_head'][] = [
+      [
+        '#tag' => 'meta',
+        '#attributes' => ['name' => 'robots', 'content' => 'noindex, nofollow'],
+      ],
+      'provenza_noindex',
+    ];
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for nodes.
+ */
+function provenza_core_node_presave(NodeInterface $node): void {
+  if ($node->hasField('field_folio') && $node->get('field_folio')->isEmpty()) {
+    $prefixes = [
+      'solicitud' => 'SOL',
+      'queja' => 'QJA',
+      'reservacion' => 'RES',
+      'visita' => 'VIS',
+      'incidente' => 'INC',
+    ];
+    if (isset($prefixes[$node->bundle()])) {
+      $node->set('field_folio', \Drupal::service('provenza_core.folio')->next($prefixes[$node->bundle()]));
+    }
+  }
+  if ($node->bundle() === 'visita' && $node->hasField('field_codigo_qr') && $node->get('field_codigo_qr')->isEmpty()) {
+    $node->set('field_codigo_qr', 'VIS-' . substr($node->uuid() ?: uniqid('v', TRUE), 0, 12));
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert() for nodes.
+ */
+function provenza_core_node_insert(NodeInterface $node): void {
+  if ($node->bundle() === 'visita') {
+    $file = \Drupal::service('provenza_core.qr')->generate($node);
+    if ($file && $node->hasField('field_qr')) {
+      $node->set('field_qr', ['target_id' => $file->id()]);
+      $node->setNewRevision(FALSE);
+      $node->save();
+    }
+  }
+  if ($node->bundle() === 'aviso' && $node->hasField('field_enviar_correo') && $node->get('field_enviar_correo')->value) {
+    \Drupal::queue('provenza_announcement_mail')->createItem(['nid' => $node->id()]);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for nodes.
+ */
+function provenza_core_node_update(NodeInterface $node): void {
+  if ($node->hasField('moderation_state') && isset($node->original) && $node->original->hasField('moderation_state')) {
+    $old = $node->original->get('moderation_state')->value;
+    $new = $node->get('moderation_state')->value;
+    if ($old !== $new) {
+      $map = [
+        'solicitud' => 'solicitud_status',
+        'queja' => 'queja_status',
+        'reservacion' => 'reservacion_status',
+      ];
+      if (isset($map[$node->bundle()])) {
+        $owner = $node->getOwner();
+        if ($owner && $owner->isActive()) {
+          \Drupal::service('provenza_core.mail_templates')->send($map[$node->bundle()], $owner, $node);
+        }
+        \Drupal::service('provenza_core.audit')->log('Estado de @folio: @old → @new', [
+          '@folio' => $node->hasField('field_folio') ? $node->get('field_folio')->value : $node->id(),
+          '@old' => (string) $old,
+          '@new' => (string) $new,
+        ]);
+      }
+    }
+  }
+  if ($node->hasField('field_asignado') && isset($node->original) && $node->original->hasField('field_asignado')) {
+    $old_a = $node->original->get('field_asignado')->target_id;
+    $new_a = $node->get('field_asignado')->target_id;
+    if ($new_a && $old_a != $new_a) {
+      $assignee = \Drupal\user\Entity\User::load($new_a);
+      if ($assignee) {
+        \Drupal::service('provenza_core.mail_templates')->send('asignacion', $assignee, $node);
+      }
+    }
+  }
+  if ($node->bundle() === 'aviso' && $node->hasField('field_enviar_correo') && $node->get('field_enviar_correo')->value) {
+    $original = $node->original ?? NULL;
+    $was = $original && $original->hasField('field_enviar_correo') ? (bool) $original->get('field_enviar_correo')->value : FALSE;
+    if (!$was) {
+      \Drupal::queue('provenza_announcement_mail')->createItem(['nid' => $node->id()]);
+    }
+  }
+}
+
+/**
+ * Implements hook_cron().
+ */
+function provenza_core_cron(): void {
+  // Expire visits whose window has passed.
+  $storage = \Drupal::entityTypeManager()->getStorage('node');
+  $ids = $storage->getQuery()
+    ->accessCheck(FALSE)
+    ->condition('type', 'visita')
+    ->condition('field_estado_visita', ['programada', 'en_caseta'], 'IN')
+    ->condition('field_ventana_fin', date('c'), '<')
+    ->range(0, 50)
+    ->execute();
+  foreach ($storage->loadMultiple($ids) as $node) {
+    $node->set('field_estado_visita', 'vencida');
+    $node->save();
+  }
+}
+
+/**
+ * Implements hook_token_info().
+ */
+function provenza_core_token_info(): array {
+  return [
+    'tokens' => [
+      'node' => [
+        'folio' => [
+          'name' => 'Folio Provenza',
+          'description' => 'Folio de seguimiento.',
+        ],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function provenza_core_tokens($type, $tokens, array $data, array $options, $bubbleable_metadata): array {
+  $replacements = [];
+  if ($type === 'node' && !empty($data['node'])) {
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = $data['node'];
+    foreach ($tokens as $name => $original) {
+      if ($name === 'folio' && $node->hasField('field_folio')) {
+        $replacements[$original] = $node->get('field_folio')->value;
+      }
+    }
+  }
+  return $replacements;
+}

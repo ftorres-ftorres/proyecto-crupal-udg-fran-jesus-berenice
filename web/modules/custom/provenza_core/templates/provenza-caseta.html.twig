@@ -1,0 +1,26 @@
+<div class="provenza-caseta">
+  <form method="get" class="provenza-caseta__filters" action="/caseta">
+    <label>Casa <input name="casa" value="{{ filters.casa }}" /></label>
+    <label>Placa <input name="placa" value="{{ filters.placa }}" /></label>
+    <button type="submit">Buscar</button>
+    <a class="button" href="/form/reportar-incidente">Registrar incidente</a>
+  </form>
+  <div class="provenza-caseta__list">
+    {% for v in visits %}
+      <article class="provenza-caseta__card is-{{ v.estado }}">
+        <p class="provenza-folio">{{ v.folio }}</p>
+        <h2>{{ v.nombre }}</h2>
+        <p>Casa: {{ v.casa }} · Placa: {{ v.placa ?: '—' }}</p>
+        <p>Ventana: {{ v.ventana }}</p>
+        <p>Estado: {{ v.estado_label|default(v.estado) }}</p>
+        <p class="provenza-caseta__actions">
+          <a class="button" href="{{ v.entrada_url }}">Registrar entrada</a>
+          <a class="button" href="{{ v.salida_url }}">Registrar salida</a>
+          <a href="{{ v.url }}">Detalle</a>
+        </p>
+      </article>
+    {% else %}
+      <p>No hay visitas esperadas con esos filtros.</p>
+    {% endfor %}
+  </div>
+</div>

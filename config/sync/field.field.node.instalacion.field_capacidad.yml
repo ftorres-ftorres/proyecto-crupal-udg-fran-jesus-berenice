@@ -1,0 +1,23 @@
+uuid: ce93a390-aa45-41e4-9908-63cb7bd5fea0
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_capacidad
+    - node.type.instalacion
+id: node.instalacion.field_capacidad
+field_name: field_capacidad
+entity_type: node
+bundle: instalacion
+label: Capacidad
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

@@ -1,0 +1,19 @@
+uuid: 2fa5c2b7-bf8d-4615-b08b-30b29eed14aa
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_correo
+    - node.type.directorio
+id: node.directorio.field_correo
+field_name: field_correo
+entity_type: node
+bundle: directorio
+label: Correo
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

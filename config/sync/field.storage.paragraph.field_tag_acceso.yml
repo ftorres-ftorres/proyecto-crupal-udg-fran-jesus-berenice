@@ -1,0 +1,21 @@
+uuid: 084d1b21-19ee-4e58-b397-7315629f4516
+langcode: es
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.field_tag_acceso
+field_name: field_tag_acceso
+entity_type: paragraph
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,19 @@
+uuid: 75591c84-405a-47d9-8643-4440110de3d0
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_codigo_tarifa
+    - node.type.tarifa
+id: node.tarifa.field_codigo_tarifa
+field_name: field_codigo_tarifa
+entity_type: node
+bundle: tarifa
+label: Código
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

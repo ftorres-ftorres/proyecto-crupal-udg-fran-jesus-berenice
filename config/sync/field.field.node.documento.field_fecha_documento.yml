@@ -1,0 +1,21 @@
+uuid: 489da2f8-0300-420d-a73e-abd995ed4862
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_fecha_documento
+    - node.type.documento
+  module:
+    - datetime
+id: node.documento.field_fecha_documento
+field_name: field_fecha_documento
+entity_type: node
+bundle: documento
+label: Fecha
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

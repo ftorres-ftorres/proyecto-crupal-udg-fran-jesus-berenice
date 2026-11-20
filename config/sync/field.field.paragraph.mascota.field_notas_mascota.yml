@@ -1,0 +1,19 @@
+uuid: 567fb949-6576-43d1-aacb-00ae3dacb260
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_notas_mascota
+    - paragraphs.paragraphs_type.mascota
+id: paragraph.mascota.field_notas_mascota
+field_name: field_notas_mascota
+entity_type: paragraph
+bundle: mascota
+label: Notas
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

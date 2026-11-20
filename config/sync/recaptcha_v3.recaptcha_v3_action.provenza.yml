@@ -1,0 +1,8 @@
+uuid: eff02ca0-9706-4f39-86a4-1f690cacfce7
+langcode: es
+status: true
+dependencies: {  }
+id: provenza
+label: 'Portal Provenza'
+threshold: 0.5
+challenge: default

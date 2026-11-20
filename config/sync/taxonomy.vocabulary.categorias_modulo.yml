@@ -1,0 +1,9 @@
+uuid: 7906a379-734c-4735-baf4-7ede5a5387e9
+langcode: es
+status: true
+dependencies: {  }
+name: 'Categorías de módulo'
+vid: categorias_modulo
+description: null
+weight: 0
+new_revision: false

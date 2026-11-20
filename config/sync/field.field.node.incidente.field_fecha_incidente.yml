@@ -1,0 +1,21 @@
+uuid: a5af696f-9fee-4e9e-b64f-38e4bc9cebab
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_fecha_incidente
+    - node.type.incidente
+  module:
+    - datetime
+id: node.incidente.field_fecha_incidente
+field_name: field_fecha_incidente
+entity_type: node
+bundle: incidente
+label: 'Fecha y hora'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

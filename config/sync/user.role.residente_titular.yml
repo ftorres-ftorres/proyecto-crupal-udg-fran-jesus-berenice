@@ -1,0 +1,50 @@
+uuid: 47c49005-b7b8-4727-a792-4082509ea958
+langcode: es
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - node.type.incidente
+    - node.type.queja
+    - node.type.reservacion
+    - node.type.solicitud
+    - node.type.visita
+    - workflows.workflow.reservacion_wf
+  module:
+    - contact
+    - content_moderation
+    - entity_print
+    - filter
+    - flag
+    - media
+    - node
+    - provenza_core
+    - system
+    - webform
+id: residente_titular
+label: 'Residente titular'
+weight: 4
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access site-wide contact form'
+  - 'access user profiles'
+  - 'access webform overview'
+  - 'create incidente content'
+  - 'create queja content'
+  - 'create reservacion content'
+  - 'create solicitud content'
+  - 'create visita content'
+  - 'edit own queja content'
+  - 'edit own reservacion content'
+  - 'edit own solicitud content'
+  - 'edit own visita content'
+  - 'entity print access bundle documento'
+  - 'entity print access bundle reservacion'
+  - 'flag guardar'
+  - 'manage household members'
+  - 'unflag guardar'
+  - 'use reservacion_wf transition a_cancelada'
+  - 'use text format basic_html'
+  - 'view media'
+  - 'view own unpublished content'

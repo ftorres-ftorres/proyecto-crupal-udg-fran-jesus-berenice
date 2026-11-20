@@ -1,0 +1,11 @@
+uuid: 7cf7d082-c00c-4e49-96ac-8c707e525ebf
+langcode: es
+status: true
+dependencies: {  }
+name: Directorio
+type: directorio
+description: null
+help: null
+new_revision: true
+preview_mode: 0
+display_submitted: false

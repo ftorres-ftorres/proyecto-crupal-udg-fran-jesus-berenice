@@ -1,0 +1,55 @@
+uuid: 7bab7030-5db9-477a-8308-57f29ae39f44
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.node.directorio.body
+    - field.field.node.directorio.field_correo
+    - field.field.node.directorio.field_telefono
+    - node.type.directorio
+  module:
+    - telephone
+    - text
+    - user
+id: node.directorio.default
+targetEntityType: node
+bundle: directorio
+mode: default
+content:
+  body:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_correo:
+    type: email_mailto
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_telefono:
+    type: telephone_link
+    label: above
+    settings:
+      title: ''
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  langcode: true
+  layout_builder__layout: true
+  path: true
+  publish_on: true
+  search_api_excerpt: true
+  unpublish_on: true

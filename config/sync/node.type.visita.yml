@@ -1,0 +1,11 @@
+uuid: 25e7f5ab-ee36-49be-96e1-a64cb1b8d5c8
+langcode: es
+status: true
+dependencies: {  }
+name: 'Visita / Autorización'
+type: visita
+description: null
+help: null
+new_revision: true
+preview_mode: 0
+display_submitted: false

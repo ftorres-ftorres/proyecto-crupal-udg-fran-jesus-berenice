@@ -1,0 +1,20 @@
+uuid: 58ef6476-c113-425e-ac94-548f0134d12f
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+    - user
+id: node.field_asignado
+field_name: field_asignado
+entity_type: node
+type: entity_reference
+settings:
+  target_type: user
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

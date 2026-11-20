@@ -1,0 +1,24 @@
+uuid: 05b53f96-0b78-44e5-ad16-eb0d713ae7d0
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.instalacion
+  module:
+    - node
+id: provenza_instalacion
+label: 'URL instalacion'
+type: 'canonical_entities:node'
+pattern: '/instalaciones/[node:title]'
+selection_criteria:
+  0af5ecf2-d13e-42b9-ad5d-e94cbe854af3:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      instalacion: instalacion
+    uuid: 6e3faaf0-7447-439f-b08a-f17d9e5b8916
+selection_logic: and
+weight: -5
+relationships: {  }

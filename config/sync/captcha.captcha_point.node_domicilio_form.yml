@@ -1,0 +1,7 @@
+uuid: 8feb5383-e6c1-4269-850a-f559e1733d83
+langcode: es
+status: false
+dependencies: {  }
+formId: node_domicilio_form
+captchaType: default
+label: node_domicilio_form

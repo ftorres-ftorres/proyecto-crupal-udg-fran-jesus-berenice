@@ -1,0 +1,14 @@
+uuid: 10a6ff50-091c-48ec-94b3-6bdb9ded62e7
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.caseta
+  module:
+    - user
+id: user_add_role_action.caseta
+label: 'Añade el rol Caseta / Seguridad al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: caseta

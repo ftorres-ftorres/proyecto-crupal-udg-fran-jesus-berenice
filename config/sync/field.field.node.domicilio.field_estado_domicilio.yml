@@ -1,0 +1,21 @@
+uuid: 3369875e-c308-44da-a799-7d5befd7ac33
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_estado_domicilio
+    - node.type.domicilio
+  module:
+    - options
+id: node.domicilio.field_estado_domicilio
+field_name: field_estado_domicilio
+entity_type: node
+bundle: domicilio
+label: Estado
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,35 @@
+uuid: 1708b9a7-c3f8-4695-b7c3-1baced96bdaa
+langcode: es
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - filter.format.webform_default
+  module:
+    - contact
+    - entity_print
+    - file
+    - filter
+    - flag
+    - media
+    - node
+    - system
+_core:
+  default_config_hash: wkW7P5A53YhGmsgamrmTbfwpZrqdnPYiJdoAZQtdmJg
+id: authenticated
+label: 'Usuario autenticado'
+weight: 1
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access site-wide contact form'
+  - 'access user profiles'
+  - 'delete own files'
+  - 'entity print access bundle documento'
+  - 'entity print access bundle reservacion'
+  - 'flag guardar'
+  - 'unflag guardar'
+  - 'use text format basic_html'
+  - 'use text format webform_default'
+  - 'view media'
+  - 'view own unpublished content'

@@ -1,0 +1,24 @@
+uuid: 9263d3ff-09a2-43a9-8281-fb80e35828be
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_domicilio
+    - node.type.domicilio
+    - node.type.solicitud
+id: node.solicitud.field_domicilio
+field_name: field_domicilio
+entity_type: node
+bundle: solicitud
+label: Domicilio
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      domicilio: domicilio
+field_type: entity_reference

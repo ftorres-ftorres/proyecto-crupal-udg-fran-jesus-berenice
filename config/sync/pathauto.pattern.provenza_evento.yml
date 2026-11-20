@@ -1,0 +1,24 @@
+uuid: 0b908b22-2c86-4762-a1b7-64fd7d9cc436
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.evento
+  module:
+    - node
+id: provenza_evento
+label: 'URL evento'
+type: 'canonical_entities:node'
+pattern: '/comunidad/calendario/[node:title]'
+selection_criteria:
+  16eac331-5dc5-43af-81b2-fc1ee47cd119:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      evento: evento
+    uuid: c6b0da7f-2342-4c8d-83e1-3ae3c48152eb
+selection_logic: and
+weight: -5
+relationships: {  }

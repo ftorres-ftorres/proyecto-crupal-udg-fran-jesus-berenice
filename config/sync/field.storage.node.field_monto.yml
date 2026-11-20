@@ -1,0 +1,20 @@
+uuid: b28b9adc-99b7-43ee-a960-544d464fd330
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_monto
+field_name: field_monto
+entity_type: node
+type: decimal
+settings:
+  precision: 10
+  scale: 2
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

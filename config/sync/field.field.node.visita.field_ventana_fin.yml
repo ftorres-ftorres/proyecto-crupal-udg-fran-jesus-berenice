@@ -1,0 +1,21 @@
+uuid: f85f6baf-ed9a-471a-9024-1c7d5435fd77
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ventana_fin
+    - node.type.visita
+  module:
+    - datetime
+id: node.visita.field_ventana_fin
+field_name: field_ventana_fin
+entity_type: node
+bundle: visita
+label: 'Fin de la ventana'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

@@ -1,0 +1,1178 @@
+/* ==========================================================================
+   Provenza Residencial · Colorful & Professional Theme Layer
+   ========================================================================== */
+
+:root {
+  /* Core brand palette */
+  --pz-primary: #0f766e;         /* Botanical teal / emerald */
+  --pz-primary-dark: #0a4f4a;
+  --pz-primary-light: #14b8a6;
+  --pz-primary-soft: #e6f7f5;
+
+  --pz-cobalt: #2563eb;          /* Mediterranean sapphire */
+  --pz-cobalt-soft: #eff6ff;
+
+  --pz-amber: #d97706;           /* Warm terracotta / sunlit gold */
+  --pz-amber-dark: #b45309;
+  --pz-amber-soft: #fff7ed;
+
+  --pz-coral: #e11d48;           /* Bougainvillea coral / rose */
+  --pz-coral-soft: #fff1f2;
+
+  --pz-plum: #7c3aed;            /* Jacaranda violet */
+  --pz-plum-soft: #f5f3ff;
+
+  --pz-emerald: #059669;         /* Garden green */
+  --pz-emerald-soft: #ecfdf5;
+
+  /* Neutrals */
+  --pz-ink: #14222c;
+  --pz-ink-soft: #2c3e4c;
+  --pz-muted: #526575;
+  --pz-line: #dce5e3;
+  --pz-line-strong: #c2d1ce;
+  --pz-bg: #f4f7f6;
+  --pz-card: #ffffff;
+
+  /* Semantic tokens (preserved for backwards compatibility) */
+  --pz-accent: var(--pz-primary);
+  --pz-accent-2: var(--pz-amber);
+  --pz-ok: var(--pz-emerald);
+  --pz-warn: var(--pz-amber-dark);
+  --pz-bad: var(--pz-coral);
+
+  /* Elevation & radii */
+  --pz-radius-sm: 0.5rem;
+  --pz-radius-md: 0.85rem;
+  --pz-radius-lg: 1.25rem;
+  --pz-shadow-sm: 0 1px 3px rgb(15 41 54 / 6%), 0 1px 2px rgb(15 41 54 / 4%);
+  --pz-shadow-md: 0 8px 24px -6px rgb(15 41 54 / 10%), 0 2px 6px rgb(15 41 54 / 5%);
+  --pz-shadow-lg: 0 16px 36px -10px rgb(15 41 54 / 16%), 0 4px 12px rgb(15 41 54 / 6%);
+
+  /* Align Olivero primary CSS variables */
+  --color--primary-hue: 175;
+  --color--primary-saturation: 77%;
+  --color--primary-lightness: 32;
+  --color--primary-30: #094944;
+  --color--primary-40: #0d625b;
+  --color--primary-50: #0f766e;
+  --color--primary-60: #14b8a6;
+  --color--primary-80: #ccfbf1;
+  --color-text-primary-medium: #0d625b;
+  --color-text-primary-loud: #094944;
+}
+
+/* ==========================================================================
+   Global Frontend Canvas (Olivero only, leaving Gin admin untouched)
+   ========================================================================== */
+
+body:not(.gin--classic-toolbar):not(.gin--vertical-toolbar):not(.gin--horizontal-toolbar):not(.gin--core-navigation) {
+  color: var(--pz-ink);
+  background-color: var(--pz-bg);
+  background-image:
+    radial-gradient(ellipse 65rem 38rem at 0% 0%, rgb(20 184 166 / 11%), transparent 60%),
+    radial-gradient(ellipse 55rem 34rem at 100% 10%, rgb(245 158 11 / 10%), transparent 58%),
+    radial-gradient(ellipse 50rem 36rem at 85% 95%, rgb(124 58 237 / 8%), transparent 60%);
+  background-attachment: fixed;
+  overflow-x: clip;
+}
+
+body .dialog-off-canvas-main-canvas,
+body .page-wrapper,
+body #main-wrapper,
+body .layout-main-wrapper {
+  background: transparent;
+}
+
+/* Smooth typography polish on frontend */
+.page-wrapper h1,
+.page-wrapper h2,
+.page-wrapper h3 {
+  color: var(--pz-ink);
+  letter-spacing: -0.015em;
+}
+
+.page-wrapper a {
+  color: var(--pz-primary-dark);
+  text-decoration-color: rgb(15 118 110 / 35%);
+  text-underline-offset: 0.18em;
+  transition: color 0.18s ease, text-decoration-color 0.18s ease;
+}
+
+.page-wrapper a:hover {
+  color: var(--pz-cobalt);
+  text-decoration-color: var(--pz-cobalt);
+}
+
+/* ==========================================================================
+   Header, Site Branding & Navigation (Olivero)
+   ========================================================================== */
+
+.site-header {
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(90deg, var(--pz-primary) 0%, var(--pz-cobalt) 35%, var(--pz-plum) 68%, var(--pz-amber) 100%) 1;
+  box-shadow: 0 4px 20px rgb(15 41 54 / 7%);
+}
+
+.site-header__initial {
+  background: linear-gradient(160deg, var(--pz-primary-dark) 0%, var(--pz-primary) 100%);
+}
+
+.site-header__inner {
+  background: rgb(255 255 255 / 95%);
+  backdrop-filter: blur(10px);
+}
+
+.page-wrapper .site-branding {
+  background-image: linear-gradient(135deg, #0a4f4a 0%, #0f766e 52%, #1d4ed8 100%);
+  box-shadow: 4px 0 20px rgb(10 79 74 / 18%);
+  position: relative;
+}
+
+.site-branding__name {
+  letter-spacing: -0.02em;
+}
+
+.site-branding__slogan {
+  color: rgb(255 255 255 / 88%);
+  font-weight: 500;
+}
+
+/* Primary nav links */
+.primary-nav__menu-link {
+  color: var(--pz-ink);
+  font-weight: 600;
+  transition: color 0.18s ease;
+}
+
+.primary-nav__menu-link:hover,
+.primary-nav__menu-link:focus,
+.primary-nav__menu-link.is-active {
+  color: var(--pz-primary);
+}
+
+.primary-nav__menu-link-inner::after {
+  border-top-color: var(--pz-amber);
+}
+
+/* Secondary / Account menu */
+.secondary-nav__menu-link {
+  font-weight: 600;
+  color: var(--pz-ink-soft);
+}
+
+.secondary-nav__menu-link:hover,
+.secondary-nav__menu-link:focus {
+  color: var(--pz-primary);
+}
+
+/* Mobile nav button */
+.mobile-nav-button__label {
+  color: var(--pz-primary-dark);
+  font-weight: 700;
+}
+
+.mobile-nav-button__icon,
+.mobile-nav-button__icon::before,
+.mobile-nav-button__icon::after {
+  background-color: var(--pz-primary);
+}
+
+/* Breadcrumbs */
+.breadcrumb {
+  color: var(--pz-muted);
+}
+
+.breadcrumb__link {
+  color: var(--pz-primary-dark);
+  font-weight: 600;
+}
+
+/* Page title accent */
+.page-title {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.55rem;
+  color: var(--pz-ink);
+}
+
+.page-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: min(5.5rem, 100%);
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--pz-primary) 0%, var(--pz-cobalt) 50%, var(--pz-amber) 100%);
+}
+
+/* ==========================================================================
+   Main Containers & Hero Section
+   ========================================================================== */
+
+.provenza-home,
+.provenza-tutorial,
+.provenza-caseta,
+.provenza-calendar,
+.provenza-pass {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.provenza-hero {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 2rem;
+  padding: clamp(1.75rem, 4vw, 3rem) clamp(1.5rem, 4vw, 2.75rem);
+  border-radius: var(--pz-radius-lg);
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 88% 18%, rgb(251 191 36 / 32%) 0%, transparent 42%),
+    radial-gradient(circle at 12% 90%, rgb(167 139 250 / 28%) 0%, transparent 45%),
+    linear-gradient(135deg, #094843 0%, #0f766e 48%, #1d4ed8 100%);
+  box-shadow: var(--pz-shadow-lg);
+}
+
+.provenza-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 5px;
+  background: linear-gradient(90deg, #2dd4bf 0%, #38bdf8 35%, #a78bfa 68%, #fbbf24 100%);
+}
+
+.provenza-hero .provenza-kicker {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  margin-bottom: 0.9rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 16%);
+  border: 1px solid rgb(255 255 255 / 26%);
+  color: #fef3c7;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.provenza-hero h1 {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.85rem, 5.5vw, 2.85rem);
+  line-height: 1.12;
+  color: #ffffff;
+}
+
+.provenza-hero p:last-child {
+  margin: 0;
+  max-width: 42rem;
+  color: rgb(255 255 255 / 90%);
+  font-size: 1.05rem;
+}
+
+.provenza-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--pz-primary);
+  margin-bottom: 0.35rem;
+}
+
+/* ==========================================================================
+   Urgent Notices Banner
+   ========================================================================== */
+
+.block-provenza-urgent-notices .block__title,
+.block-provenza-urgent-notices h2,
+.block-provenza-urgent-notices h3 {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.55rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--pz-amber-dark);
+}
+
+.provenza-urgent {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, #fffbeb 0%, #fff1f2 100%);
+  border: 1px solid #fcd34d;
+  border-left: 5px solid var(--pz-amber);
+  border-radius: var(--pz-radius-md);
+  box-shadow: var(--pz-shadow-sm);
+}
+
+.provenza-urgent li {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0.3rem 0;
+  padding: 0;
+}
+
+.provenza-urgent li::before {
+  content: "";
+  flex: 0 0 0.55rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--pz-coral);
+  box-shadow: 0 0 0 3px rgb(225 29 72 / 18%);
+}
+
+.provenza-urgent a {
+  color: #7c2d12;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.provenza-urgent a:hover {
+  color: var(--pz-coral);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Quick Action Tiles (Vibrant Multi-Accent Card System)
+   ========================================================================== */
+
+.provenza-tiles {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 1rem 0 1.75rem;
+}
+
+@media (min-width: 600px) {
+  .provenza-tiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .provenza-tiles {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.provenza-tile {
+  --tile-accent: var(--pz-primary);
+  --tile-soft: var(--pz-primary-soft);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 6rem;
+  padding: 1.25rem 2.75rem 1.25rem 1.35rem;
+  background: var(--pz-card);
+  border: 1px solid var(--pz-line);
+  border-top: 4px solid var(--tile-accent);
+  border-radius: var(--pz-radius-md);
+  color: var(--pz-ink);
+  text-decoration: none;
+  font-size: 1.02rem;
+  font-weight: 700;
+  box-shadow: var(--pz-shadow-sm);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.provenza-tile::after {
+  content: "→";
+  position: absolute;
+  right: 1.15rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.9rem;
+  height: 1.9rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--tile-soft);
+  color: var(--tile-accent);
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Curated jewel-tone rotation across tiles */
+.provenza-tile:nth-child(5n + 1) {
+  --tile-accent: var(--pz-primary);
+  --tile-soft: var(--pz-primary-soft);
+}
+
+.provenza-tile:nth-child(5n + 2) {
+  --tile-accent: var(--pz-plum);
+  --tile-soft: var(--pz-plum-soft);
+}
+
+.provenza-tile:nth-child(5n + 3) {
+  --tile-accent: var(--pz-cobalt);
+  --tile-soft: var(--pz-cobalt-soft);
+}
+
+.provenza-tile:nth-child(5n + 4) {
+  --tile-accent: var(--pz-coral);
+  --tile-soft: var(--pz-coral-soft);
+}
+
+.provenza-tile:nth-child(5n + 5) {
+  --tile-accent: var(--pz-amber);
+  --tile-soft: var(--pz-amber-soft);
+}
+
+.provenza-tile:hover,
+.provenza-tile:focus-visible {
+  transform: translateY(-3px);
+  background: linear-gradient(180deg, var(--pz-card) 0%, var(--tile-soft) 100%);
+  border-color: var(--tile-accent);
+  color: var(--pz-ink);
+  box-shadow: var(--pz-shadow-md);
+  text-decoration: none;
+}
+
+.provenza-tile:focus-visible {
+  outline: 3px solid var(--tile-accent);
+  outline-offset: 2px;
+}
+
+.provenza-tile:hover::after,
+.provenza-tile:focus-visible::after {
+  background: var(--tile-accent);
+  color: #ffffff;
+  transform: translate(2px, -50%);
+}
+
+.provenza-tile span {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--pz-muted);
+  margin-top: 0.35rem;
+}
+
+@media (max-width: 360px) {
+  .provenza-tile {
+    min-height: 4.75rem;
+  }
+}
+
+/* ==========================================================================
+   Home Events & Generic Content Listings
+   ========================================================================== */
+
+.provenza-home section {
+  margin-bottom: 2rem;
+}
+
+.provenza-home section > h2 {
+  font-size: 1.35rem;
+  margin: 0 0 1rem;
+  color: var(--pz-ink);
+}
+
+.provenza-home section > ul,
+.provenza-listing {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.provenza-home section > ul li,
+.provenza-listing li {
+  padding: 0.95rem 1.2rem;
+  background: var(--pz-card);
+  border: 1px solid var(--pz-line);
+  border-left: 4px solid var(--pz-cobalt);
+  border-radius: var(--pz-radius-sm);
+  box-shadow: var(--pz-shadow-sm);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+}
+
+.provenza-home section > ul li:nth-child(3n + 2),
+.provenza-listing li:nth-child(3n + 2) {
+  border-left-color: var(--pz-plum);
+}
+
+.provenza-home section > ul li:nth-child(3n + 3),
+.provenza-listing li:nth-child(3n + 3) {
+  border-left-color: var(--pz-primary);
+}
+
+.provenza-home section > ul li:hover,
+.provenza-listing li:hover {
+  transform: translateX(3px);
+  box-shadow: var(--pz-shadow-md);
+}
+
+.provenza-home section > ul li a,
+.provenza-listing li a {
+  font-weight: 650;
+  color: var(--pz-ink);
+  text-decoration: none;
+}
+
+.provenza-home section > ul li a:hover,
+.provenza-listing li a:hover {
+  color: var(--pz-primary);
+}
+
+/* ==========================================================================
+   Login Card & Forms
+   ========================================================================== */
+
+.provenza-login {
+  max-width: 26rem;
+  margin: 0 0 2rem;
+  padding: 1.5rem 1.6rem;
+  background: var(--pz-card);
+  border: 1px solid var(--pz-line);
+  border-top: 4px solid var(--pz-primary);
+  border-radius: var(--pz-radius-md);
+  box-shadow: var(--pz-shadow-md);
+}
+
+.provenza-login h2 {
+  margin-top: 0;
+  color: var(--pz-primary-dark);
+}
+
+.page-wrapper input[type="text"],
+.page-wrapper input[type="email"],
+.page-wrapper input[type="password"],
+.page-wrapper input[type="search"],
+.page-wrapper input[type="number"],
+.page-wrapper input[type="tel"],
+.page-wrapper input[type="date"],
+.page-wrapper input[type="datetime-local"],
+.page-wrapper select,
+.page-wrapper textarea {
+  border: 1.5px solid var(--pz-line-strong);
+  border-radius: var(--pz-radius-sm);
+  background-color: #ffffff;
+  color: var(--pz-ink);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.page-wrapper input[type="text"]:focus,
+.page-wrapper input[type="email"]:focus,
+.page-wrapper input[type="password"]:focus,
+.page-wrapper input[type="search"]:focus,
+.page-wrapper input[type="number"]:focus,
+.page-wrapper input[type="tel"]:focus,
+.page-wrapper input[type="date"]:focus,
+.page-wrapper input[type="datetime-local"]:focus,
+.page-wrapper select:focus,
+.page-wrapper textarea:focus {
+  border-color: var(--pz-primary);
+  box-shadow: 0 0 0 3px rgb(15 118 110 / 18%);
+  outline: none;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.page-wrapper .button,
+.page-wrapper button[type="submit"],
+.provenza-search-form button,
+.provenza-filters button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  padding: 0.55rem 1.25rem;
+  border-radius: 0.6rem;
+  border: 2px solid var(--pz-primary);
+  background: var(--pz-card);
+  color: var(--pz-primary-dark);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: var(--pz-shadow-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.page-wrapper .button:hover,
+.page-wrapper .button:focus-visible {
+  transform: translateY(-1px);
+  background: var(--pz-primary-soft);
+  color: var(--pz-primary-dark);
+  border-color: var(--pz-primary-dark);
+  box-shadow: var(--pz-shadow-md);
+}
+
+.page-wrapper .button--primary,
+.page-wrapper input.button--primary,
+.provenza-search-form button[type="submit"],
+.provenza-filters button[type="submit"] {
+  background: linear-gradient(135deg, var(--pz-primary) 0%, #0d9488 100%);
+  border-color: transparent;
+  color: #ffffff;
+}
+
+.page-wrapper .button--primary:hover,
+.page-wrapper .button--primary:focus-visible,
+.page-wrapper input.button--primary:hover,
+.provenza-search-form button[type="submit"]:hover,
+.provenza-filters button[type="submit"]:hover {
+  background: linear-gradient(135deg, var(--pz-primary-dark) 0%, var(--pz-primary) 100%);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 6px 18px rgb(15 118 110 / 28%);
+}
+
+/* ==========================================================================
+   Tables & Folios
+   ========================================================================== */
+
+.provenza-folio {
+  display: inline-block;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  background: var(--pz-primary-soft);
+  border: 1px solid rgb(15 118 110 / 22%);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--pz-primary-dark);
+  letter-spacing: 0.02em;
+}
+
+.provenza-table {
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--pz-card);
+  border: 1px solid var(--pz-line);
+  border-radius: var(--pz-radius-md);
+  box-shadow: var(--pz-shadow-sm);
+}
+
+.provenza-table thead th {
+  background: linear-gradient(135deg, #0a4f4a 0%, #0f766e 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.85rem 1rem;
+  border-bottom: none;
+}
+
+.provenza-table thead th:first-child {
+  border-top-left-radius: calc(var(--pz-radius-md) - 1px);
+}
+
+.provenza-table thead th:last-child {
+  border-top-right-radius: calc(var(--pz-radius-md) - 1px);
+}
+
+.provenza-table tbody td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--pz-line);
+  vertical-align: middle;
+}
+
+.provenza-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.provenza-table tbody tr:nth-child(even) {
+  background-color: #f8fbfa;
+}
+
+.provenza-table tbody tr:hover {
+  background-color: var(--pz-primary-soft);
+}
+
+/* ==========================================================================
+   Availability Calendar
+   ========================================================================== */
+
+.provenza-calendar {
+  background: var(--pz-card);
+  border: 1px solid var(--pz-line);
+  border-radius: var(--pz-radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--pz-shadow-md);
+}
+
+.provenza-calendar__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--pz-line);
+}
+
+.provenza-calendar__nav h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  color: var(--pz-primary-dark);
+}
+
+.provenza-calendar__nav a {
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: var(--pz-primary-soft);
+  color: var(--pz-primary-dark);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.provenza-calendar__nav a:hover {
+  background: var(--pz-primary);
+  color: #ffffff;
+}
+
+.provenza-calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.provenza-calendar__dow {
+  min-height: auto;
+  padding: 0.5rem 0.35rem;
+  text-align: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0a4f4a 0%, #0f766e 100%);
+  border: none;
+  border-radius: var(--pz-radius-sm);
+}
+
+.provenza-calendar__day {
+  min-height: 4rem;
+  padding: 0.5rem;
+  border-radius: var(--pz-radius-sm);
+  background: var(--pz-card);
+  border: 1px solid var(--pz-line);
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.provenza-calendar__day:not(.is-empty):hover {
+  transform: translateY(-2px);
+  box-shadow: var(--pz-shadow-sm);
+}
+
+.provenza-calendar__day small {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--pz-muted);
+}
+
+.provenza-calendar__day.is-libre {
+  background: var(--pz-emerald-soft);
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+
+.provenza-calendar__day.is-libre small {
+  color: #047857;
+}
+
+.provenza-calendar__day.is-reservado {
+  background: var(--pz-coral-soft);
+  border-color: #fecdd3;
+  color: #9f1239;
+}
+
+.provenza-calendar__day.is-reservado small {
+  color: #be123c;
+}
+
+.provenza-calendar__day.is-bloqueado {
+  background: var(--pz-amber-soft);
+  border-color: #fde68a;
+  color: #92400e;
+}
+
+.provenza-calendar__day.is-bloqueado small {
+  color: #b45309;
+}
+
+.provenza-calendar__day.is-empty {
+  background: transparent;
+  border-color: transparent;
+}
+
+.provenza-calendar__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0;
+}
+
+.provenza-calendar__legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 650;
+}
+
+.provenza-calendar__legend li::before {
+  content: "";
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+}
+
+.provenza-calendar__legend li.is-libre {
+  background: var(--pz-emerald-soft);
+  color: #065f46;
+}
+
+.provenza-calendar__legend li.is-libre::before {
+  background: var(--pz-emerald);
+}
+
+.provenza-calendar__legend li.is-reservado {
+  background: var(--pz-coral-soft);
+  color: #9f1239;
+}
+
+.provenza-calendar__legend li.is-reservado::before {
+  background: var(--pz-coral);
+}
+
+.provenza-calendar__legend li.is-bloqueado {
+  background: var(--pz-amber-soft);
+  color: #92400e;
+}
+
+.provenza-calendar__legend li.is-bloqueado::before {
+  background: var(--pz-amber);
+}
+
+/* ==========================================================================
+   KPI Cards
+   ========================================================================== */
+
+.provenza-kpis {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 1.25rem 0 1.75rem;
+}
+
+@media (min-width: 600px) {
+  .provenza-kpis {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.provenza-kpis div {
+  background: var(--pz-card);
+  border: 1px solid var(--pz-line);
+  border-top: 4px solid var(--pz-primary);
+  border-radius: var(--pz-radius-md);
+  padding: 1.25rem 1.35rem;
+  box-shadow: var(--pz-shadow-sm);
+}
+
+.provenza-kpis div:nth-child(2) {
+  border-top-color: var(--pz-amber);
+}
+
+.provenza-kpis div:nth-child(3) {
+  border-top-color: var(--pz-plum);
+}
+
+.provenza-kpis strong {
+  display: block;
+  font-size: 2.15rem;
+  line-height: 1.1;
+  margin-bottom: 0.3rem;
+  color: var(--pz-primary-dark);
+}
+
+.provenza-kpis div:nth-child(2) strong {
+  color: var(--pz-amber-dark);
+}
+
+.provenza-kpis div:nth-child(3) strong {
+  color: var(--pz-plum);
+}
+
+.provenza-kpis span {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--pz-muted);
+}
+
+/* ==========================================================================
+   Search, Filters & Badges
+   ========================================================================== */
+
+.provenza-search-form {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+  align-items: center;
+}
+
+.provenza-search-form input {
+  flex: 1 1 14rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.9rem;
+}
+
+.provenza-filters,
+.provenza-caseta__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.25rem;
+  background: var(--pz-card);
+  border: 1px solid var(--pz-line);
+  border-radius: var(--pz-radius-md);
+  box-shadow: var(--pz-shadow-sm);
+  align-items: end;
+}
+
+.provenza-search-hit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.75rem;
+  align-items: center;
+  padding: 0.65rem 0.85rem;
+  background: var(--pz-card);
+  border: 1px solid var(--pz-line);
+  border-radius: var(--pz-radius-sm);
+  margin-bottom: 0.5rem;
+}
+
+.provenza-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--pz-cobalt-soft);
+  color: var(--pz-cobalt);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* ==========================================================================
+   QR Visitor Pass
+   ========================================================================== */
+
+.provenza-pass {
+  max-width: 28rem;
+  text-align: center;
+  padding: 2rem 1.75rem;
+  background: var(--pz-card);
+  border: 1px solid var(--pz-line);
+  border-top: 6px solid var(--pz-primary);
+  border-radius: var(--pz-radius-lg);
+  box-shadow: var(--pz-shadow-lg);
+}
+
+.provenza-pass h2 {
+  margin-top: 0;
+  color: var(--pz-primary-dark);
+}
+
+.provenza-pass img {
+  padding: 0.75rem;
+  background: #ffffff;
+  border: 2px dashed var(--pz-primary-light);
+  border-radius: var(--pz-radius-md);
+}
+
+/* ==========================================================================
+   Tutorial, Module Cards, Diagrams & Accordions
+   ========================================================================== */
+
+.provenza-tutorial-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.85rem;
+  margin: 0 0 1.5rem;
+  padding: 0.85rem 1.1rem;
+  background: var(--pz-card);
+  border: 1px solid var(--pz-line);
+  border-radius: var(--pz-radius-md);
+  box-shadow: var(--pz-shadow-sm);
+}
+
+.provenza-tutorial-nav a {
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.provenza-diagram {
+  background: linear-gradient(135deg, var(--pz-primary-soft) 0%, var(--pz-cobalt-soft) 100%);
+  border: 1px solid #bae6fd;
+  padding: 1.25rem 1.5rem 1.25rem 2.25rem;
+  border-radius: var(--pz-radius-md);
+  box-shadow: var(--pz-shadow-sm);
+}
+
+.provenza-diagram li {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.provenza-module-card {
+  padding: 1.35rem;
+  background: var(--pz-card);
+  border: 1px solid var(--pz-line);
+  border-top: 4px solid var(--pz-plum);
+  border-radius: var(--pz-radius-md);
+  box-shadow: var(--pz-shadow-sm);
+  margin-bottom: 1.25rem;
+}
+
+.provenza-module-card__shot img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--pz-radius-sm);
+  border: 1px solid var(--pz-line);
+  margin: 0 0 0.85rem;
+}
+
+details.provenza-tech {
+  margin: 1.5rem 0;
+  background: var(--pz-card);
+  border: 1px solid var(--pz-line);
+  border-left: 4px solid var(--pz-plum);
+  border-radius: var(--pz-radius-md);
+  padding: 0.85rem 1.15rem;
+  box-shadow: var(--pz-shadow-sm);
+}
+
+details.provenza-tech summary {
+  font-weight: 700;
+  color: var(--pz-plum);
+  cursor: pointer;
+}
+
+.provenza-facility-actions {
+  margin: 1.75rem 0;
+}
+
+.provenza-chart {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  background: var(--pz-card);
+  border: 1px solid var(--pz-line);
+  border-radius: var(--pz-radius-md);
+  box-shadow: var(--pz-shadow-sm);
+}
+
+/* ==========================================================================
+   Drupal Messages & Local Tasks Tabs (Olivero Polish)
+   ========================================================================== */
+
+.page-wrapper .messages {
+  border-radius: var(--pz-radius-md);
+  box-shadow: var(--pz-shadow-sm);
+}
+
+.page-wrapper .tabs__link {
+  border-radius: var(--pz-radius-sm);
+  font-weight: 600;
+}
+
+.page-wrapper .tabs__link.is-active {
+  background: var(--pz-primary-soft);
+  color: var(--pz-primary-dark);
+}
+
+/* ==========================================================================
+   Footer (Rich Midnight-Teal with Colorful Top Accent)
+   ========================================================================== */
+
+footer.site-footer {
+  position: relative;
+  margin-top: 3rem;
+  color: #cbd5e1;
+  background: linear-gradient(155deg, #082f33 0%, #0f2942 58%, #1a2238 100%);
+  border-top: 4px solid transparent;
+  border-image: linear-gradient(90deg, var(--pz-primary-light) 0%, var(--pz-cobalt) 35%, var(--pz-plum) 68%, var(--pz-amber) 100%) 1;
+}
+
+@media (min-width: 75rem) {
+  body:not(.is-always-mobile-nav) footer.site-footer {
+    border-inline-start: solid var(--content-left) #062124;
+  }
+}
+
+footer.site-footer h2,
+footer.site-footer .block__title {
+  color: #ffffff;
+}
+
+footer.site-footer a {
+  color: #e2e8f0;
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+footer.site-footer a:hover,
+footer.site-footer a:focus {
+  color: #fcd34d;
+  text-decoration: underline;
+}
+
+footer.site-footer .region-footer .menu a[href*="asi-lo-construimos"] {
+  font-weight: 700;
+  color: #5eead4;
+}
+
+footer.site-footer .region-footer .menu a[href*="asi-lo-construimos"]:hover {
+  color: #fcd34d;
+}
+
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .provenza-tile,
+  .provenza-tile::after,
+  .provenza-home section > ul li,
+  .provenza-listing li,
+  .provenza-calendar__day,
+  .page-wrapper .button {
+    transition: none;
+  }
+
+  .provenza-tile:hover,
+  .provenza-calendar__day:hover,
+  .page-wrapper .button:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,33 @@
+<div class="provenza-home">
+  <section class="provenza-hero">
+    <p class="provenza-kicker">Colonos del Condominio Residencial AC</p>
+    <h1>Provenza Residencial</h1>
+    <p>Av. Adolfo López Mateos Sur 5555, Tlajomulco de Zúñiga, Jalisco.</p>
+  </section>
+
+  {% if login %}
+    <section class="provenza-login" aria-label="Iniciar sesión">
+      <h2>Iniciar sesión</h2>
+      {{ login }}
+      <p><a href="/user/register">Registrarme</a> · <a href="/user/password">Recuperar contraseña</a></p>
+    </section>
+  {% endif %}
+
+  {% if tiles %}
+    <section aria-label="Acciones rápidas">
+      <h2>{{ is_resident ? 'Acciones rápidas' : 'Comienza aquí' }}</h2>
+      {% include '@provenza_core/provenza-tiles.html.twig' with { items: tiles } %}
+    </section>
+  {% endif %}
+
+  {% if events %}
+    <section>
+      <h2>Próximos eventos</h2>
+      <ul>
+        {% for item in events %}
+          <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+</div>

@@ -1,0 +1,20 @@
+uuid: 509481ff-7e82-40a6-9545-af61f4c3a15e
+langcode: es
+status: true
+dependencies:
+  module:
+    - datetime
+    - node
+id: node.field_caducidad
+field_name: field_caducidad
+entity_type: node
+type: datetime
+settings:
+  datetime_type: date
+module: datetime
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

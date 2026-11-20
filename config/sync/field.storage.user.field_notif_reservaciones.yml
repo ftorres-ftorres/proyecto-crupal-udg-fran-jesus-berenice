@@ -1,0 +1,18 @@
+uuid: f5e18995-42aa-49f0-ab02-e9883bebb959
+langcode: es
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_notif_reservaciones
+field_name: field_notif_reservaciones
+entity_type: user
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

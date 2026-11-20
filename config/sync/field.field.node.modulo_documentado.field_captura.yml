@@ -1,0 +1,38 @@
+uuid: 476fdec7-a2d4-423b-b489-5f873a071a64
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_captura
+    - node.type.modulo_documentado
+  module:
+    - image
+id: node.modulo_documentado.field_captura
+field_name: field_captura
+entity_type: node
+bundle: modulo_documentado
+label: Captura
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'png gif jpg jpeg webp'
+  max_filesize: ''
+  max_resolution: ''
+  min_resolution: ''
+  alt_field: true
+  alt_field_required: true
+  title_field: false
+  title_field_required: false
+  default_image:
+    uuid: null
+    alt: ''
+    title: ''
+    width: null
+    height: null
+field_type: image

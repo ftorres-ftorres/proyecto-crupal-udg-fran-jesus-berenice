@@ -1,0 +1,33 @@
+uuid: f605fa5b-b7fe-4e65-92cc-f8a5239db272
+langcode: es
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - node.type.incidente
+    - node.type.visita
+  module:
+    - contact
+    - filter
+    - flag
+    - media
+    - node
+    - provenza_core
+    - system
+id: caseta
+label: 'Caseta / Seguridad'
+weight: 6
+is_admin: false
+permissions:
+  - 'access caseta view'
+  - 'access content'
+  - 'access site-wide contact form'
+  - 'access user profiles'
+  - 'create incidente content'
+  - 'edit any incidente content'
+  - 'edit any visita content'
+  - 'flag guardar'
+  - 'unflag guardar'
+  - 'use text format basic_html'
+  - 'view media'
+  - 'view own unpublished content'

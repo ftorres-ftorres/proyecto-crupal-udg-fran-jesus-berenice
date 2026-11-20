@@ -1,0 +1,19 @@
+uuid: e294732a-53a2-471f-a8a1-148b0f7e8150
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_instalacion
+field_name: field_instalacion
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

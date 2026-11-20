@@ -1,0 +1,37 @@
+uuid: d5637315-e9e6-443c-a223-8823b6eeebc5
+langcode: es
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - node.type.documento
+  module:
+    - contact
+    - entity_print
+    - filter
+    - flag
+    - media
+    - node
+    - provenza_core
+    - system
+    - toolbar
+id: mesa_directiva
+label: 'Mesa directiva'
+weight: 9
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access site-wide contact form'
+  - 'access toolbar'
+  - 'access user profiles'
+  - 'create documento content'
+  - 'edit own documento content'
+  - 'entity print access bundle documento'
+  - 'entity print access bundle reservacion'
+  - 'flag guardar'
+  - 'unflag guardar'
+  - 'use text format basic_html'
+  - 'view management reports'
+  - 'view media'
+  - 'view own unpublished content'
+  - 'view the administration theme'

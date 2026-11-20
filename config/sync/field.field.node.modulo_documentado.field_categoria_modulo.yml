@@ -1,0 +1,24 @@
+uuid: 39317d82-c339-43d0-8f83-2d4845e042ae
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_categoria_modulo
+    - node.type.modulo_documentado
+    - taxonomy.vocabulary.categorias_modulo
+id: node.modulo_documentado.field_categoria_modulo
+field_name: field_categoria_modulo
+entity_type: node
+bundle: modulo_documentado
+label: Categoría
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      categorias_modulo: categorias_modulo
+field_type: entity_reference

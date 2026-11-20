@@ -1,0 +1,11 @@
+uuid: c9471c71-5156-4a59-a996-edc61214182c
+langcode: es
+status: true
+dependencies: {  }
+name: Evento
+type: evento
+description: null
+help: null
+new_revision: true
+preview_mode: 0
+display_submitted: false

@@ -1,0 +1,11 @@
+uuid: bf650c3d-3fe4-4c56-9eb0-0f3a50f1c333
+langcode: es
+status: true
+dependencies: {  }
+name: Tarifa
+type: tarifa
+description: null
+help: null
+new_revision: true
+preview_mode: 0
+display_submitted: false

@@ -1,0 +1,19 @@
+uuid: 7c89d5b0-425b-4026-b786-1a9d7692dcba
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_version_modulo
+    - node.type.modulo_documentado
+id: node.modulo_documentado.field_version_modulo
+field_name: field_version_modulo
+entity_type: node
+bundle: modulo_documentado
+label: Versión
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

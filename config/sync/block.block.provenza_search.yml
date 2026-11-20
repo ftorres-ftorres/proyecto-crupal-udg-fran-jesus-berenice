@@ -1,0 +1,20 @@
+uuid: 68548828-02c3-4fe3-8042-80b50728b769
+langcode: es
+status: true
+dependencies:
+  module:
+    - provenza_core
+  theme:
+    - olivero
+id: provenza_search
+theme: olivero
+region: secondary_menu
+weight: -5
+provider: null
+plugin: provenza_search_form
+settings:
+  id: provenza_search_form
+  label: ''
+  label_display: ''
+  provider: provenza_core
+visibility: {  }

@@ -1,0 +1,51 @@
+uuid: 2afb4e1d-0e1f-4711-9fd0-8468779ebd2d
+langcode: es
+status: true
+dependencies:
+  module:
+    - eca_log
+    - eca_workflow
+id: provenza_status_mail
+weight: 0
+template: null
+events:
+  Event_status:
+    plugin: 'workflow:transition'
+    label: 'Cambio de estado'
+    configuration:
+      type: 'node _all'
+      from_state: ''
+      to_state: ''
+    successors:
+      -
+        id: Activity_mail
+        condition: ''
+conditions: {  }
+gateways: {  }
+actions:
+  Activity_mail:
+    label: 'Enviar correo (plantilla Provenza)'
+    plugin: action_send_email_action
+    configuration:
+      recipient: '[node:author:mail]'
+      subject: 'Actualización de [node:folio]'
+      message: |-
+        Hola [node:author:display-name],
+
+        El folio [node:folio] cambió de estado.
+
+        [node:url:absolute]
+
+        Portal de colonos · Provenza Residencial
+    successors:
+      -
+        id: Activity_log
+        condition: ''
+  Activity_log:
+    label: 'Registrar en auditoría'
+    plugin: eca_write_log_message
+    configuration:
+      channel: auditoria
+      severity: 6
+      message: 'ECA: correo de estado para [node:folio]'
+    successors: {  }

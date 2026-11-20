@@ -1,0 +1,9 @@
+uuid: 7ae2787a-7289-4667-8f5d-a6222ea9af5c
+langcode: es
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 2iz3cMg7T1eSKXtNIB9WyaRptfg7wosDDPBSBhXFXl0
+formId: user_register_form
+captchaType: recaptcha_v3/provenza
+label: Registro

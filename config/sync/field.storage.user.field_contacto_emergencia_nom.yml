@@ -1,0 +1,21 @@
+uuid: ebb9d059-931b-4c08-b5e8-6b852f93688a
+langcode: es
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_contacto_emergencia_nom
+field_name: field_contacto_emergencia_nom
+entity_type: user
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

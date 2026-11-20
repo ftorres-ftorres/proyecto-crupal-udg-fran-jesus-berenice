@@ -1,0 +1,24 @@
+uuid: 6de0fe3d-275b-4e3b-9dd8-69ef6b23d391
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.reservacion
+  module:
+    - node
+id: provenza_reservacion
+label: 'URL reservacion'
+type: 'canonical_entities:node'
+pattern: '/reservaciones/[node:field_folio:value]'
+selection_criteria:
+  a669afc5-497f-4c35-9740-661e9546679e:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      reservacion: reservacion
+    uuid: 493bb7ee-422b-41fb-84db-4cfa1435da76
+selection_logic: and
+weight: -5
+relationships: {  }

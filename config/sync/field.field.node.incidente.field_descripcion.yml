@@ -1,0 +1,22 @@
+uuid: 0dfbc48b-ccad-409d-adbc-ed7d8e607cb5
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_descripcion
+    - node.type.incidente
+  module:
+    - text
+id: node.incidente.field_descripcion
+field_name: field_descripcion
+entity_type: node
+bundle: incidente
+label: Descripción
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

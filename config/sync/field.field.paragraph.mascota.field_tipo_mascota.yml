@@ -1,0 +1,19 @@
+uuid: 519dc3bb-c703-42cd-833a-a8dfa6944397
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_tipo_mascota
+    - paragraphs.paragraphs_type.mascota
+id: paragraph.mascota.field_tipo_mascota
+field_name: field_tipo_mascota
+entity_type: paragraph
+bundle: mascota
+label: Tipo
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

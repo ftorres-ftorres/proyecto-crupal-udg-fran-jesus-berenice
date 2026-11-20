@@ -1,0 +1,11 @@
+uuid: 3e036883-0a41-4238-a272-f578508e205f
+langcode: es
+status: true
+dependencies: {  }
+name: Domicilio
+type: domicilio
+description: null
+help: null
+new_revision: true
+preview_mode: 0
+display_submitted: false

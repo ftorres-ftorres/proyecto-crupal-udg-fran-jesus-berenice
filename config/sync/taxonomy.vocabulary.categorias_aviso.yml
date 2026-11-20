@@ -1,0 +1,9 @@
+uuid: 22d78d24-8f02-4f1f-9ecf-eac4697c31ba
+langcode: es
+status: true
+dependencies: {  }
+name: 'Categorías de aviso'
+vid: categorias_aviso
+description: null
+weight: 0
+new_revision: false

@@ -1,0 +1,68 @@
+uuid: 14739474-82df-47ec-9d23-8ced9cf4a424
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.node.aviso.body
+    - field.field.node.aviso.field_categoria_aviso
+    - field.field.node.aviso.field_enviar_correo
+    - field.field.node.aviso.field_urgente
+    - node.type.aviso
+  module:
+    - text
+    - user
+id: node.aviso.default
+targetEntityType: node
+bundle: aviso
+mode: default
+content:
+  body:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_categoria_aviso:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_enviar_correo:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_urgente:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  langcode: true
+  layout_builder__layout: true
+  path: true
+  publish_on: true
+  search_api_excerpt: true
+  unpublish_on: true

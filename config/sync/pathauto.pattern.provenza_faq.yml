@@ -1,0 +1,24 @@
+uuid: 44df2843-4412-46e9-9a77-f5d4ad505596
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.faq
+  module:
+    - node
+id: provenza_faq
+label: 'URL faq'
+type: 'canonical_entities:node'
+pattern: '/comunidad/preguntas-frecuentes/[node:title]'
+selection_criteria:
+  21dcfb6b-31ed-4486-80b0-4713ade113c6:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      faq: faq
+    uuid: 387fb1fb-5727-43ec-9044-3d84dda0ddcd
+selection_logic: and
+weight: -5
+relationships: {  }

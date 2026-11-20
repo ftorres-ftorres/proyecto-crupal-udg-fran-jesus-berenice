@@ -1,0 +1,24 @@
+uuid: e1290ac7-e63c-4a0b-993c-281695d230b5
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.solicitud
+  module:
+    - text
+id: node.solicitud.body
+field_name: body
+entity_type: node
+bundle: solicitud
+label: Contenido
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+  required_summary: false
+  allowed_formats: {  }
+field_type: text_with_summary

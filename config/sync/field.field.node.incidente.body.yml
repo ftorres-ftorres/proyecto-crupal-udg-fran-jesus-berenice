@@ -1,0 +1,24 @@
+uuid: 4e7dc726-8a7c-42dd-9192-028b38a2a3d7
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.incidente
+  module:
+    - text
+id: node.incidente.body
+field_name: body
+entity_type: node
+bundle: incidente
+label: Contenido
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+  required_summary: false
+  allowed_formats: {  }
+field_type: text_with_summary

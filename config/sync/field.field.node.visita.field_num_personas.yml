@@ -1,0 +1,23 @@
+uuid: 8ab09b04-6510-49fa-86fc-401266c78f13
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_num_personas
+    - node.type.visita
+id: node.visita.field_num_personas
+field_name: field_num_personas
+entity_type: node
+bundle: visita
+label: 'Número de personas'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

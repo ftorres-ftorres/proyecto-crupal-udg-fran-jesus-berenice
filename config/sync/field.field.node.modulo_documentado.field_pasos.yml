@@ -1,0 +1,22 @@
+uuid: 854751f9-7573-4bd2-b633-3c2efa182ceb
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pasos
+    - node.type.modulo_documentado
+  module:
+    - text
+id: node.modulo_documentado.field_pasos
+field_name: field_pasos
+entity_type: node
+bundle: modulo_documentado
+label: 'Cómo funciona'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

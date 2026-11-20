@@ -1,0 +1,14 @@
+uuid: 7691bd7e-c5a0-46a2-b67a-5ad632571293
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.residente_familiar
+  module:
+    - user
+id: user_add_role_action.residente_familiar
+label: 'Añade el rol Residente familiar / inquilino al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: residente_familiar

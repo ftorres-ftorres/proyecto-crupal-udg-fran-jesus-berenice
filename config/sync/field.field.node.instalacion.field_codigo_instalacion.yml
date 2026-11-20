@@ -1,0 +1,21 @@
+uuid: 4f9ce3e9-539f-4f26-9e39-bdf81c89e7a8
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_codigo_instalacion
+    - node.type.instalacion
+  module:
+    - options
+id: node.instalacion.field_codigo_instalacion
+field_name: field_codigo_instalacion
+entity_type: node
+bundle: instalacion
+label: Código
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

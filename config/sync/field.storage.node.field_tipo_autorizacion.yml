@@ -1,0 +1,36 @@
+uuid: 1f49be43-70af-42fb-8d54-e4f6228e5f48
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_tipo_autorizacion
+field_name: field_tipo_autorizacion
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: visita
+      label: Visita
+    -
+      value: proveedor
+      label: Proveedor
+    -
+      value: domestico
+      label: 'Personal doméstico'
+    -
+      value: cuidador
+      label: Cuidador
+    -
+      value: recurrente
+      label: 'Autorización recurrente'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

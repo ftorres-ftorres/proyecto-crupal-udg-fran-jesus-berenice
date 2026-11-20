@@ -1,0 +1,21 @@
+uuid: 1e6ae9ab-86bb-4b16-9311-5ffeec06dfb5
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_contacto_emergencia_tel
+  module:
+    - telephone
+    - user
+id: user.user.field_contacto_emergencia_tel
+field_name: field_contacto_emergencia_tel
+entity_type: user
+bundle: user
+label: 'Teléfono de emergencia'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

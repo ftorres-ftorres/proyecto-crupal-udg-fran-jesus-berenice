@@ -1,0 +1,67 @@
+uuid: 30e8850f-03f5-4e24-99e0-1589fd121293
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.user.user.field_contacto_emergencia_nom
+    - field.field.user.user.field_contacto_emergencia_tel
+    - field.field.user.user.field_domicilio
+    - field.field.user.user.field_last_password_reset
+    - field.field.user.user.field_mascotas
+    - field.field.user.user.field_nombre_completo
+    - field.field.user.user.field_notif_avisos
+    - field.field.user.user.field_notif_reservaciones
+    - field.field.user.user.field_notif_solicitudes
+    - field.field.user.user.field_numero_casa
+    - field.field.user.user.field_password_expiration
+    - field.field.user.user.field_pending_expire_sent
+    - field.field.user.user.field_relacion
+    - field.field.user.user.field_telefono
+    - field.field.user.user.field_vehiculos
+    - field.field.user.user.user_picture
+    - image.style.thumbnail
+  module:
+    - image
+    - user
+_core:
+  default_config_hash: SULWJMy7nHcntPqaIZ7FlQPf_XzIiC5tnUCKattDCEI
+id: user.user.default
+targetEntityType: user
+bundle: user
+mode: default
+content:
+  member_for:
+    weight: 5
+    region: content
+  user_picture:
+    type: image
+    label: hidden
+    settings:
+      image_link: content
+      image_style: thumbnail
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  field_contacto_emergencia_nom: true
+  field_contacto_emergencia_tel: true
+  field_domicilio: true
+  field_last_password_reset: true
+  field_mascotas: true
+  field_nombre_completo: true
+  field_notif_avisos: true
+  field_notif_reservaciones: true
+  field_notif_solicitudes: true
+  field_numero_casa: true
+  field_password_expiration: true
+  field_pending_expire_sent: true
+  field_relacion: true
+  field_telefono: true
+  field_vehiculos: true
+  langcode: true
+  search_api_excerpt: true

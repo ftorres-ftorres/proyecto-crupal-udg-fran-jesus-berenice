@@ -1,0 +1,6 @@
+services:
+  provenza_demo.commands:
+    class: Drupal\provenza_demo\Commands\DemoCommands
+    arguments: ['@class_resolver']
+    tags:
+      - { name: drush.command }

@@ -1,0 +1,15 @@
+uuid: 1d9f8187-6ecf-4262-a391-314fce307b9d
+langcode: es
+status: true
+dependencies:
+  config:
+    - flag.flag.guardar
+  module:
+    - flag
+id: flag_action.guardar_flag
+label: Guardar
+type: node
+plugin: 'flag_action:guardar_flag'
+configuration:
+  flag_id: guardar
+  flag_action: flag

@@ -1,0 +1,14 @@
+uuid: 19d5944d-e977-4a99-b26f-29cf49ade57a
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.mantenimiento
+  module:
+    - user
+id: user_remove_role_action.mantenimiento
+label: 'Elimina el rol Mantenimiento al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: mantenimiento

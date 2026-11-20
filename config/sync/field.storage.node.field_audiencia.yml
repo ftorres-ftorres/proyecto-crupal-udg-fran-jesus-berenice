@@ -1,0 +1,42 @@
+uuid: 670db09b-2240-4384-b5bb-115e3072f5d3
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_audiencia
+field_name: field_audiencia
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: visitante
+      label: 'Público / visitante'
+    -
+      value: residente_titular
+      label: 'Residente titular'
+    -
+      value: residente_familiar
+      label: 'Residente familiar / inquilino'
+    -
+      value: caseta
+      label: Caseta
+    -
+      value: mantenimiento
+      label: Mantenimiento
+    -
+      value: administracion
+      label: Administración
+    -
+      value: mesa_directiva
+      label: 'Mesa directiva'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

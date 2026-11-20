@@ -1,0 +1,7 @@
+uuid: 9f66711b-0c5e-4ceb-bed9-dc6b2d2f7faf
+langcode: es
+status: false
+dependencies: {  }
+formId: node_queja_form
+captchaType: default
+label: node_queja_form

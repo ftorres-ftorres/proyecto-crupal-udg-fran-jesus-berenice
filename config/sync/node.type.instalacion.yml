@@ -1,0 +1,11 @@
+uuid: 3989281c-b9c4-49a0-97b2-d1b5d08b5015
+langcode: es
+status: true
+dependencies: {  }
+name: Instalación
+type: instalacion
+description: null
+help: null
+new_revision: true
+preview_mode: 0
+display_submitted: false

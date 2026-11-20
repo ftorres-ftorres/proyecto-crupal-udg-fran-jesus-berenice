@@ -1,0 +1,9 @@
+uuid: 9ca801d2-5f14-4faf-86d1-ea6a40e5c179
+langcode: es
+status: true
+dependencies: {  }
+name: 'Tipos de queja o sugerencia'
+vid: tipos_queja
+description: null
+weight: 0
+new_revision: false

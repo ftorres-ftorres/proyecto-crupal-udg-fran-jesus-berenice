@@ -1,0 +1,24 @@
+uuid: c5ac5c1d-6e8d-411d-a250-282069a2f720
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.incidente
+  module:
+    - node
+id: provenza_incidente
+label: 'URL incidente'
+type: 'canonical_entities:node'
+pattern: '/seguridad/incidentes/[node:field_folio:value]'
+selection_criteria:
+  e35967a1-fc7c-4599-9e5b-00e650a514ab:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      incidente: incidente
+    uuid: 18993b17-e5ad-455d-8ee4-878753d84ec7
+selection_logic: and
+weight: -5
+relationships: {  }

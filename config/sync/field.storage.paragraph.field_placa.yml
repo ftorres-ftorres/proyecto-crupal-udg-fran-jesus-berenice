@@ -1,0 +1,21 @@
+uuid: abb66825-fb1b-4f36-bfca-b0ea69222d22
+langcode: es
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.field_placa
+field_name: field_placa
+entity_type: paragraph
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

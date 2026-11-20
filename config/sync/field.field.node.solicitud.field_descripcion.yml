@@ -1,0 +1,22 @@
+uuid: 73979470-ca7a-460b-9c71-66b26d93de0f
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_descripcion
+    - node.type.solicitud
+  module:
+    - text
+id: node.solicitud.field_descripcion
+field_name: field_descripcion
+entity_type: node
+bundle: solicitud
+label: Descripción
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

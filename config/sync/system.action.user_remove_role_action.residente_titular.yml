@@ -1,0 +1,14 @@
+uuid: 7fb3180e-3702-4689-894d-87731462ca05
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.residente_titular
+  module:
+    - user
+id: user_remove_role_action.residente_titular
+label: 'Elimina el rol Residente titular al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: residente_titular

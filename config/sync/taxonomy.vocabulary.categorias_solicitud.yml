@@ -1,0 +1,9 @@
+uuid: da175d08-6b64-4ccb-b76b-1e020546782b
+langcode: es
+status: true
+dependencies: {  }
+name: 'Categorías de solicitud'
+vid: categorias_solicitud
+description: null
+weight: 0
+new_revision: false

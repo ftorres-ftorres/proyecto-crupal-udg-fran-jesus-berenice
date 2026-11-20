@@ -1,0 +1,20 @@
+uuid: fd0658c0-2b98-4d19-853f-80d5a4ef27be
+langcode: es
+status: true
+dependencies:
+  module:
+    - datetime
+    - node
+id: node.field_checkout
+field_name: field_checkout
+entity_type: node
+type: datetime
+settings:
+  datetime_type: datetime
+module: datetime
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

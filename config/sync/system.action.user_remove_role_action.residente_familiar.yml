@@ -1,0 +1,14 @@
+uuid: e965b48b-c13c-4a06-bbd1-b42c6af180df
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.residente_familiar
+  module:
+    - user
+id: user_remove_role_action.residente_familiar
+label: 'Elimina el rol Residente familiar / inquilino al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: residente_familiar

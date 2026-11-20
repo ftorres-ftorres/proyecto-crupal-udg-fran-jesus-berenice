@@ -1,0 +1,21 @@
+uuid: 3bc26beb-414d-4f78-b253-53e2c3050eb2
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_telefono
+    - node.type.directorio
+  module:
+    - telephone
+id: node.directorio.field_telefono
+field_name: field_telefono
+entity_type: node
+bundle: directorio
+label: Teléfono
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

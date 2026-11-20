@@ -1,0 +1,55 @@
+_core:
+  default_config_hash: vBsL2_W9shDmfjbdlBeAMNq8aiJqiogVj40JUrgiGXQ
+mail_templates:
+  solicitud_status:
+    subject: 'Solicitud [node:field_folio:value]: [node:moderation_state]'
+    body: |-
+      Hola [user:display-name],
+
+      Tu solicitud con folio [node:field_folio:value] cambió a estado: [node:moderation_state].
+
+      Puedes ver el seguimiento en: [node:url]
+
+      Portal de colonos · Provenza Residencial
+  queja_status:
+    subject: 'Queja [node:field_folio:value]: [node:moderation_state]'
+    body: |-
+      Hola [user:display-name],
+
+      Tu queja o sugerencia con folio [node:field_folio:value] cambió a estado: [node:moderation_state].
+
+      Resolución: [node:field_mensaje_resolucion:value]
+
+      Portal de colonos · Provenza Residencial
+  reservacion_status:
+    subject: 'Reservación [node:field_folio:value]: [node:moderation_state]'
+    body: |-
+      Hola [user:display-name],
+
+      Tu reservación del salón de fiestas ([node:field_folio:value]) cambió a estado: [node:moderation_state].
+
+      Consulta los detalles en: [node:url]
+
+      Portal de colonos · Provenza Residencial
+  asignacion:
+    subject: 'Se te asignó la solicitud [node:field_folio:value]'
+    body: |-
+      Hola [user:display-name],
+
+      Se te asignó la solicitud [node:field_folio:value].
+
+      [node:url]
+
+      Portal de colonos · Provenza Residencial
+  aviso:
+    subject: 'Aviso: [node:title]'
+    body: |-
+      Hola [user:display-name],
+
+      Hay un aviso nuevo en Provenza Residencial:
+
+      [node:title]
+
+      [node:url]
+
+      Portal de colonos · Provenza Residencial

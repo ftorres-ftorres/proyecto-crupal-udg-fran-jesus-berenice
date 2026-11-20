@@ -1,0 +1,8 @@
+uuid: 71114dd5-7799-4dc0-bf41-c6e866473ae8
+langcode: es
+status: true
+dependencies: {  }
+id: guardhouse
+label: 'Menú de caseta'
+description: null
+locked: false

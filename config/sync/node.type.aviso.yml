@@ -1,0 +1,17 @@
+uuid: 6732dfe8-4210-470f-86df-1d8d038294fc
+langcode: es
+status: true
+dependencies:
+  module:
+    - scheduler
+third_party_settings:
+  scheduler:
+    publish_enable: true
+    unpublish_enable: true
+name: Aviso
+type: aviso
+description: null
+help: null
+new_revision: true
+preview_mode: 0
+display_submitted: false

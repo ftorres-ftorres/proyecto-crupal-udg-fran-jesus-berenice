@@ -1,0 +1,7 @@
+uuid: 3caf959e-e4a0-4cb6-9042-327fd35afc33
+langcode: es
+status: false
+dependencies: {  }
+formId: node_tarifa_form
+captchaType: default
+label: node_tarifa_form

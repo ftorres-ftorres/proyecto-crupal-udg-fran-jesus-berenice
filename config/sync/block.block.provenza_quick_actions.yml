@@ -1,0 +1,25 @@
+uuid: da080c74-bf76-4181-8d0d-bc9ea6f2a90f
+langcode: es
+status: true
+dependencies:
+  module:
+    - provenza_core
+    - system
+  theme:
+    - olivero
+id: provenza_quick_actions
+theme: olivero
+region: content_above
+weight: -10
+provider: null
+plugin: provenza_quick_actions
+settings:
+  id: provenza_quick_actions
+  label: ''
+  label_display: ''
+  provider: provenza_core
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

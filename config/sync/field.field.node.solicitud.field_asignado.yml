@@ -1,0 +1,21 @@
+uuid: 5e632045-deed-4a61-866b-cdb26187f8d4
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_asignado
+    - node.type.solicitud
+id: node.solicitud.field_asignado
+field_name: field_asignado
+entity_type: node
+bundle: solicitud
+label: 'Asignado a'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings: {  }
+field_type: entity_reference

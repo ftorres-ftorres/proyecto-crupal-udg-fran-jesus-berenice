@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for Provenza Core.
+ */
+
+use Drupal\provenza_core\Install\SiteInstaller;
+
+/**
+ * Implements hook_install().
+ */
+function provenza_core_install(): void {
+  \Drupal::classResolver(SiteInstaller::class)->install();
+  $paths = [
+    'solicitud_servicio' => '/form/solicitud-servicio',
+    'recoleccion_especial' => '/form/recoleccion-especial',
+    'calificar_servicio' => '/form/calificar-servicio',
+    'queja_sugerencia' => '/form/queja-sugerencia',
+    'reservar_salon' => '/form/reservar-salon',
+    'registrar_visita' => '/form/registrar-visita',
+    'reportar_incidente' => '/form/reportar-incidente',
+  ];
+  foreach ($paths as $id => $alias) {
+    $webform = \Drupal\webform\Entity\Webform::load($id);
+    if ($webform) {
+      $webform->set('settings', ['page' => TRUE] + $webform->getSettings());
+      $webform->save();
+    }
+    \Drupal::service('path_alias.manager');
+    $storage = \Drupal::entityTypeManager()->getStorage('path_alias');
+    $storage->create([
+      'path' => '/webform/' . str_replace('_', '-', $id),
+      'alias' => $alias,
+      'langcode' => 'es',
+    ])->save();
+    $storage->create([
+      'path' => '/form/' . $id,
+      'alias' => $alias,
+      'langcode' => 'es',
+    ])->save();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function provenza_core_uninstall(): void {
+  // Configuration is removed automatically.
+}
+
+/**
+ * Aligns navigation, search, recaptcha and public displays with the brief.
+ */
+function provenza_core_update_11001(): void {
+  \Drupal::service('module_installer')->install([
+    'search',
+    'captcha',
+    'recaptcha_v3',
+    'charts',
+    'charts_chartjs',
+    'field_group',
+  ]);
+  \Drupal::classResolver(SiteInstaller::class)->applyRequirementsFixes();
+  if (\Drupal::moduleHandler()->moduleExists('provenza_demo')) {
+    \Drupal::classResolver(\Drupal\provenza_demo\DemoContentGenerator::class)->generate();
+  }
+}

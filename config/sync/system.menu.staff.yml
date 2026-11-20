@@ -1,0 +1,8 @@
+uuid: 6734a284-7900-4545-bfac-68aa7056a262
+langcode: es
+status: true
+dependencies: {  }
+id: staff
+label: 'Menú de personal'
+description: null
+locked: false

@@ -1,0 +1,125 @@
+uuid: e65d6e27-d7c9-4095-a8c6-b23d92857352
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.queja
+  module:
+    - content_moderation
+id: queja_wf
+label: 'Quejas y sugerencias'
+type: content_moderation
+type_settings:
+  states:
+    accion_tomada:
+      label: 'Acción tomada'
+      weight: 2
+      published: true
+      default_revision: true
+    cerrada:
+      label: Cerrada
+      weight: 3
+      published: true
+      default_revision: true
+    draft:
+      label: Borrador
+      weight: -10
+      published: false
+      default_revision: false
+    en_investigacion:
+      label: 'En investigación'
+      weight: 1
+      published: true
+      default_revision: true
+    published:
+      label: Publicado
+      weight: -9
+      published: true
+      default_revision: true
+    recibida:
+      label: Recibida
+      weight: 0
+      published: true
+      default_revision: true
+  transitions:
+    crear:
+      label: Crear
+      from: {  }
+      to: recibida
+      weight: 0
+    de_accion_tomada_a_cerrada:
+      label: Cerrada
+      from:
+        - accion_tomada
+      to: cerrada
+      weight: 9
+    de_accion_tomada_a_en_investigacion:
+      label: 'En investigación'
+      from:
+        - accion_tomada
+      to: en_investigacion
+      weight: 8
+    de_accion_tomada_a_recibida:
+      label: Recibida
+      from:
+        - accion_tomada
+      to: recibida
+      weight: 7
+    de_cerrada_a_accion_tomada:
+      label: 'Acción tomada'
+      from:
+        - cerrada
+      to: accion_tomada
+      weight: 12
+    de_cerrada_a_en_investigacion:
+      label: 'En investigación'
+      from:
+        - cerrada
+      to: en_investigacion
+      weight: 11
+    de_cerrada_a_recibida:
+      label: Recibida
+      from:
+        - cerrada
+      to: recibida
+      weight: 10
+    de_en_investigacion_a_accion_tomada:
+      label: 'Acción tomada'
+      from:
+        - en_investigacion
+      to: accion_tomada
+      weight: 5
+    de_en_investigacion_a_cerrada:
+      label: Cerrada
+      from:
+        - en_investigacion
+      to: cerrada
+      weight: 6
+    de_en_investigacion_a_recibida:
+      label: Recibida
+      from:
+        - en_investigacion
+      to: recibida
+      weight: 4
+    de_recibida_a_accion_tomada:
+      label: 'Acción tomada'
+      from:
+        - recibida
+      to: accion_tomada
+      weight: 2
+    de_recibida_a_cerrada:
+      label: Cerrada
+      from:
+        - recibida
+      to: cerrada
+      weight: 3
+    de_recibida_a_en_investigacion:
+      label: 'En investigación'
+      from:
+        - recibida
+      to: en_investigacion
+      weight: 1
+  entity_types:
+    node:
+      - queja
+  default_moderation_state: recibida

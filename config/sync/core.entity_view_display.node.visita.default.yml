@@ -1,0 +1,179 @@
+uuid: 0915b6e9-cbc4-4b9b-bda6-e2079b2a85b1
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.node.visita.field_caducidad
+    - field.field.node.visita.field_checkin
+    - field.field.node.visita.field_checkout
+    - field.field.node.visita.field_codigo_qr
+    - field.field.node.visita.field_domicilio
+    - field.field.node.visita.field_estado_visita
+    - field.field.node.visita.field_folio
+    - field.field.node.visita.field_nombre_visita
+    - field.field.node.visita.field_num_personas
+    - field.field.node.visita.field_placa
+    - field.field.node.visita.field_qr
+    - field.field.node.visita.field_recurrente
+    - field.field.node.visita.field_tipo_autorizacion
+    - field.field.node.visita.field_ventana_fin
+    - field.field.node.visita.field_ventana_inicio
+    - node.type.visita
+  module:
+    - datetime
+    - image
+    - options
+    - user
+id: node.visita.default
+targetEntityType: node
+bundle: visita
+mode: default
+content:
+  field_caducidad:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_checkin:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_checkout:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_codigo_qr:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_domicilio:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_estado_visita:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_folio:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_nombre_visita:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  field_num_personas:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  field_placa:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 14
+    region: content
+  field_qr:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 15
+    region: content
+  field_recurrente:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 16
+    region: content
+  field_tipo_autorizacion:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 17
+    region: content
+  field_ventana_fin:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 18
+    region: content
+  field_ventana_inicio:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 19
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  langcode: true
+  layout_builder__layout: true
+  path: true
+  publish_on: true
+  search_api_excerpt: true
+  unpublish_on: true

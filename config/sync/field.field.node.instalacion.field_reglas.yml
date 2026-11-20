@@ -1,0 +1,22 @@
+uuid: 19ff483f-ecb6-4e2e-87bc-d4c9ea056add
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_reglas
+    - node.type.instalacion
+  module:
+    - text
+id: node.instalacion.field_reglas
+field_name: field_reglas
+entity_type: node
+bundle: instalacion
+label: 'Reglamento de uso'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

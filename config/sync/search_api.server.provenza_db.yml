@@ -1,0 +1,14 @@
+uuid: 9b1ea438-b41d-4598-81ed-d7ee5aba1a85
+langcode: es
+status: true
+dependencies:
+  module:
+    - search_api_db
+id: provenza_db
+name: 'Base de datos Provenza'
+description: ''
+backend: search_api_db
+backend_config:
+  database: 'default:default'
+  min_chars: 3
+  matching: partial

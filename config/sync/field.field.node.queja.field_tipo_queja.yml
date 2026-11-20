@@ -1,0 +1,24 @@
+uuid: 08d75d47-d0c1-47fc-a982-a731c233f9b6
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tipo_queja
+    - node.type.queja
+    - taxonomy.vocabulary.tipos_queja
+id: node.queja.field_tipo_queja
+field_name: field_tipo_queja
+entity_type: node
+bundle: queja
+label: Tipo
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      tipos_queja: tipos_queja
+field_type: entity_reference

@@ -1,0 +1,21 @@
+uuid: 21f6af4a-8733-476c-b0ba-5697d06ba6b6
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_acepta_reglas
+    - node.type.reservacion
+id: node.reservacion.field_acepta_reglas
+field_name: field_acepta_reglas
+entity_type: node
+bundle: reservacion
+label: 'Acepta el reglamento'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Activado
+  off_label: Desactivado
+field_type: boolean

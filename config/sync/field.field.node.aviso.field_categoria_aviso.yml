@@ -1,0 +1,24 @@
+uuid: 18937ee3-6f3b-4345-8ec1-c19dd43637a8
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_categoria_aviso
+    - node.type.aviso
+    - taxonomy.vocabulary.categorias_aviso
+id: node.aviso.field_categoria_aviso
+field_name: field_categoria_aviso
+entity_type: node
+bundle: aviso
+label: Categoría
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      categorias_aviso: categorias_aviso
+field_type: entity_reference

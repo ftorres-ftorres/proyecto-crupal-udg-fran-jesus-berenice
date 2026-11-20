@@ -1,0 +1,52 @@
+name: Provenza Core
+type: module
+description: 'Lógica del portal de colonos de Provenza Residencial: roles, tipos de contenido, flujos, accesos y notificaciones.'
+package: Provenza
+core_version_requirement: ^11
+configure: provenza_core.admin
+dependencies:
+  - drupal:node
+  - drupal:user
+  - drupal:taxonomy
+  - drupal:views
+  - drupal:media
+  - drupal:media_library
+  - drupal:file
+  - drupal:image
+  - drupal:path
+  - drupal:workflows
+  - drupal:content_moderation
+  - drupal:datetime
+  - drupal:datetime_range
+  - drupal:telephone
+  - drupal:options
+  - drupal:layout_builder
+  - drupal:contact
+  - drupal:dblog
+  - drupal:search
+  - webform:webform
+  - captcha:captcha
+  - recaptcha_v3:recaptcha_v3
+  - charts:charts
+  - charts:charts_chartjs
+  - field_group:field_group
+  - eca:eca
+  - eca:eca_workflow
+  - eca:eca_content
+  - paragraphs:paragraphs
+  - pathauto:pathauto
+  - token:token
+  - metatag:metatag
+  - scheduler:scheduler
+  - flag:flag
+  - search_api:search_api
+  - honeypot:honeypot
+  - password_policy:password_policy
+  - tfa:tfa
+  - smart_date:smart_date
+  - simple_sitemap:simple_sitemap
+  - views_bulk_operations:views_bulk_operations
+  - better_exposed_filters:better_exposed_filters
+  - views_data_export:views_data_export
+  - entity_print:entity_print
+  - drupal:responsive_image

@@ -1,0 +1,22 @@
+uuid: ec306328-e5b9-443f-9823-036ab596355e
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_notif_avisos
+  module:
+    - user
+id: user.user.field_notif_avisos
+field_name: field_notif_avisos
+entity_type: user
+bundle: user
+label: 'Avisarme de avisos comunitarios'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Activado
+  off_label: Desactivado
+field_type: boolean

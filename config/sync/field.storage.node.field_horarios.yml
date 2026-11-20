@@ -1,0 +1,19 @@
+uuid: 6b870824-6501-4775-bcf0-9cf9c51da21c
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_horarios
+field_name: field_horarios
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

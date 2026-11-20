@@ -1,0 +1,48 @@
+uuid: 234fee14-1e77-47d6-a9d4-23a9fe5b0a65
+langcode: es
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - node.type.incidente
+    - node.type.queja
+    - node.type.reservacion
+    - node.type.solicitud
+    - node.type.visita
+    - workflows.workflow.reservacion_wf
+  module:
+    - contact
+    - content_moderation
+    - entity_print
+    - filter
+    - flag
+    - media
+    - node
+    - system
+    - webform
+id: residente_familiar
+label: 'Residente familiar / inquilino'
+weight: 5
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access site-wide contact form'
+  - 'access user profiles'
+  - 'access webform overview'
+  - 'create incidente content'
+  - 'create queja content'
+  - 'create reservacion content'
+  - 'create solicitud content'
+  - 'create visita content'
+  - 'edit own queja content'
+  - 'edit own reservacion content'
+  - 'edit own solicitud content'
+  - 'edit own visita content'
+  - 'entity print access bundle documento'
+  - 'entity print access bundle reservacion'
+  - 'flag guardar'
+  - 'unflag guardar'
+  - 'use reservacion_wf transition a_cancelada'
+  - 'use text format basic_html'
+  - 'view media'
+  - 'view own unpublished content'

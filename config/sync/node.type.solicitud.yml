@@ -1,0 +1,11 @@
+uuid: 08a34030-75fb-4b13-b68c-edeb5e62994d
+langcode: es
+status: true
+dependencies: {  }
+name: 'Solicitud de servicio'
+type: solicitud
+description: null
+help: null
+new_revision: true
+preview_mode: 0
+display_submitted: false

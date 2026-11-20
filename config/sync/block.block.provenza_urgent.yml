@@ -1,0 +1,20 @@
+uuid: 82c9d3ad-4b88-489d-9d1d-4a5f44d6019b
+langcode: es
+status: true
+dependencies:
+  module:
+    - provenza_core
+  theme:
+    - olivero
+id: provenza_urgent
+theme: olivero
+region: highlighted
+weight: -20
+provider: null
+plugin: provenza_urgent_notices
+settings:
+  id: provenza_urgent_notices
+  label: ''
+  label_display: ''
+  provider: provenza_core
+visibility: {  }

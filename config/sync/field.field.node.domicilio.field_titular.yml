@@ -1,0 +1,21 @@
+uuid: 876aa922-493f-4970-a018-5396ff01041e
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_titular
+    - node.type.domicilio
+id: node.domicilio.field_titular
+field_name: field_titular
+entity_type: node
+bundle: domicilio
+label: Titular
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings: {  }
+field_type: entity_reference

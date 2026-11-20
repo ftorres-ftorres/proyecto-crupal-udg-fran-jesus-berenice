@@ -1,0 +1,21 @@
+uuid: 1ec780aa-e16c-4b9f-85b0-e32aa928af3b
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_fecha_fin
+    - node.type.reservacion
+  module:
+    - datetime
+id: node.reservacion.field_fecha_fin
+field_name: field_fecha_fin
+entity_type: node
+bundle: reservacion
+label: Fin
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

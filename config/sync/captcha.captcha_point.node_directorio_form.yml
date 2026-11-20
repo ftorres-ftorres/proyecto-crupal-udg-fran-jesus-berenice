@@ -1,0 +1,7 @@
+uuid: 2685de80-c30b-469c-9403-c8fcf195a623
+langcode: es
+status: false
+dependencies: {  }
+formId: node_directorio_form
+captchaType: default
+label: node_directorio_form

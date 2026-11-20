@@ -1,0 +1,22 @@
+uuid: 803844be-a147-4062-9d36-3d833c3c4eed
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mensaje_resolucion
+    - node.type.queja
+  module:
+    - text
+id: node.queja.field_mensaje_resolucion
+field_name: field_mensaje_resolucion
+entity_type: node
+bundle: queja
+label: 'Mensaje de resolución'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

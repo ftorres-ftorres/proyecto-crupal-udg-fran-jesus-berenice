@@ -1,0 +1,24 @@
+uuid: 58d1bbc3-67b0-45cb-9e5c-9c2e8b746534
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.solicitud
+  module:
+    - node
+id: provenza_solicitud
+label: 'URL solicitud'
+type: 'canonical_entities:node'
+pattern: '/solicitudes/[node:field_folio:value]'
+selection_criteria:
+  7022392d-79c4-4d2c-922b-a8e72ed1b07f:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      solicitud: solicitud
+    uuid: 41c6c018-a22b-4067-ba76-04e8ebe1cf93
+selection_logic: and
+weight: -5
+relationships: {  }

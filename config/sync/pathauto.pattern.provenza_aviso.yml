@@ -1,0 +1,24 @@
+uuid: 06c318bb-1c07-41fe-a894-8811fa993c98
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.aviso
+  module:
+    - node
+id: provenza_aviso
+label: 'URL aviso'
+type: 'canonical_entities:node'
+pattern: '/comunidad/avisos/[node:title]'
+selection_criteria:
+  a139f0b7-af4b-4716-9f61-b0dc2a96eb1d:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      aviso: aviso
+    uuid: 634a31a9-8822-4b3b-8413-98ca572a834d
+selection_logic: and
+weight: -5
+relationships: {  }

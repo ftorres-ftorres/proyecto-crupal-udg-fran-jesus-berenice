@@ -1,0 +1,20 @@
+uuid: 58ce6592-7d5b-4cbc-98cf-317df9e23a15
+langcode: es
+status: true
+dependencies:
+  module:
+    - datetime
+    - node
+id: node.field_fecha_recoleccion
+field_name: field_fecha_recoleccion
+entity_type: node
+type: datetime
+settings:
+  datetime_type: date
+module: datetime
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

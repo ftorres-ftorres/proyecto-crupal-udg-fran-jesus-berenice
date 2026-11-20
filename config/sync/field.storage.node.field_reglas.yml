@@ -1,0 +1,19 @@
+uuid: 322ae4f8-536e-45cf-b8a9-0037480d637c
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_reglas
+field_name: field_reglas
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

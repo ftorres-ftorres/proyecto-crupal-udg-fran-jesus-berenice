@@ -1,0 +1,19 @@
+uuid: d5bfdbec-6256-4144-96ea-7384c4d33ab3
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_folio
+    - node.type.visita
+id: node.visita.field_folio
+field_name: field_folio
+entity_type: node
+bundle: visita
+label: Folio
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

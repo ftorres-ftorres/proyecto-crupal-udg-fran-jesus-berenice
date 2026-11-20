@@ -1,0 +1,24 @@
+uuid: e5be2e68-abf8-4d27-9840-64c5687635c8
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.directorio
+  module:
+    - text
+id: node.directorio.body
+field_name: body
+entity_type: node
+bundle: directorio
+label: Contenido
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+  required_summary: false
+  allowed_formats: {  }
+field_type: text_with_summary

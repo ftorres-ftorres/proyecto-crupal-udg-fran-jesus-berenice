@@ -1,0 +1,19 @@
+uuid: db17eb23-b8dc-4995-a2b2-aaa21b7b3c1f
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_calle
+    - node.type.domicilio
+id: node.domicilio.field_calle
+field_name: field_calle
+entity_type: node
+bundle: domicilio
+label: Calle
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,24 @@
+uuid: ad40151b-411f-48b3-ab40-446a8a91f58d
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_instalacion
+    - node.type.instalacion
+    - node.type.reservacion
+id: node.reservacion.field_instalacion
+field_name: field_instalacion
+entity_type: node
+bundle: reservacion
+label: Instalación
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      instalacion: instalacion
+field_type: entity_reference

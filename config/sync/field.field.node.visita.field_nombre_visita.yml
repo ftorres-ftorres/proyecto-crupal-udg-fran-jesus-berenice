@@ -1,0 +1,19 @@
+uuid: 546f8ed2-5507-465b-8935-f86364e2a661
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_nombre_visita
+    - node.type.visita
+id: node.visita.field_nombre_visita
+field_name: field_nombre_visita
+entity_type: node
+bundle: visita
+label: 'Nombre de la visita'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

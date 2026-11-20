@@ -1,0 +1,24 @@
+uuid: 98e27fbc-efd8-478b-a693-691e70cf7105
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.queja
+  module:
+    - node
+id: provenza_queja
+label: 'URL queja'
+type: 'canonical_entities:node'
+pattern: '/quejas/[node:field_folio:value]'
+selection_criteria:
+  0048bc3e-7923-4310-89c6-c3418bdead56:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      queja: queja
+    uuid: d5e9aa30-1753-4d72-ad8f-db3c3ad697a0
+selection_logic: and
+weight: -5
+relationships: {  }

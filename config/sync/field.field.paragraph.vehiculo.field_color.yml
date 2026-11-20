@@ -1,0 +1,19 @@
+uuid: 7f7f8f03-23ab-4a05-a9c7-ee50896bbf67
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_color
+    - paragraphs.paragraphs_type.vehiculo
+id: paragraph.vehiculo.field_color
+field_name: field_color
+entity_type: paragraph
+bundle: vehiculo
+label: Color
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

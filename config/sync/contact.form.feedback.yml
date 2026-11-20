@@ -1,0 +1,12 @@
+uuid: c610469e-1af4-4891-8c0b-ef58442e44cf
+langcode: es
+status: true
+dependencies: {  }
+id: feedback
+label: Contacto
+recipients:
+  - administracion@provenza.local
+reply: ''
+weight: 0
+message: 'Gracias. Tu mensaje fue enviado a Administración.'
+redirect: /contacto

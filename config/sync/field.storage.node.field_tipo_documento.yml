@@ -1,0 +1,20 @@
+uuid: 6ab578a5-751b-447d-b372-b29903067a7f
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.field_tipo_documento
+field_name: field_tipo_documento
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,11 @@
+uuid: 13056746-e9f4-4a6a-bff7-9ce4e3f2b83d
+langcode: es
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: LvxVjof3cIMtLiLuTX7RwrzDMkzztGz8snF66lipmZw
+id: '403'
+label: '403 acceso denegado'
+tags:
+  canonical_url: '<none>'
+  shortlink: '<none>'

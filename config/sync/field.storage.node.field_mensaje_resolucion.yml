@@ -1,0 +1,19 @@
+uuid: f509eeec-42ef-4e55-bafa-4a561c1f5580
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_mensaje_resolucion
+field_name: field_mensaje_resolucion
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

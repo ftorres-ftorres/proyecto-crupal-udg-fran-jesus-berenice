@@ -1,0 +1,19 @@
+uuid: 19dc04aa-dfad-46d0-a93c-e3a4a60c8cda
+langcode: es
+status: true
+dependencies:
+  module:
+    - telephone
+    - user
+id: user.field_contacto_emergencia_tel
+field_name: field_contacto_emergencia_tel
+entity_type: user
+type: telephone
+settings: {  }
+module: telephone
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

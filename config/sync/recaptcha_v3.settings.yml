@@ -1,0 +1,11 @@
+_core:
+  default_config_hash: UqoPtv5ZWzKvrSUU6kRFwsddB-I_BN16Cw38Rtk7H7A
+langcode: es
+site_key: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
+secret_key: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
+hide_badge: false
+verify_hostname: false
+default_challenge: captcha/Math
+error_message: 'No se pudo verificar que no eres un robot. Inténtalo de nuevo.'
+cacheable: false
+library_use_recaptcha_net: false

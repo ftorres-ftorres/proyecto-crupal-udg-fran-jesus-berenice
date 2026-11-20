@@ -1,0 +1,15 @@
+uuid: 29747966-d275-4e05-83ba-cbd9b6eae5aa
+langcode: es
+status: true
+dependencies:
+  config:
+    - flag.flag.prioridad
+  module:
+    - flag
+id: flag_action.prioridad_unflag
+label: 'Quitar prioridad'
+type: node
+plugin: 'flag_action:prioridad_unflag'
+configuration:
+  flag_id: prioridad
+  flag_action: unflag

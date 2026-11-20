@@ -1,0 +1,19 @@
+uuid: 16aeeb0a-4c92-4d16-8f06-f4f3f3985a0a
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_pasos
+field_name: field_pasos
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

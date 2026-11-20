@@ -1,0 +1,14 @@
+uuid: 24964f1e-ce50-445a-89ad-191b841611da
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.mantenimiento
+  module:
+    - user
+id: user_add_role_action.mantenimiento
+label: 'Añade el rol Mantenimiento al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: mantenimiento

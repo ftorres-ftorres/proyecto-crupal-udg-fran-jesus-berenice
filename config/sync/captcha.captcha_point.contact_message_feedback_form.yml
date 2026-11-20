@@ -1,0 +1,7 @@
+uuid: f228f0ce-09dc-4b58-a0d3-4e6c309f777d
+langcode: es
+status: true
+dependencies: {  }
+formId: contact_message_feedback_form
+captchaType: recaptcha_v3/provenza
+label: Contacto

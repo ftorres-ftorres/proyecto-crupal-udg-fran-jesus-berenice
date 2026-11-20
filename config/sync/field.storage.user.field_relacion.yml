@@ -1,0 +1,30 @@
+uuid: 1bc92efb-ddbc-4d8d-9408-ae6e59aebdfa
+langcode: es
+status: true
+dependencies:
+  module:
+    - options
+    - user
+id: user.field_relacion
+field_name: field_relacion
+entity_type: user
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: titular
+      label: Titular
+    -
+      value: familiar
+      label: Familiar
+    -
+      value: inquilino
+      label: Inquilino
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

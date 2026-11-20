@@ -1,0 +1,26 @@
+services:
+  provenza_core.folio:
+    class: Drupal\provenza_core\FolioGenerator
+    arguments: ['@database']
+  provenza_core.qr:
+    class: Drupal\provenza_core\QrPassService
+    arguments: ['@file.repository', '@file_system', '@date.formatter']
+  provenza_core.mail_templates:
+    class: Drupal\provenza_core\MailTemplateService
+    arguments: ['@config.factory', '@plugin.manager.mail', '@token', '@logger.channel.provenza_auditoria', '@language_manager']
+  provenza_core.audit:
+    class: Drupal\provenza_core\AuditLogger
+    arguments: ['@logger.channel.provenza_auditoria', '@current_user']
+  logger.channel.provenza_auditoria:
+    parent: logger.channel_base
+    arguments: ['auditoria']
+  provenza_core.status_subscriber:
+    class: Drupal\provenza_core\EventSubscriber\StatusChangeSubscriber
+    arguments: ['@provenza_core.mail_templates', '@provenza_core.audit', '@entity_type.manager']
+    tags:
+      - { name: event_subscriber }
+  provenza.commands:
+    class: Drupal\provenza_core\Commands\ProvenzaCommands
+    arguments: ['@class_resolver']
+    tags:
+      - { name: drush.command }

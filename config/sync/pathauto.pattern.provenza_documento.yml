@@ -1,0 +1,24 @@
+uuid: 418f86bf-c770-4b2e-8816-a590a05b1d2f
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.documento
+  module:
+    - node
+id: provenza_documento
+label: 'URL documento'
+type: 'canonical_entities:node'
+pattern: '/comunidad/documentos/[node:title]'
+selection_criteria:
+  2e04dd62-115d-4b87-8a5c-6c03a37d214f:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      documento: documento
+    uuid: 074f74a0-c9e6-4d17-a5b9-1f6d8eecd701
+selection_logic: and
+weight: -5
+relationships: {  }

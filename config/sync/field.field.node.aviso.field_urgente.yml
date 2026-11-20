@@ -1,0 +1,21 @@
+uuid: a0d31269-cf7b-4c7f-be78-18ea3378400b
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_urgente
+    - node.type.aviso
+id: node.aviso.field_urgente
+field_name: field_urgente
+entity_type: node
+bundle: aviso
+label: Urgente
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Activado
+  off_label: Desactivado
+field_type: boolean

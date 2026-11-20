@@ -1,0 +1,393 @@
+provenza_core.home:
+  path: '/inicio'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\PortalController::home'
+    _title: 'Inicio'
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.sitemap:
+  path: '/mapa-del-sitio'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\PortalController::sitemap'
+    _title: 'Mapa del sitio'
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.search:
+  path: '/buscar'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\PortalController::search'
+    _title: 'Buscar'
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.mis_solicitudes:
+  path: '/solicitudes/mis-solicitudes'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\TrackingController::myList'
+    _title: 'Mis solicitudes y seguimiento'
+    type: solicitud
+  requirements:
+    _role: 'residente_titular+residente_familiar+administracion+webmaster+authenticated'
+
+provenza_core.mis_quejas:
+  path: '/quejas/mis-quejas'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\TrackingController::myList'
+    _title: 'Mis quejas y seguimiento'
+    type: queja
+  requirements:
+    _role: 'residente_titular+residente_familiar+administracion+webmaster'
+
+provenza_core.mis_reservaciones:
+  path: '/instalaciones/salon-de-fiestas/mis-reservaciones'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\TrackingController::myList'
+    _title: 'Mis reservaciones'
+    type: reservacion
+  requirements:
+    _role: 'residente_titular+residente_familiar+administracion+webmaster'
+
+provenza_core.mis_autorizaciones:
+  path: '/seguridad/mis-autorizaciones'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\TrackingController::myList'
+    _title: 'Mis autorizaciones y pases QR'
+    type: visita
+  requirements:
+    _role: 'residente_titular+residente_familiar+administracion+webmaster+caseta'
+
+provenza_core.mis_vehiculos:
+  path: '/seguridad/mis-vehiculos'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\AccountController::vehicles'
+    _title: 'Mis vehículos y tags'
+  requirements:
+    _role: 'residente_titular+residente_familiar+administracion+webmaster'
+
+provenza_core.mi_domicilio:
+  path: '/cuenta/mi-domicilio'
+  defaults:
+    _form: '\Drupal\provenza_core\Form\HouseholdForm'
+    _title: 'Mi domicilio y familiares'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+
+provenza_core.notificaciones:
+  path: '/cuenta/notificaciones'
+  defaults:
+    _form: '\Drupal\provenza_core\Form\NotificationsForm'
+    _title: 'Notificaciones por correo'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+
+provenza_core.seguridad:
+  path: '/cuenta/seguridad'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\AccountController::security'
+    _title: 'Seguridad de la cuenta'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+
+provenza_core.reporte_confidencial:
+  path: '/quejas/reporte-confidencial'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\PortalController::confidentialComplaint'
+    _title: 'Reporte confidencial'
+  requirements:
+    _role: 'residente_titular+residente_familiar+administracion+webmaster'
+
+provenza_core.mis_asignaciones:
+  path: '/mantenimiento/asignaciones'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\TrackingController::assigned'
+    _title: 'Mis asignaciones'
+  requirements:
+    _permission: 'update assigned requests'
+
+provenza_core.caseta:
+  path: '/caseta'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\GuardhouseController::today'
+    _title: 'Vista de caseta'
+  requirements:
+    _permission: 'access caseta view'
+
+provenza_core.caseta_check:
+  path: '/caseta/{node}/{op}'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\GuardhouseController::check'
+  requirements:
+    _permission: 'access caseta view'
+    node: \d+
+    op: 'entrada|salida'
+    _csrf_token: 'TRUE'
+  options:
+    parameters:
+      node:
+        type: entity:node
+
+provenza_core.admin:
+  path: '/admin/provenza'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\AdminController::panel'
+    _title: 'Panel de administración'
+  requirements:
+    _permission: 'access provenza admin'
+
+provenza_core.residents:
+  path: '/admin/provenza/residentes'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\AdminController::residents'
+    _title: 'Residentes y domicilios'
+  requirements:
+    _permission: 'manage provenza residents'
+
+provenza_core.approve_user:
+  path: '/admin/provenza/residentes/{user}/aprobar'
+  defaults:
+    _form: '\Drupal\provenza_core\Form\ApproveUserForm'
+    _title: 'Aprobar registro'
+  requirements:
+    _permission: 'manage provenza residents'
+  options:
+    parameters:
+      user:
+        type: entity:user
+
+provenza_core.reject_user:
+  path: '/admin/provenza/residentes/{user}/rechazar'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\AdminController::rejectUser'
+    _title: 'Rechazar registro'
+  requirements:
+    _permission: 'manage provenza residents'
+    _csrf_token: 'TRUE'
+  options:
+    parameters:
+      user:
+        type: entity:user
+
+provenza_core.deactivate_house:
+  path: '/admin/provenza/domicilios/{node}/desactivar'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\AdminController::deactivateHouse'
+  requirements:
+    _permission: 'manage provenza residents'
+    _csrf_token: 'TRUE'
+  options:
+    parameters:
+      node:
+        type: entity:node
+
+provenza_core.reports:
+  path: '/admin/provenza/reportes'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\AdminController::reports'
+    _title: 'Reportes y tableros'
+  requirements:
+    _permission: 'view management reports'
+
+provenza_core.audit:
+  path: '/admin/provenza/auditoria'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\AdminController::audit'
+    _title: 'Auditoría'
+  requirements:
+    _permission: 'access provenza admin'
+
+provenza_core.mail_templates:
+  path: '/admin/provenza/plantillas-correo'
+  defaults:
+    _form: '\Drupal\provenza_core\Form\MailTemplatesForm'
+    _title: 'Plantillas de correo'
+  requirements:
+    _permission: 'access provenza admin'
+
+provenza_core.assign:
+  path: '/admin/provenza/asignar/{node}/{user}'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\AdminController::assign'
+  requirements:
+    _permission: 'assign service requests'
+    _csrf_token: 'TRUE'
+  options:
+    parameters:
+      node:
+        type: entity:node
+      user:
+        type: entity:user
+
+provenza_core.transition:
+  path: '/admin/provenza/estado/{node}/{state}'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\AdminController::transition'
+  requirements:
+    _permission: 'access provenza admin'
+    _csrf_token: 'TRUE'
+  options:
+    parameters:
+      node:
+        type: entity:node
+
+provenza_core.export_queue:
+  path: '/admin/provenza/bandeja/exportar'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\AdminController::export'
+    _title: 'Exportar bandeja'
+  requirements:
+    _permission: 'access provenza admin'
+
+provenza_core.qr:
+  path: '/seguridad/pase/{node}'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\GuardhouseController::pass'
+    _title: 'Pase QR'
+  requirements:
+    _entity_access: 'node.view'
+  options:
+    parameters:
+      node:
+        type: entity:node
+
+provenza_core.calendar:
+  path: '/instalaciones/salon-de-fiestas/calendario'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\PortalController::calendar'
+    _title: 'Calendario de disponibilidad'
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.list:
+  path: '/lista/{bundle}'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\PortalController::listing'
+    _title_callback: '\Drupal\provenza_core\Controller\PortalController::listingTitle'
+  requirements:
+    _access: 'TRUE'
+    bundle: 'tarifa|aviso|faq|documento|directorio|instalacion|evento|modulo_documentado'
+
+provenza_core.tarifas:
+  path: '/comunidad/cuotas-y-tarifas'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\PortalController::listing'
+    _title: 'Cuotas y tarifas'
+    bundle: tarifa
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.avisos:
+  path: '/comunidad/avisos'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\PortalController::listing'
+    _title: 'Avisos'
+    bundle: aviso
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.faqs:
+  path: '/comunidad/preguntas-frecuentes'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\PortalController::listing'
+    _title: 'Preguntas frecuentes'
+    bundle: faq
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.documentos:
+  path: '/comunidad/documentos'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\PortalController::listing'
+    _title: 'Documentos y reglamento'
+    bundle: documento
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.actas:
+  path: '/comunidad/actas'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\PortalController::listing'
+    _title: 'Actas de asamblea'
+    bundle: documento
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.directorio:
+  path: '/comunidad/directorio'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\PortalController::listing'
+    _title: 'Directorio'
+    bundle: directorio
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.instalaciones:
+  path: '/instalaciones'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\PortalController::listing'
+    _title: 'Instalaciones'
+    bundle: instalacion
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.eventos:
+  path: '/comunidad/calendario'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\PortalController::listing'
+    _title: 'Calendario de eventos'
+    bundle: evento
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.tutorial:
+  path: '/asi-lo-construimos'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\TutorialController::landing'
+    _title: 'Así lo construimos'
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.tutorial_how:
+  path: '/asi-lo-construimos/como-funciona-drupal'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\TutorialController::howDrupalWorks'
+    _title: '¿Cómo funciona Drupal?'
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.tutorial_categories:
+  path: '/asi-lo-construimos/modulos'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\TutorialController::categories'
+    _title: 'Módulos por categoría'
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.tutorial_category:
+  path: '/asi-lo-construimos/modulos/{tid}'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\TutorialController::category'
+    _title_callback: '\Drupal\provenza_core\Controller\TutorialController::categoryTitle'
+  requirements:
+    _access: 'TRUE'
+  options:
+    parameters:
+      tid:
+        type: entity:taxonomy_term
+
+provenza_core.tutorial_glossary:
+  path: '/asi-lo-construimos/glosario'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\TutorialController::glossary'
+    _title: 'Glosario'
+  requirements:
+    _access: 'TRUE'
+
+provenza_core.tutorial_credits:
+  path: '/asi-lo-construimos/creditos'
+  defaults:
+    _controller: '\Drupal\provenza_core\Controller\TutorialController::credits'
+    _title: 'Créditos y actualizaciones'
+  requirements:
+    _access: 'TRUE'

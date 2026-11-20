@@ -1,0 +1,21 @@
+uuid: 0545cb16-32df-412c-b11e-45899bbeb697
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_recurrente
+    - node.type.visita
+id: node.visita.field_recurrente
+field_name: field_recurrente
+entity_type: node
+bundle: visita
+label: Recurrente
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Activado
+  off_label: Desactivado
+field_type: boolean

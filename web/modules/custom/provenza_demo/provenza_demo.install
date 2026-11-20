@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Installs sample data.
+ */
+
+use Drupal\provenza_demo\DemoContentGenerator;
+
+/**
+ * Implements hook_install().
+ */
+function provenza_demo_install(): void {
+  \Drupal::classResolver(DemoContentGenerator::class)->generate();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function provenza_demo_uninstall(): void {
+  // Sample nodes remain unless deleted manually; users keep their accounts.
+}

@@ -1,0 +1,9 @@
+uuid: 0954dd22-6c30-40ca-9712-c1de90035643
+langcode: es
+status: true
+dependencies: {  }
+id: es
+label: Español
+direction: ltr
+weight: 0
+locked: false

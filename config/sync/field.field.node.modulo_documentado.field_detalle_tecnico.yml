@@ -1,0 +1,22 @@
+uuid: 7324bbd1-fa14-4c8e-aef9-fcd779e0557e
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_detalle_tecnico
+    - node.type.modulo_documentado
+  module:
+    - text
+id: node.modulo_documentado.field_detalle_tecnico
+field_name: field_detalle_tecnico
+entity_type: node
+bundle: modulo_documentado
+label: 'Detalle técnico'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

@@ -1,0 +1,194 @@
+uuid: cf68b079-700f-41c3-b4d3-1224d74745fd
+langcode: es
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - node.type.aviso
+    - node.type.directorio
+    - node.type.documento
+    - node.type.domicilio
+    - node.type.evento
+    - node.type.faq
+    - node.type.incidente
+    - node.type.instalacion
+    - node.type.modulo_documentado
+    - node.type.page
+    - node.type.queja
+    - node.type.reservacion
+    - node.type.solicitud
+    - node.type.tarifa
+    - node.type.visita
+    - workflows.workflow.queja_wf
+    - workflows.workflow.reservacion_wf
+    - workflows.workflow.solicitud_wf
+  module:
+    - block
+    - contact
+    - content_moderation
+    - entity_print
+    - filter
+    - flag
+    - media
+    - node
+    - provenza_core
+    - system
+    - toolbar
+    - views_ui
+    - webform
+id: webmaster
+label: Webmaster
+weight: 10
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access content overview'
+  - 'access provenza admin'
+  - 'access site-wide contact form'
+  - 'access toolbar'
+  - 'access user contact forms'
+  - 'access user profiles'
+  - 'access webform overview'
+  - 'administer blocks'
+  - 'administer contact forms'
+  - 'administer menu'
+  - 'administer modules'
+  - 'administer nodes'
+  - 'administer permissions'
+  - 'administer site configuration'
+  - 'administer themes'
+  - 'administer users'
+  - 'administer views'
+  - 'administer webform'
+  - 'assign service requests'
+  - 'create aviso content'
+  - 'create directorio content'
+  - 'create documento content'
+  - 'create domicilio content'
+  - 'create evento content'
+  - 'create faq content'
+  - 'create incidente content'
+  - 'create instalacion content'
+  - 'create modulo_documentado content'
+  - 'create page content'
+  - 'create queja content'
+  - 'create reservacion content'
+  - 'create solicitud content'
+  - 'create tarifa content'
+  - 'create visita content'
+  - 'delete any aviso content'
+  - 'edit any aviso content'
+  - 'edit any directorio content'
+  - 'edit any documento content'
+  - 'edit any domicilio content'
+  - 'edit any evento content'
+  - 'edit any faq content'
+  - 'edit any incidente content'
+  - 'edit any instalacion content'
+  - 'edit any modulo_documentado content'
+  - 'edit any page content'
+  - 'edit any queja content'
+  - 'edit any reservacion content'
+  - 'edit any solicitud content'
+  - 'edit any tarifa content'
+  - 'edit any visita content'
+  - 'edit own queja content'
+  - 'edit own reservacion content'
+  - 'edit own solicitud content'
+  - 'edit own visita content'
+  - 'entity print access bundle documento'
+  - 'entity print access bundle reservacion'
+  - 'flag guardar'
+  - 'flag prioridad'
+  - 'manage provenza residents'
+  - 'unflag guardar'
+  - 'unflag prioridad'
+  - 'use queja_wf transition crear'
+  - 'use queja_wf transition de_accion_tomada_a_cerrada'
+  - 'use queja_wf transition de_accion_tomada_a_en_investigacion'
+  - 'use queja_wf transition de_accion_tomada_a_recibida'
+  - 'use queja_wf transition de_cerrada_a_accion_tomada'
+  - 'use queja_wf transition de_cerrada_a_en_investigacion'
+  - 'use queja_wf transition de_cerrada_a_recibida'
+  - 'use queja_wf transition de_en_investigacion_a_accion_tomada'
+  - 'use queja_wf transition de_en_investigacion_a_cerrada'
+  - 'use queja_wf transition de_en_investigacion_a_recibida'
+  - 'use queja_wf transition de_recibida_a_accion_tomada'
+  - 'use queja_wf transition de_recibida_a_cerrada'
+  - 'use queja_wf transition de_recibida_a_en_investigacion'
+  - 'use reservacion_wf transition a_cancelada'
+  - 'use reservacion_wf transition crear'
+  - 'use reservacion_wf transition de_aprobada_a_cancelada'
+  - 'use reservacion_wf transition de_aprobada_a_realizada'
+  - 'use reservacion_wf transition de_aprobada_a_rechazada'
+  - 'use reservacion_wf transition de_aprobada_a_solicitada'
+  - 'use reservacion_wf transition de_cancelada_a_aprobada'
+  - 'use reservacion_wf transition de_cancelada_a_realizada'
+  - 'use reservacion_wf transition de_cancelada_a_rechazada'
+  - 'use reservacion_wf transition de_cancelada_a_solicitada'
+  - 'use reservacion_wf transition de_realizada_a_aprobada'
+  - 'use reservacion_wf transition de_realizada_a_cancelada'
+  - 'use reservacion_wf transition de_realizada_a_rechazada'
+  - 'use reservacion_wf transition de_realizada_a_solicitada'
+  - 'use reservacion_wf transition de_rechazada_a_aprobada'
+  - 'use reservacion_wf transition de_rechazada_a_cancelada'
+  - 'use reservacion_wf transition de_rechazada_a_realizada'
+  - 'use reservacion_wf transition de_rechazada_a_solicitada'
+  - 'use reservacion_wf transition de_solicitada_a_aprobada'
+  - 'use reservacion_wf transition de_solicitada_a_cancelada'
+  - 'use reservacion_wf transition de_solicitada_a_realizada'
+  - 'use reservacion_wf transition de_solicitada_a_rechazada'
+  - 'use solicitud_wf transition a_en_proceso'
+  - 'use solicitud_wf transition a_resuelta'
+  - 'use solicitud_wf transition crear'
+  - 'use solicitud_wf transition de_asignada_a_cerrada'
+  - 'use solicitud_wf transition de_asignada_a_en_proceso'
+  - 'use solicitud_wf transition de_asignada_a_en_revision'
+  - 'use solicitud_wf transition de_asignada_a_rechazada'
+  - 'use solicitud_wf transition de_asignada_a_recibida'
+  - 'use solicitud_wf transition de_asignada_a_resuelta'
+  - 'use solicitud_wf transition de_cerrada_a_asignada'
+  - 'use solicitud_wf transition de_cerrada_a_en_proceso'
+  - 'use solicitud_wf transition de_cerrada_a_en_revision'
+  - 'use solicitud_wf transition de_cerrada_a_rechazada'
+  - 'use solicitud_wf transition de_cerrada_a_recibida'
+  - 'use solicitud_wf transition de_cerrada_a_resuelta'
+  - 'use solicitud_wf transition de_en_proceso_a_asignada'
+  - 'use solicitud_wf transition de_en_proceso_a_cerrada'
+  - 'use solicitud_wf transition de_en_proceso_a_en_revision'
+  - 'use solicitud_wf transition de_en_proceso_a_rechazada'
+  - 'use solicitud_wf transition de_en_proceso_a_recibida'
+  - 'use solicitud_wf transition de_en_proceso_a_resuelta'
+  - 'use solicitud_wf transition de_en_revision_a_asignada'
+  - 'use solicitud_wf transition de_en_revision_a_cerrada'
+  - 'use solicitud_wf transition de_en_revision_a_en_proceso'
+  - 'use solicitud_wf transition de_en_revision_a_rechazada'
+  - 'use solicitud_wf transition de_en_revision_a_recibida'
+  - 'use solicitud_wf transition de_en_revision_a_resuelta'
+  - 'use solicitud_wf transition de_rechazada_a_asignada'
+  - 'use solicitud_wf transition de_rechazada_a_cerrada'
+  - 'use solicitud_wf transition de_rechazada_a_en_proceso'
+  - 'use solicitud_wf transition de_rechazada_a_en_revision'
+  - 'use solicitud_wf transition de_rechazada_a_recibida'
+  - 'use solicitud_wf transition de_rechazada_a_resuelta'
+  - 'use solicitud_wf transition de_recibida_a_asignada'
+  - 'use solicitud_wf transition de_recibida_a_cerrada'
+  - 'use solicitud_wf transition de_recibida_a_en_proceso'
+  - 'use solicitud_wf transition de_recibida_a_en_revision'
+  - 'use solicitud_wf transition de_recibida_a_rechazada'
+  - 'use solicitud_wf transition de_recibida_a_resuelta'
+  - 'use solicitud_wf transition de_resuelta_a_asignada'
+  - 'use solicitud_wf transition de_resuelta_a_cerrada'
+  - 'use solicitud_wf transition de_resuelta_a_en_proceso'
+  - 'use solicitud_wf transition de_resuelta_a_en_revision'
+  - 'use solicitud_wf transition de_resuelta_a_rechazada'
+  - 'use solicitud_wf transition de_resuelta_a_recibida'
+  - 'use text format basic_html'
+  - 'view all tracking content'
+  - 'view any unpublished content'
+  - 'view confidential complaints'
+  - 'view latest version'
+  - 'view management reports'
+  - 'view media'
+  - 'view own unpublished content'
+  - 'view the administration theme'

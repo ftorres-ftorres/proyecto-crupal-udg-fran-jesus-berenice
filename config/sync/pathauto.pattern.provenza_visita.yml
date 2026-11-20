@@ -1,0 +1,24 @@
+uuid: 4a633dd5-402b-4aa9-a558-ba83a0da105d
+langcode: es
+status: true
+dependencies:
+  config:
+    - node.type.visita
+  module:
+    - node
+id: provenza_visita
+label: 'URL visita'
+type: 'canonical_entities:node'
+pattern: '/seguridad/pases/[node:field_folio:value]'
+selection_criteria:
+  07b1e1f3-533d-4f93-b438-a4151d757cb2:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      visita: visita
+    uuid: 78d15957-7160-47dc-a4d6-bec2a71e7eee
+selection_logic: and
+weight: -5
+relationships: {  }

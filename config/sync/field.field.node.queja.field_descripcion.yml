@@ -1,0 +1,22 @@
+uuid: f857a7cd-8cc4-40d0-9501-58f4dd090b89
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_descripcion
+    - node.type.queja
+  module:
+    - text
+id: node.queja.field_descripcion
+field_name: field_descripcion
+entity_type: node
+bundle: queja
+label: Descripción
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

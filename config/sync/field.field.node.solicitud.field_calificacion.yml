@@ -1,0 +1,23 @@
+uuid: 6ef3fd13-0a39-4261-beeb-74bf407f05b0
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_calificacion
+    - node.type.solicitud
+id: node.solicitud.field_calificacion
+field_name: field_calificacion
+entity_type: node
+bundle: solicitud
+label: Calificación
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

@@ -1,0 +1,14 @@
+uuid: e1767a29-cb3b-4bb2-b1ea-5c4e57a03519
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.residente_titular
+  module:
+    - user
+id: user_add_role_action.residente_titular
+label: 'Añade el rol Residente titular al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: residente_titular

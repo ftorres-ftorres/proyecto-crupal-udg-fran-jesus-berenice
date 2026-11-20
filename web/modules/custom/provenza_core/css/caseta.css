@@ -1,0 +1,67 @@
+/* ==========================================================================
+   Provenza Residencial · Caseta / Guardhouse Styles
+   ========================================================================== */
+
+.provenza-caseta__list {
+  display: grid;
+  gap: 1rem;
+}
+
+.provenza-caseta__card {
+  background: var(--pz-card, #ffffff);
+  border: 1px solid var(--pz-line, #dce5e3);
+  border-radius: var(--pz-radius-md, 0.85rem);
+  padding: 1.25rem 1.35rem;
+  box-shadow: var(--pz-shadow-sm, 0 1px 3px rgb(15 41 54 / 6%));
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.provenza-caseta__card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--pz-shadow-md, 0 8px 24px -6px rgb(15 41 54 / 10%));
+}
+
+.provenza-caseta__card h2 {
+  margin: 0.45rem 0 0.5rem;
+  font-size: 1.25rem;
+  color: var(--pz-ink, #14222c);
+}
+
+.provenza-caseta__card.is-programada {
+  border-left: 6px solid var(--pz-cobalt, #2563eb);
+  background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+}
+
+.provenza-caseta__card.is-en_caseta {
+  border-left: 6px solid var(--pz-emerald, #059669);
+  background: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%);
+}
+
+.provenza-caseta__card.is-salio {
+  border-left: 6px solid #94a3b8;
+  opacity: 0.78;
+}
+
+.provenza-caseta__card.is-vencida {
+  border-left: 6px solid var(--pz-coral, #e11d48);
+  background: linear-gradient(135deg, #ffffff 0%, #fff1f2 100%);
+}
+
+.provenza-caseta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.provenza-caseta__actions .button {
+  min-height: 2.75rem;
+  padding: 0.6rem 1.1rem;
+}
+
+@media (min-width: 800px) {
+  .provenza-caseta__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

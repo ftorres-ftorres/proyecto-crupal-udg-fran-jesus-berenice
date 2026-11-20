@@ -1,0 +1,21 @@
+uuid: 0001138f-7fd3-47bf-8a82-22ee6461f3a4
+langcode: es
+status: true
+dependencies:
+  module:
+    - entity_reference_revisions
+    - paragraphs
+    - user
+id: user.field_mascotas
+field_name: field_mascotas
+entity_type: user
+type: entity_reference_revisions
+settings:
+  target_type: paragraph
+module: entity_reference_revisions
+locked: false
+cardinality: -1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

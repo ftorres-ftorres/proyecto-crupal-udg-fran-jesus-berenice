@@ -1,0 +1,7 @@
+uuid: 801859c2-5305-452a-9cb8-ccc9f032a1cb
+langcode: es
+status: false
+dependencies: {  }
+formId: node_solicitud_form
+captchaType: default
+label: node_solicitud_form

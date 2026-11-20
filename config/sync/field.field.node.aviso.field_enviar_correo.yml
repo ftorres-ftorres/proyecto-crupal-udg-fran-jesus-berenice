@@ -1,0 +1,21 @@
+uuid: 8108072a-55c8-448b-99a9-dfc253500eb2
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_enviar_correo
+    - node.type.aviso
+id: node.aviso.field_enviar_correo
+field_name: field_enviar_correo
+entity_type: node
+bundle: aviso
+label: 'Enviar por correo a residentes'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Activado
+  off_label: Desactivado
+field_type: boolean
