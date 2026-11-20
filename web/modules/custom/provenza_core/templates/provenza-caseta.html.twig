@@ -10,7 +10,7 @@
       <article class="provenza-caseta__card is-{{ v.estado }}">
         <p class="provenza-folio">{{ v.folio }}</p>
         <h2>{{ v.nombre }}</h2>
-        <p>Casa: {{ v.casa }} · Placa: {{ v.placa ?: '—' }}</p>
+        <p><span>Casa: {{ v.casa }}</span> <span>Placa: {{ v.placa ?: 'Sin placa' }}</span></p>
         <p>Ventana: {{ v.ventana }}</p>
         <p>Estado: {{ v.estado_label|default(v.estado) }}</p>
         <p class="provenza-caseta__actions">

@@ -1,0 +1,7 @@
+<a class="modulo-tarjeta revela" href="{{ url }}">
+  {% if image %}<span class="modulo-tarjeta__foto"><img src="{{ image }}" alt="Dónde se ve {{ title }} en este sitio" loading="lazy"></span>{% endif %}
+  <span class="etiqueta">{{ category }}</span>
+  <span class="modulo-tarjeta__titulo">{{ title }}</span>
+  <span class="modulo-tarjeta__texto">{{ summary }}</span>
+  <span class="enlace-flecha">Ver ficha{{ source('@provenza/icons/flecha.svg') }}</span>
+</a>

@@ -1,0 +1,329 @@
+<?php
+
+/**
+ * @file
+ * Funciones de preprocesamiento del tema Provenza.
+ */
+
+use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
+
+/**
+ * Foto editada por código de instalación (carpeta images/fotos del tema).
+ */
+function provenza_facility_photo(?string $code, bool $small = FALSE): string {
+  $map = [
+    'salon' => 'salon',
+    'gym' => 'gimnasio',
+    'gimnasio' => 'gimnasio',
+    'alberca' => 'alberca',
+    'trotapista' => 'trotapista',
+    'juegos' => 'juegos',
+    'fuentes' => 'fuentes',
+    'jardines' => 'jardines',
+  ];
+  $file = $map[$code] ?? 'amenidades';
+  $base = \Drupal::service('extension.list.theme')->getPath('provenza');
+  return base_path() . $base . '/images/fotos/' . $file . ($small ? '-sm' : '') . '.webp';
+}
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function provenza_preprocess_html(array &$variables): void {
+  $route = \Drupal::routeMatch()->getRouteName() ?? '';
+  $variables['attributes']['class'][] = 'ruta--' . str_replace(['.', '_'], '-', $route);
+  if (\Drupal::service('path.matcher')->isFrontPage() || $route === 'provenza_core.home') {
+    $variables['attributes']['class'][] = 'es-portada';
+  }
+  if (str_starts_with(\Drupal::service('path.current')->getPath(), '/asi-lo-construimos')) {
+    $variables['attributes']['class'][] = 'es-tutorial';
+  }
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function provenza_preprocess_page(array &$variables): void {
+  $route = \Drupal::routeMatch()->getRouteName() ?? '';
+  $variables['es_portada'] = \Drupal::service('path.matcher')->isFrontPage() || $route === 'provenza_core.home';
+  $variables['ruta_tema'] = base_path() . \Drupal::service('extension.list.theme')->getPath('provenza');
+  $account = \Drupal::currentUser();
+  $variables['logueado'] = $account->isAuthenticated();
+  $variables['nombre_usuario'] = $account->isAuthenticated() ? $account->getDisplayName() : '';
+  $variables['anio'] = date('Y');
+
+  // Imagen de cabecera por sección para las páginas interiores.
+  $path = \Drupal::service('path.current')->getPath();
+  $alias = \Drupal::service('path_alias.manager')->getAliasByPath($path);
+  $secciones = [
+    '/instalaciones' => 'amenidades',
+    '/seguridad' => 'acceso',
+    '/solicitudes' => 'alumbrado',
+    '/quejas' => 'casas',
+    '/comunidad' => 'casas',
+    '/form/solicitud-servicio' => 'alumbrado',
+    '/form/recoleccion-especial' => 'residuos',
+    '/form/reservar-salon' => 'salon',
+    '/form/registrar-visita' => 'acceso',
+    '/form/reportar-incidente' => 'acceso',
+    '/form/queja-sugerencia' => 'casas',
+    '/contacto' => 'fuentes',
+    '/user' => 'casas',
+  ];
+  $foto = NULL;
+  foreach ($secciones as $prefijo => $archivo) {
+    if (str_starts_with($alias, $prefijo)) {
+      $foto = $archivo;
+    }
+  }
+  $webform = \Drupal::routeMatch()->getParameter('webform');
+  if ($webform && ($pasos = provenza_form_help($webform->id()))) {
+    $variables['ayuda_formulario'] = $pasos;
+  }
+
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if ($node instanceof NodeInterface && $node->bundle() === 'instalacion' && $node->hasField('field_codigo_instalacion')) {
+    $variables['foto_cabecera'] = provenza_facility_photo($node->get('field_codigo_instalacion')->value);
+  }
+  elseif ($foto) {
+    $variables['foto_cabecera'] = $variables['ruta_tema'] . '/images/fotos/' . $foto . '.webp';
+  }
+}
+
+/**
+ * Implements hook_preprocess_provenza_home().
+ */
+function provenza_preprocess_provenza_home(array &$variables): void {
+  $tema = base_path() . \Drupal::service('extension.list.theme')->getPath('provenza');
+  $variables['ruta_tema'] = $tema;
+  $storage = \Drupal::entityTypeManager()->getStorage('node');
+
+  // Instalaciones con su foto editada.
+  $nids = $storage->getQuery()->accessCheck(TRUE)
+    ->condition('type', 'instalacion')->condition('status', 1)->execute();
+  $orden = ['alberca', 'salon', 'gym', 'trotapista', 'juegos', 'jardines', 'fuentes'];
+  $instalaciones = [];
+  foreach (Node::loadMultiple($nids) as $node) {
+    $code = $node->hasField('field_codigo_instalacion') ? (string) $node->get('field_codigo_instalacion')->value : '';
+    $instalaciones[] = [
+      'titulo' => $node->label(),
+      'url' => $node->toUrl()->toString(),
+      'foto' => provenza_facility_photo($code, TRUE),
+      'horario' => $node->hasField('field_horarios') ? (string) $node->get('field_horarios')->value : '',
+      'peso' => array_search($code, $orden, TRUE) === FALSE ? 99 : array_search($code, $orden, TRUE),
+    ];
+  }
+  usort($instalaciones, fn ($a, $b) => $a['peso'] <=> $b['peso']);
+  $variables['instalaciones'] = array_slice($instalaciones, 0, 4);
+
+  // Avisos recientes.
+  $nids = $storage->getQuery()->accessCheck(TRUE)
+    ->condition('type', 'aviso')->condition('status', 1)
+    ->sort('created', 'DESC')->range(0, 3)->execute();
+  $avisos = [];
+  foreach (Node::loadMultiple($nids) as $node) {
+    $cuerpo = $node->hasField('body') ? strip_tags((string) $node->get('body')->value) : '';
+    $avisos[] = [
+      'titulo' => $node->label(),
+      'url' => $node->toUrl()->toString(),
+      'fecha' => \Drupal::service('date.formatter')->format($node->getCreatedTime(), 'custom', 'j \d\e F'),
+      'resumen' => mb_strimwidth($cuerpo, 0, 120, '…'),
+      'urgente' => $node->hasField('field_urgente') && (bool) $node->get('field_urgente')->value,
+    ];
+  }
+  $variables['avisos'] = $avisos;
+
+  // Próximos eventos con fecha separada para la tarjeta.
+  $nids = $storage->getQuery()->accessCheck(TRUE)
+    ->condition('type', 'evento')->condition('status', 1)
+    ->sort('field_fecha_evento', 'ASC')->range(0, 4)->execute();
+  $eventos = [];
+  $formatter = \Drupal::service('date.formatter');
+  foreach (Node::loadMultiple($nids) as $node) {
+    $ts = $node->hasField('field_fecha_evento') && !$node->get('field_fecha_evento')->isEmpty() ? (int) $node->get('field_fecha_evento')->value : NULL;
+    $eventos[] = [
+      'titulo' => $node->label(),
+      'url' => $node->toUrl()->toString(),
+      'dia' => $ts ? $formatter->format($ts, 'custom', 'j', 'America/Mexico_City') : '',
+      'mes' => $ts ? mb_substr($formatter->format($ts, 'custom', 'F', 'America/Mexico_City'), 0, 3) : '',
+      'hora' => $ts ? $formatter->format($ts, 'custom', 'H:i', 'America/Mexico_City') . ' h' : '',
+    ];
+  }
+  $variables['eventos'] = $eventos;
+
+  // Cuota principal y tarifas destacadas.
+  $nids = $storage->getQuery()->accessCheck(TRUE)
+    ->condition('type', 'tarifa')->condition('status', 1)->sort('title')->execute();
+  $tarifas = [];
+  foreach (Node::loadMultiple($nids) as $node) {
+    $tarifas[] = [
+      'concepto' => $node->label(),
+      'monto' => $node->hasField('field_monto') ? number_format((float) $node->get('field_monto')->value, 0, '.', ',') : '',
+    ];
+  }
+  $variables['tarifas'] = array_slice($tarifas, 0, 5);
+  $variables['audio_bienvenida'] = $tema . '/media/bienvenida.mp3';
+  $variables['url_registro'] = Url::fromRoute('user.register')->toString();
+  $variables['#cache']['tags'][] = 'node_list';
+}
+
+/**
+ * Implements hook_theme_suggestions_page_alter().
+ */
+function provenza_theme_suggestions_page_alter(array &$suggestions, array $variables): void {
+  if ((\Drupal::routeMatch()->getRouteName() ?? '') === 'provenza_core.home') {
+    $suggestions[] = 'page__front';
+  }
+}
+
+/**
+ * Implements hook_preprocess_provenza_listing().
+ */
+function provenza_preprocess_provenza_listing(array &$variables): void {
+  if ($variables['bundle'] === 'instalacion') {
+    foreach ($variables['items'] as &$item) {
+      $item['foto'] = provenza_facility_photo($item['codigo'] ?? NULL, TRUE);
+    }
+    unset($item);
+    $orden = ['alberca', 'salon', 'gym', 'trotapista', 'juegos', 'jardines', 'fuentes'];
+    usort($variables['items'], fn ($a, $b) => (array_search($a['codigo'], $orden, TRUE) ?: 0) <=> (array_search($b['codigo'], $orden, TRUE) ?: 0));
+    $variables['items'][0]['foto'] = provenza_facility_photo($variables['items'][0]['codigo']);
+  }
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function provenza_preprocess_node(array &$variables): void {
+  /** @var \Drupal\node\NodeInterface $node */
+  $node = $variables['node'];
+  $variables['fecha_bonita'] = \Drupal::service('date.formatter')->format($node->getCreatedTime(), 'custom', 'j \d\e F \d\e Y', 'America/Mexico_City');
+  if ($node->bundle() !== 'instalacion' || $variables['view_mode'] !== 'full') {
+    return;
+  }
+  $code = (string) $node->get('field_codigo_instalacion')->value;
+  $variables['ficha'] = [
+    'codigo' => $code,
+    'descripcion' => strip_tags((string) $node->get('body')->value),
+    'horario' => str_replace('–', ' a ', (string) $node->get('field_horarios')->value),
+    'capacidad' => (int) $node->get('field_capacidad')->value,
+    'foto' => provenza_facility_photo($code),
+    'reglas' => provenza_split_lines((string) $node->get('field_reglas')->value),
+    'tarifas' => [],
+  ];
+  foreach ($node->get('field_tarifa')->referencedEntities() as $tarifa) {
+    $variables['ficha']['tarifas'][] = [
+      'concepto' => $tarifa->label(),
+      'monto' => number_format((float) $tarifa->get('field_monto')->value, 0, '.', ','),
+    ];
+  }
+  $acciones = [];
+  if ($code === 'salon') {
+    $acciones[] = ['titulo' => 'Ver disponibilidad', 'url' => '/instalaciones/salon-de-fiestas/calendario', 'icono' => 'calendario', 'principal' => TRUE];
+    $acciones[] = ['titulo' => 'Solicitar reservación', 'url' => '/form/reservar-salon', 'icono' => 'fiesta'];
+  }
+  $acciones[] = ['titulo' => 'Reportar un problema', 'url' => '/form/solicitud-servicio', 'icono' => 'solicitud', 'principal' => $code !== 'salon'];
+  $variables['ficha']['acciones'] = $acciones;
+}
+
+/**
+ * Implements hook_theme_suggestions_field_alter().
+ */
+function provenza_theme_suggestions_node_alter(array &$suggestions, array $variables): void {
+  $node = $variables['elements']['#node'] ?? NULL;
+  if ($node && $node->bundle() === 'instalacion' && ($variables['elements']['#view_mode'] ?? '') === 'full') {
+    $suggestions[] = 'node__instalacion__ficha';
+  }
+}
+
+/**
+ * Convierte un texto con saltos de línea o párrafos en una lista limpia.
+ */
+function provenza_split_lines(string $html): array {
+  $text = preg_replace('/<br\s*\/?>|<\/p>/i', "\n", $html);
+  $lines = array_map(fn ($l) => trim(html_entity_decode(strip_tags($l))), explode("\n", $text));
+  return array_values(array_filter($lines, fn ($l) => $l !== ''));
+}
+
+/**
+ * Datos para tarjetas de las páginas de sección (centros de enlaces).
+ */
+function provenza_hub_meta(): array {
+  return [
+    '/form/solicitud-servicio' => ['solicitud', 'Alumbrado, jardines, alberca, gimnasio o cualquier área común.'],
+    '/solicitudes/mis-solicitudes' => ['documento', 'Consulta el folio, el estado y las notas de cada reporte.'],
+    '/form/recoleccion-especial' => ['camion', 'Muebles, poda o cascajo, en la fecha que elijas.'],
+    '/form/calificar-servicio' => ['estrella', 'Califica de 1 a 5 una solicitud ya resuelta.'],
+    '/form/queja-sugerencia' => ['queja', 'Ruido, mascotas, estacionamiento, conducta o una felicitación.'],
+    '/quejas/mis-quejas' => ['mensaje', 'Sigue la investigación y lee la resolución de Administración.'],
+    '/quejas/reporte-confidencial' => ['escudo', 'Tu identidad solo la ve Administración.'],
+    '/form/registrar-visita' => ['qr', 'Pre-registra a tu invitado o proveedor y comparte su pase QR.'],
+    '/seguridad/mis-autorizaciones' => ['llave', 'Pases vigentes y autorizaciones recurrentes.'],
+    '/seguridad/mis-vehiculos' => ['auto', 'Placas registradas y solicitud de tags de acceso.'],
+    '/form/reportar-incidente' => ['alerta', 'Avisa a caseta de algo fuera de lo normal.'],
+    '/seguridad/reglamento-de-acceso' => ['documento', 'Reglas para visitas, proveedores, mudanzas y obras.'],
+    '/seguridad/telefonos-de-emergencia' => ['telefono', 'Caseta, Administración, Protección Civil y 911.'],
+    '/comunidad/avisos' => ['aviso', 'Comunicados generales, de seguridad y mantenimiento.'],
+    '/comunidad/calendario' => ['calendario', 'Asambleas, cortes programados y jornadas comunitarias.'],
+    '/comunidad/cuotas-y-tarifas' => ['tarifa', 'Cuota mensual y tarifas de cada servicio.'],
+    '/comunidad/documentos' => ['documento', 'Reglamento interno, formatos y documentos oficiales.'],
+    '/comunidad/actas' => ['grupo', 'Acuerdos de las asambleas de colonos.'],
+    '/comunidad/preguntas-frecuentes' => ['ayuda', 'Respuestas rápidas a las dudas más comunes.'],
+    '/comunidad/directorio' => ['telefono', 'Contactos de servicios y proveedores.'],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_node__page().
+ */
+function provenza_preprocess_node__page(array &$variables): void {
+  if ($variables['view_mode'] !== 'full') {
+    return;
+  }
+  $html = (string) $variables['node']->get('body')->value;
+  if (!str_contains($html, '<ul>') || !str_contains($html, 'href="/')) {
+    return;
+  }
+  $dom = new \DOMDocument();
+  @$dom->loadHTML('<?xml encoding="utf-8"?><div>' . $html . '</div>');
+  $xpath = new \DOMXPath($dom);
+  $links = $xpath->query('//ul/li/a[starts-with(@href, "/")]');
+  // Solo es centro de enlaces si cada elemento de la lista es un enlace interno.
+  if (!$links->length || $links->length !== $xpath->query('//ul/li')->length) {
+    return;
+  }
+  $meta = provenza_hub_meta();
+  $tarjetas = [];
+  foreach ($links as $a) {
+    $href = $a->getAttribute('href');
+    $tarjetas[] = [
+      'titulo' => trim($a->textContent),
+      'url' => $href,
+      'icono' => $meta[$href][0] ?? 'flecha_diag',
+      'texto' => $meta[$href][1] ?? '',
+    ];
+  }
+  $intro = [];
+  foreach ($xpath->query('/html/body/div/p') as $p) {
+    $intro[] = trim($p->textContent);
+  }
+  $variables['hub'] = ['intro' => implode(' ', $intro), 'tarjetas' => $tarjetas];
+}
+
+/**
+ * Textos de apoyo para la columna lateral de cada formulario.
+ */
+function provenza_form_help(string $id): ?array {
+  $ayuda = [
+    'solicitud_servicio' => ['Recibes un folio al enviar', 'Administración la revisa y la asigna a mantenimiento', 'Te avisamos por correo en cada cambio de estado', 'Cuando se resuelva, califica el servicio'],
+    'recoleccion_especial' => ['Elige la fecha de recolección', 'Saca los residuos la noche anterior', 'Consulta el costo en Cuotas y tarifas'],
+    'calificar_servicio' => ['Califica de 1 a 5 estrellas', 'Tu comentario ayuda a mejorar el servicio'],
+    'queja_sugerencia' => ['Recibes un folio al enviar', 'Administración investiga y toma acción', 'Si marcas confidencial, solo Administración ve tu nombre', 'Lee la resolución en Mis quejas'],
+    'reservar_salon' => ['Revisa antes las fechas libres en el calendario', 'Administración aprueba o rechaza la solicitud', 'El depósito en garantía se devuelve después del evento'],
+    'registrar_visita' => ['Captura el nombre y la ventana de horario', 'Se genera un pase QR para compartir', 'Caseta valida el pase y registra entrada y salida'],
+    'reportar_incidente' => ['Describe qué pasó y dónde', 'Agrega fotos si es seguro hacerlo', 'Ante una emergencia llama primero a caseta o al 911'],
+  ];
+  return $ayuda[$id] ?? NULL;
+}

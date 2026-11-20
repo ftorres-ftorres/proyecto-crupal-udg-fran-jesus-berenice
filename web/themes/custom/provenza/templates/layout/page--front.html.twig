@@ -1,0 +1,8 @@
+<a href="#contenido" class="visually-hidden focusable saltar">Saltar al contenido</a>
+{% include '@provenza/layout/_header.html.twig' %}
+{% if page.highlighted %}<div class="destacado destacado--portada">{{ page.highlighted }}</div>{% endif %}
+<main id="contenido" class="principal-portada" tabindex="-1">
+  {{ page.content }}
+  {{ page.content_below }}
+</main>
+{% include '@provenza/layout/_footer.html.twig' %}

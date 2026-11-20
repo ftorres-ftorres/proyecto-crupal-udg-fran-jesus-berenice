@@ -1,0 +1,9 @@
+{% if items %}
+  <ul class="menu-principal">
+    {% for item in items %}
+      <li class="menu-principal__item{{ item.in_active_trail ? ' es-activo' }}">
+        {{ link(item.title, item.url, { 'class': ['menu-principal__enlace'] }) }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}

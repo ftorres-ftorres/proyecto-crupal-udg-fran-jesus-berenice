@@ -1,0 +1,36 @@
+<article{{ attributes.addClass('ficha') }}>
+  <div class="ficha__principal">
+    <p class="ficha__lead revela">{{ ficha.descripcion }}</p>
+    {% if ficha.reglas %}
+      <section class="ficha__reglas revela" aria-labelledby="reglas-{{ node.id }}">
+        <h2 id="reglas-{{ node.id }}">Reglamento de uso</h2>
+        <ul class="lista-check">
+          {% for r in ficha.reglas %}<li>{{ source('@provenza/icons/check.svg') }}<span>{{ r }}</span></li>{% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+    <figure class="ficha__foto revela">
+      <img src="{{ ficha.foto }}" alt="{{ label|render|striptags|trim }} en Provenza Residencial" width="1200" height="900" loading="lazy">
+      <figcaption>Fotografía ilustrativa, editada por el equipo del portal.</figcaption>
+    </figure>
+  </div>
+  <aside class="ficha__lateral">
+    <div class="ficha__tarjeta">
+      <dl class="ficha__datos">
+        <div><dt>{{ source('@provenza/icons/reloj.svg') }}Horario</dt><dd>{{ ficha.horario }}</dd></div>
+        {% if ficha.capacidad %}<div><dt>{{ source('@provenza/icons/grupo.svg') }}Capacidad</dt><dd>{{ ficha.capacidad }} personas</dd></div>{% endif %}
+      </dl>
+      {% if ficha.tarifas %}
+        <h2 class="ficha__subtitulo">Tarifas</h2>
+        <ul class="ficha__tarifas">
+          {% for t in ficha.tarifas %}<li><span>{{ t.concepto }}</span><strong>${{ t.monto }}</strong></li>{% endfor %}
+        </ul>
+      {% endif %}
+      <div class="ficha__acciones">
+        {% for a in ficha.acciones %}
+          <a class="boton{{ a.principal ? ' boton--acento' : ' boton--claro' }}" href="{{ a.url }}">{{ source('@provenza/icons/' ~ a.icono ~ '.svg') }}{{ a.titulo }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </aside>
+</article>

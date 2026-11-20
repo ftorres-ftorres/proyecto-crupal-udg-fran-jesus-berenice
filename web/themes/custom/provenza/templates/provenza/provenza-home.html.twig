@@ -1,0 +1,167 @@
+{#
+  Portada del portal. Reemplaza la plantilla del módulo provenza_core.
+  Variables extra en provenza_preprocess_provenza_home().
+#}
+<section class="hero" aria-labelledby="hero-titulo">
+  <div class="hero__fondo" style="--foto: url('{{ ruta_tema }}/images/fotos/hero.webp')"></div>
+  <div class="hero__velo"></div>
+  <div class="contenedor hero__contenido">
+    <h1 id="hero-titulo" class="hero__titulo aparece">Tu vida en Provenza, <em>resuelta en un solo lugar</em></h1>
+    <p class="hero__texto aparece">Reporta una falla, reserva el salón, registra a tus visitas y entérate de lo que pasa en el fraccionamiento.</p>
+    <form class="buscador aparece" action="/buscar" method="get" role="search">
+      <label class="visually-hidden" for="buscador-portada">Buscar en el portal</label>
+      <span class="buscador__icono">{{ source('@provenza/icons/buscar.svg') }}</span>
+      <input id="buscador-portada" name="q" type="search" placeholder="Busca horarios, reglamentos, tarifas…" autocomplete="off">
+      <button class="boton boton--acento" type="submit">Buscar</button>
+    </form>
+    <ul class="hero__atajos aparece" aria-label="Atajos">
+      <li><a href="/form/solicitud-servicio">{{ source('@provenza/icons/solicitud.svg') }}Nueva solicitud</a></li>
+      <li><a href="/instalaciones/salon-de-fiestas/calendario">{{ source('@provenza/icons/calendario.svg') }}Reservar salón</a></li>
+      <li><a href="/form/registrar-visita">{{ source('@provenza/icons/qr.svg') }}Registrar visita</a></li>
+      <li><a href="/comunidad/cuotas-y-tarifas">{{ source('@provenza/icons/tarifa.svg') }}Cuotas y tarifas</a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="seccion contenedor" aria-labelledby="tramites-titulo">
+  <div class="seccion__cabeza revela">
+    <h2 id="tramites-titulo">¿Qué necesitas hoy?</h2>
+    <p>Cada trámite recibe un folio. Lo sigues desde tu cuenta y te avisamos por correo en cada cambio.</p>
+  </div>
+  <div class="tramites">
+    {% set tramites = [
+      { icono: 'foco', titulo: 'Reportar una falla', texto: 'Alumbrado, jardines, fuentes, alberca o cualquier área común.', url: '/form/solicitud-servicio' },
+      { icono: 'fiesta', titulo: 'Reservar el salón', texto: 'Consulta fechas libres y envía tu solicitud en minutos.', url: '/instalaciones/salon-de-fiestas/calendario' },
+      { icono: 'qr', titulo: 'Registrar una visita', texto: 'Genera un pase QR y compártelo con tu invitado.', url: '/form/registrar-visita' },
+      { icono: 'queja', titulo: 'Presentar una queja', texto: 'Ruido, mascotas, estacionamiento. Puede ser confidencial.', url: '/form/queja-sugerencia' },
+      { icono: 'camion', titulo: 'Recolección especial', texto: 'Muebles, poda o cascajo. Elige el día que te conviene.', url: '/form/recoleccion-especial' },
+      { icono: 'alerta', titulo: 'Reportar un incidente', texto: 'Algo fuera de lo normal en el fraccionamiento.', url: '/form/reportar-incidente' },
+    ] %}
+    {% for t in tramites %}
+      <a class="tramite revela" href="{{ t.url }}" style="--retraso: {{ loop.index0 * 60 }}ms">
+        <span class="tramite__icono">{{ source('@provenza/icons/' ~ t.icono ~ '.svg') }}</span>
+        <span class="tramite__titulo">{{ t.titulo }}</span>
+        <span class="tramite__texto">{{ t.texto }}</span>
+        <span class="tramite__flecha">{{ source('@provenza/icons/flecha_diag.svg') }}</span>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+{% if instalaciones %}
+<section class="seccion seccion--tono" aria-labelledby="inst-titulo">
+  <div class="contenedor">
+    <div class="seccion__cabeza seccion__cabeza--fila revela">
+      <div>
+        <h2 id="inst-titulo">Instalaciones para todos</h2>
+        <p>Horarios, reglas y tarifas de cada espacio común.</p>
+      </div>
+      <a class="boton boton--oscuro" href="/instalaciones">Ver todas{{ source('@provenza/icons/flecha.svg') }}</a>
+    </div>
+    <div class="rejilla-fotos">
+      {% for i in instalaciones %}
+        <a class="foto-tarjeta revela" href="{{ i.url }}" style="--retraso: {{ loop.index0 * 80 }}ms">
+          <img src="{{ i.foto }}" alt="{{ i.titulo }} de Provenza Residencial" loading="lazy" width="640" height="480">
+          <span class="foto-tarjeta__pie">
+            <span class="foto-tarjeta__titulo">{{ i.titulo }}</span>
+            {% if i.horario %}<span class="foto-tarjeta__dato">{{ source('@provenza/icons/reloj.svg') }}{{ i.horario|replace({'–': ' a '}) }}</span>{% endif %}
+          </span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="seccion contenedor flujo" aria-labelledby="flujo-titulo">
+  <div class="flujo__texto revela">
+    <h2 id="flujo-titulo">Así avanza tu solicitud</h2>
+    <p>Se acabaron los mensajes perdidos en el chat. Administración asigna tu reporte, mantenimiento lo atiende y tú ves cada paso.</p>
+    <a class="boton boton--acento" href="/solicitudes/mis-solicitudes">Ver mis solicitudes</a>
+  </div>
+  <ol class="linea" data-linea>
+    <li class="linea__paso"><span class="linea__punto">{{ source('@provenza/icons/mensaje.svg') }}</span><strong>Recibida</strong><span>Se genera tu folio, por ejemplo SOL-2026-0042.</span></li>
+    <li class="linea__paso"><span class="linea__punto">{{ source('@provenza/icons/grupo.svg') }}</span><strong>Asignada</strong><span>Administración la turna al equipo de mantenimiento.</span></li>
+    <li class="linea__paso"><span class="linea__punto">{{ source('@provenza/icons/solicitud.svg') }}</span><strong>En proceso</strong><span>El equipo agrega notas y fotos de evidencia.</span></li>
+    <li class="linea__paso"><span class="linea__punto">{{ source('@provenza/icons/check.svg') }}</span><strong>Resuelta</strong><span>Calificas el servicio de 1 a 5 estrellas.</span></li>
+  </ol>
+</section>
+
+<section class="seccion seccion--tono" aria-label="Avisos y eventos">
+  <div class="contenedor dos-columnas">
+    <div class="revela">
+      <div class="seccion__cabeza seccion__cabeza--fila">
+        <h2>Avisos</h2>
+        <a class="enlace-flecha" href="/comunidad/avisos">Todos los avisos{{ source('@provenza/icons/flecha.svg') }}</a>
+      </div>
+      <div class="avisos">
+        {% for a in avisos %}
+          <a class="aviso{{ a.urgente ? ' aviso--urgente' }}" href="{{ a.url }}">
+            <span class="aviso__meta">{% if a.urgente %}<span class="etiqueta etiqueta--acento">Urgente</span>{% endif %}<span>{{ a.fecha }}</span></span>
+            <span class="aviso__titulo">{{ a.titulo }}</span>
+            {% if a.resumen %}<span class="aviso__texto">{{ a.resumen }}</span>{% endif %}
+          </a>
+        {% else %}
+          <p>No hay avisos por ahora.</p>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="revela" style="--retraso: 120ms">
+      <div class="seccion__cabeza seccion__cabeza--fila">
+        <h2>Próximos eventos</h2>
+        <a class="enlace-flecha" href="/comunidad/calendario">Calendario{{ source('@provenza/icons/flecha.svg') }}</a>
+      </div>
+      <div class="eventos">
+        {% for e in eventos %}
+          <a class="evento" href="{{ e.url }}">
+            <span class="evento__fecha"><strong>{{ e.dia }}</strong>{{ e.mes }}</span>
+            <span class="evento__info"><span class="evento__titulo">{{ e.titulo }}</span><span class="evento__hora">{{ e.hora }}</span></span>
+          </a>
+        {% else %}
+          <p>No hay eventos programados.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion contenedor bienvenida" aria-labelledby="audio-titulo">
+  <div class="bienvenida__foto revela">
+    <img src="{{ ruta_tema }}/images/fotos/casas.webp" alt="Casas de un fraccionamiento residencial al atardecer" loading="lazy" width="1200" height="900">
+  </div>
+  <div class="bienvenida__texto revela" style="--retraso: 120ms">
+    <h2 id="audio-titulo">Escucha el mensaje de bienvenida</h2>
+    <p>Treinta segundos para conocer lo que puedes hacer en el portal. Ideal si acabas de mudarte.</p>
+    <div class="reproductor" data-reproductor>
+      <audio preload="metadata" src="{{ audio_bienvenida }}"></audio>
+      <button class="reproductor__boton" type="button" aria-label="Reproducir mensaje de bienvenida" data-play>
+        <span class="reproductor__play">{{ source('@provenza/icons/play.svg') }}</span>
+        <span class="reproductor__pausa">{{ source('@provenza/icons/pausa.svg') }}</span>
+      </button>
+      <div class="reproductor__onda" aria-hidden="true">{% for n in 1..32 %}<i style="--n: {{ n }}; --h: {{ ((n * 37) % 61) + 22 }}%"></i>{% endfor %}</div>
+      <span class="reproductor__tiempo" data-tiempo>0:30</span>
+    </div>
+    {% if tarifas %}
+      <div class="cuotas">
+        <h3>Cuotas vigentes</h3>
+        <ul>
+          {% for t in tarifas %}<li><span>{{ t.concepto }}</span><strong>${{ t.monto }}</strong></li>{% endfor %}
+        </ul>
+        <a class="enlace-flecha" href="/comunidad/cuotas-y-tarifas">Ver todas las tarifas{{ source('@provenza/icons/flecha.svg') }}</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% if login %}
+<section class="seccion contenedor" aria-labelledby="acceso-titulo">
+  <div class="acceso revela">
+    <div class="acceso__texto">
+      <h2 id="acceso-titulo">Entra a tu cuenta</h2>
+      <p>Usa el correo que registraste con Administración. Si eres nuevo, solicita tu alta con tu número de casa y te confirmamos por correo.</p>
+      <p class="acceso__enlaces"><a class="boton boton--claro" href="{{ url_registro }}">Solicitar mi alta</a><a class="enlace-flecha enlace-flecha--claro" href="/user/password">Olvidé mi contraseña</a></p>
+    </div>
+    <div class="acceso__form">{{ login }}</div>
+  </div>
+</section>
+{% endif %}

@@ -1,0 +1,18 @@
+<article{{ attributes.addClass('pagina') }}>
+  {% if hub %}
+    {% if hub.intro %}<p class="listado__intro">{{ hub.intro }}</p>{% endif %}
+    <div class="tramites tramites--hub">
+      {% for t in hub.tarjetas %}
+        <a class="tramite revela" href="{{ t.url }}" style="--retraso: {{ loop.index0 * 50 }}ms">
+          <span class="tramite__icono">{{ source('@provenza/icons/' ~ t.icono ~ '.svg') }}</span>
+          <span class="tramite__titulo">{{ t.titulo }}</span>
+          {% if t.texto %}<span class="tramite__texto">{{ t.texto }}</span>{% endif %}
+          <span class="tramite__flecha">{{ source('@provenza/icons/flecha_diag.svg') }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="prosa">{{ content.body }}</div>
+    {{ content|without('body', 'links') }}
+  {% endif %}
+</article>

@@ -1,0 +1,31 @@
+<header class="encabezado{{ es_portada ? ' encabezado--sobre-foto' }}" data-encabezado>
+  <div class="encabezado__barra contenedor">
+    {% include '@provenza/layout/_marca.html.twig' %}
+    <nav class="encabezado__nav" id="menu-principal" aria-label="Menú principal" data-menu>
+      {{ page.primary_menu }}
+      <div class="encabezado__nav-movil">
+        {% if logueado %}
+          <a class="boton boton--claro" href="{{ path('user.page') }}">Mi cuenta</a>
+          <a class="boton boton--fantasma" href="{{ path('user.logout') }}">Cerrar sesión</a>
+        {% else %}
+          <a class="boton boton--claro" href="{{ path('user.login') }}">Iniciar sesión</a>
+          <a class="boton boton--fantasma" href="{{ path('user.register') }}">Registrarme</a>
+        {% endif %}
+      </div>
+    </nav>
+    <div class="encabezado__acciones">
+      <a class="icono-boton" href="/buscar" aria-label="Buscar en el sitio">{{ source('@provenza/icons/buscar.svg') }}</a>
+      {% if logueado %}
+        <a class="boton boton--chico boton--acento encabezado__cuenta" href="{{ path('user.page') }}">{{ source('@provenza/icons/usuario.svg') }}<span>{{ nombre_usuario|split(' ')|first }}</span></a>
+      {% else %}
+        <a class="boton boton--chico boton--acento encabezado__cuenta" href="{{ path('user.login') }}">{{ source('@provenza/icons/entrar.svg') }}<span>Entrar</span></a>
+      {% endif %}
+      <button class="icono-boton encabezado__abrir" type="button" aria-controls="menu-principal" aria-expanded="false" data-abrir-menu>
+        <span class="visually-hidden">Abrir menú</span>
+        <span class="encabezado__icono-abrir">{{ source('@provenza/icons/menu.svg') }}</span>
+        <span class="encabezado__icono-cerrar">{{ source('@provenza/icons/cerrar.svg') }}</span>
+      </button>
+    </div>
+  </div>
+  {% if page.secondary_menu %}<div class="visually-hidden">{{ page.secondary_menu }}</div>{% endif %}
+</header>

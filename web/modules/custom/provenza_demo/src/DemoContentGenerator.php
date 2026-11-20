@@ -211,7 +211,6 @@ class DemoContentGenerator {
    * Seven facilities.
    */
   protected function facilities(array $rates): void {
-    $photo = $this->placeholder('instalacion');
     $list = [
       [
         'Salón de fiestas', 'salon',
@@ -274,8 +273,9 @@ class DemoContentGenerator {
         'field_capacidad' => $cap,
         'field_tarifa' => $tids,
       ];
+      $photo = $this->facilityPhoto($code);
       if ($photo) {
-        $fields['field_fotos_publicas'] = [['target_id' => $photo, 'alt' => $title]];
+        $fields['field_fotos_publicas'] = [['target_id' => $photo, 'alt' => $title . ' de Provenza Residencial']];
       }
       $this->node('instalacion', $title, $fields);
     }
@@ -594,6 +594,27 @@ class DemoContentGenerator {
       ->range(0, 1)
       ->execute();
     return $nids ? (int) reset($nids) : NULL;
+  }
+
+  /**
+   * Foto editada de una instalación (assets/fotos), copiada a public://instalaciones.
+   */
+  public function facilityPhoto(string $code): ?int {
+    $map = ['gym' => 'gimnasio'];
+    $name = $map[$code] ?? $code;
+    $source = \Drupal::service('extension.list.module')->getPath('provenza_demo') . '/assets/fotos/' . $name . '.jpg';
+    if (!file_exists($source)) {
+      return $this->placeholder('instalacion-' . $code);
+    }
+    $dir = 'public://instalaciones';
+    \Drupal::service('file_system')->prepareDirectory($dir, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
+    $file = \Drupal::service('file.repository')->writeData(file_get_contents($source), $dir . '/' . $name . '.jpg', FileSystemInterface::EXISTS_REPLACE);
+    if ($file instanceof FileInterface) {
+      $file->setPermanent();
+      $file->save();
+      return (int) $file->id();
+    }
+    return NULL;
   }
 
   protected function placeholder(string $slug): ?int {

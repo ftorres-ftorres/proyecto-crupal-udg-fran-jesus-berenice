@@ -15,18 +15,39 @@ class TutorialController extends ControllerBase {
    * Landing.
    */
   public function landing(): array {
+    $pasos = [
+      ['formulario', 'Formulario', 'Un colono llena un formulario', 'Webform'],
+      ['expediente', 'Expediente', 'Se crea un expediente con folio', 'Nodo y Token'],
+      ['estado', 'Estado', 'Administración cambia el estado', 'Workflows y Content Moderation'],
+      ['correo', 'Correo', 'El sistema avisa por correo', 'ECA y Symfony Mailer'],
+      ['lista', 'Lista', 'Caseta o mantenimiento ven su lista', 'Views y permisos'],
+    ];
+    $diagrama = '<ol class="diagrama" aria-label="Cómo viaja un trámite por el sitio">';
+    foreach ($pasos as $i => [$icono, $titulo, $texto, $modulo]) {
+      $diagrama .= '<li class="diagrama__paso" style="--i: ' . $i . '"><span class="diagrama__icono diagrama__icono--' . $icono . '" aria-hidden="true"></span><strong>' . $titulo . '</strong><span>' . $texto . '</span><em>' . $modulo . '</em></li>';
+    }
+    $diagrama .= '</ol>';
+    $total = $this->entityTypeManager()->getStorage('node')->getQuery()
+      ->accessCheck(TRUE)->condition('type', 'modulo_documentado')->count()->execute();
+    $secciones = [
+      ['/asi-lo-construimos/como-funciona-drupal', '¿Cómo funciona Drupal?', 'Núcleo, módulos, tipos de contenido, roles, vistas y bloques explicados sin tecnicismos.'],
+      ['/asi-lo-construimos/modulos', 'Módulos por categoría', 'Las ' . $total . ' fichas de módulos: qué hacen, dónde se ven y cómo funcionan.'],
+      ['/asi-lo-construimos/glosario', 'Glosario', 'Módulo, nodo, vista, rol, folio y otras palabras de la guía.'],
+    ];
+    $cards = '<div class="guia-tarjetas">';
+    foreach ($secciones as [$url, $titulo, $texto]) {
+      $cards .= '<a class="guia-tarjeta" href="' . $url . '"><strong>' . $titulo . '</strong><span>' . $texto . '</span></a>';
+    }
+    $cards .= '</div>';
     return [
-      'intro' => [
-        '#markup' => '<div class="provenza-tutorial"><p>Este portal de colonos de Provenza Residencial está construido con <strong>Drupal</strong>, un sistema de gestión de contenidos de código abierto. Drupal organiza la información en piezas reutilizables (nodos, formularios, vistas, roles) y las combina como bloques de Lego.</p><p>Esta área explica, en español sencillo, qué módulos se usaron y dónde se ven en el sitio. No hace falta saber programar para leerla.</p>',
-      ],
-      'diagram' => [
-        '#markup' => '<ol class="provenza-diagram"><li>Un colono llena un formulario (Webform).</li><li>Se crea un expediente con folio (nodo).</li><li>Administración cambia el estado (flujos de trabajo).</li><li>El sistema envía un correo (ECA y Symfony Mailer).</li><li>Caseta o mantenimiento ven su lista (vistas y permisos).</li></ol>',
-      ],
       'nav' => $this->nav(),
-      'suffix' => ['#markup' => '</div>'],
+      'intro' => [
+        '#markup' => '<div class="provenza-tutorial"><p class="guia-lead">Este portal está construido con <strong>Drupal</strong>, un sistema de gestión de contenidos de código abierto. Drupal organiza la información en piezas reutilizables y las combina como bloques de Lego.</p><p>Esta área explica, en español sencillo, qué módulos se usaron y dónde se ven en el sitio. No hace falta saber programar para leerla.</p><h2>Cómo viaja un trámite</h2>',
+      ],
+      'diagram' => ['#markup' => $diagrama],
+      'cards' => ['#markup' => '<h2>Explora la guía</h2>' . $cards . '</div>'],
     ];
   }
-
   /**
    * How Drupal works.
    */
@@ -61,13 +82,13 @@ class TutorialController extends ControllerBase {
         ->count()
         ->execute();
       $cards[] = [
-        '#markup' => '<a class="provenza-tile" href="/asi-lo-construimos/modulos/' . $term->id() . '"><strong>' . $term->label() . '</strong><span>' . $count . ' módulos</span></a>',
+        '#markup' => '<a class="guia-tarjeta guia-tarjeta--categoria" href="/asi-lo-construimos/modulos/' . $term->id() . '"><span class="diagrama__icono diagrama__icono--cat-' . \Drupal::service('transliteration')->transliterate(mb_strtolower(strtok($term->label(), ' ')), 'es') . '" aria-hidden="true"></span><strong>' . $term->label() . '</strong><span>' . $count . ' módulos documentados</span></a>',
       ];
     }
     return [
       'nav' => $this->nav(),
       'cards' => [
-        '#prefix' => '<div class="provenza-tiles">',
+        '#prefix' => '<div class="guia-tarjetas">',
         '#suffix' => '</div>',
         'items' => $cards,
       ],
@@ -101,7 +122,7 @@ class TutorialController extends ControllerBase {
     }
     return [
       'nav' => $this->nav(),
-      'list' => ['#theme' => 'item_list', '#items' => $items, '#attributes' => ['class' => ['provenza-module-list']]],
+      'list' => ['#prefix' => '<div class="guia-modulos">', '#suffix' => '</div>', 'items' => $items],
     ];
   }
 
@@ -128,11 +149,12 @@ class TutorialController extends ControllerBase {
       'Caseta' => 'Puesto de control de acceso del condominio.',
       'Colono' => 'Residente o titular de un domicilio en Provenza Residencial.',
     ];
-    $items = [];
+    $html = '<dl class="glosario">';
     foreach ($terms as $term => $def) {
-      $items[] = ['#markup' => '<strong>' . $term . '.</strong> ' . $def];
+      $html .= '<div><dt>' . $term . '</dt><dd>' . $def . '</dd></div>';
     }
-    return ['nav' => $this->nav(), 'list' => ['#theme' => 'item_list', '#items' => $items]];
+    $html .= '</dl>';
+    return ['nav' => $this->nav(), 'list' => ['#markup' => $html]];
   }
 
   /**
@@ -145,7 +167,15 @@ class TutorialController extends ControllerBase {
         '#markup' => '<p>Este sitio usa Drupal 11 y módulos de la comunidad de Drupal. Gracias a las personas que mantienen Webform, ECA, Gin, Pathauto y el resto de proyectos listados en esta guía.</p>
           <p>Última actualización de esta prueba de concepto: 19 de noviembre de 2026. Zona horaria: America/Mexico_City.</p>
           <p><strong>reCAPTCHA v3</strong> está activo en registro, contacto y quejas (junto con Honeypot). En local se usan las claves de prueba de Google para que los formularios se puedan enviar; en producción se sustituyen por las del dominio autenticado. Un correo SMTP de dominio autenticado tampoco está configurado: los correos se capturan en Mailpit de DDEV.</p>
-          <p><a href="/asi-lo-construimos">Volver al inicio de la guía</a> · <a href="/inicio">Volver al portal</a></p>',
+          <h2>Multimedia del sitio</h2>
+          <ul>
+            <li><strong>Fotografías.</strong> Imágenes de Pexels con licencia libre, recortadas y corregidas de color por el equipo (contraste, saturación, viñeta y enfoque) y exportadas a WebP. Son ilustrativas: no muestran las instalaciones reales de Provenza.</li>
+            <li><strong>Mensaje de bienvenida.</strong> Narración generada con voz sintética en español de México y mezclada con una base musical original compuesta con ffmpeg: entrada, atenuación automática bajo la voz y normalización a -16 LUFS.</li>
+            <li><strong>Animaciones.</strong> Entradas al hacer scroll, línea de tiempo de solicitudes, ondas del reproductor y este diagrama, hechas con CSS y JavaScript. Respetan la preferencia de movimiento reducido del sistema.</li>
+            <li><strong>Iconos.</strong> Hugeicons, colección gratuita.</li>
+            <li><strong>Tipografías.</strong> Instrument Serif y Onest, de Google Fonts.</li>
+          </ul>
+          <p><a href="/asi-lo-construimos">Volver al inicio de la guía</a> <a href="/inicio">Volver al portal</a></p>',
       ],
     ];
   }
@@ -155,7 +185,7 @@ class TutorialController extends ControllerBase {
   }
 
   protected function renderNav(): string {
-    return '<nav class="provenza-tutorial-nav" aria-label="Así lo construimos"><a href="/asi-lo-construimos">Inicio de la guía</a> · <a href="/asi-lo-construimos/como-funciona-drupal">¿Cómo funciona Drupal?</a> · <a href="/asi-lo-construimos/modulos">Módulos por categoría</a> · <a href="/asi-lo-construimos/glosario">Glosario</a> · <a href="/asi-lo-construimos/creditos">Créditos</a></nav>';
+    return '<nav class="provenza-tutorial-nav" aria-label="Así lo construimos"><a href="/asi-lo-construimos">Inicio de la guía</a> <a href="/asi-lo-construimos/como-funciona-drupal">¿Cómo funciona Drupal?</a> <a href="/asi-lo-construimos/modulos">Módulos por categoría</a> <a href="/asi-lo-construimos/glosario">Glosario</a> <a href="/asi-lo-construimos/creditos">Créditos</a></nav>';
   }
 
 }

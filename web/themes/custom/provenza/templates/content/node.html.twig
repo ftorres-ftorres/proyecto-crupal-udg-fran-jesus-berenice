@@ -1,0 +1,10 @@
+<article{{ attributes.addClass('nodo', 'nodo--' ~ node.bundle|clean_class, view_mode == 'full' ? 'nodo--completo') }}>
+  {% if view_mode != 'full' %}
+    <h2 class="nodo__titulo"><a href="{{ url }}">{{ label }}</a></h2>
+  {% else %}
+    {% if node.bundle in ['aviso', 'evento', 'documento'] %}
+      <p class="nodo__fecha">{{ source('@provenza/icons/calendario.svg') }}Publicado el {{ fecha_bonita }}</p>
+    {% endif %}
+  {% endif %}
+  <div class="prosa">{{ content|without('links') }}</div>
+</article>

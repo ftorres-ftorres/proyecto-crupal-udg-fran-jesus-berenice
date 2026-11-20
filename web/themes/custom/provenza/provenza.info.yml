@@ -1,0 +1,30 @@
+name: Provenza
+type: theme
+description: 'Tema del portal de colonos de Provenza Residencial. Piedra caliza, olivo y terracota, con fotografía editada y animaciones discretas.'
+core_version_requirement: ^11
+base theme: stable9
+libraries:
+  - provenza/global
+regions:
+  header: 'Encabezado'
+  primary_menu: 'Menú principal'
+  secondary_menu: 'Menú secundario'
+  hero: 'Portada a todo lo ancho'
+  highlighted: 'Destacado (avisos urgentes y mensajes)'
+  breadcrumb: 'Migas de pan'
+  social: 'Redes'
+  content_above: 'Arriba del contenido'
+  content: 'Contenido'
+  sidebar: 'Barra lateral'
+  content_below: 'Debajo del contenido'
+  footer_top: 'Pie: menú'
+  footer_bottom: 'Pie: inferior'
+libraries-override:
+  provenza_core/portal:
+    css:
+      theme:
+        css/provenza.css: false
+  provenza_core/caseta:
+    css:
+      theme:
+        css/caseta.css: false

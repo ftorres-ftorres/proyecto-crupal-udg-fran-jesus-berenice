@@ -54,7 +54,7 @@ class TrackingController extends ControllerBase {
       $folio = $node->hasField('field_folio') ? $node->get('field_folio')->value : $node->id();
       $state = $node->hasField('moderation_state') && !$node->get('moderation_state')->isEmpty()
         ? $node->get('moderation_state')->value
-        : ($node->hasField('field_estado_visita') ? $node->get('field_estado_visita')->value : '—');
+        : ($node->hasField('field_estado_visita') ? $node->get('field_estado_visita')->value : 'sin_estado');
       $actions = [Link::fromTextAndUrl('Ver', $node->toUrl())->toString()];
       if ($type === 'visita') {
         $actions[] = Link::createFromRoute('Pase QR', 'provenza_core.qr', ['node' => $node->id()])->toString();
@@ -65,14 +65,14 @@ class TrackingController extends ControllerBase {
       $rows[] = [
         ['data' => ['#markup' => '<span class="provenza-folio">' . $folio . '</span>']],
         Link::fromTextAndUrl($node->label(), $node->toUrl()),
-        $this->stateLabel($state),
+        ['data' => ['#markup' => '<span class="estado estado--' . preg_replace('/[^a-z_]/', '', (string) $state) . '">' . $this->stateLabel($state) . '</span>']],
         \Drupal::service('date.formatter')->format($node->getCreatedTime(), 'short'),
-        ['data' => ['#markup' => implode(' · ', array_map(static function ($a): string {
+        ['data' => ['#markup' => '<span class="acciones-fila">' . implode('', array_map(static function ($a): string {
           if (is_array($a)) {
             return (string) \Drupal::service('renderer')->render($a);
           }
           return (string) $a;
-        }, $actions))]],
+        }, $actions)) . '</span>']],
       ];
     }
     $create = match ($type) {

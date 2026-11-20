@@ -1,0 +1,11 @@
+{# Listado genérico; el tema Provenza lo sobrescribe con tarjetas por tipo. #}
+<div class="provenza-listing provenza-listing--{{ bundle }}">
+  {% if intro %}<p>{{ intro }}</p>{% endif %}
+  <ul>
+    {% for item in items %}
+      <li><a href="{{ item.url }}">{{ item.titulo }}</a>{% if item.monto %} ${{ item.monto }}{% endif %}</li>
+    {% else %}
+      <li>No hay contenidos todavía.</li>
+    {% endfor %}
+  </ul>
+</div>

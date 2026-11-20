@@ -91,7 +91,7 @@ class AdminController extends ControllerBase {
         $folio,
         $node->type->entity->label(),
         Link::fromTextAndUrl($node->label(), $node->toUrl()),
-        $node->hasField('moderation_state') ? $node->get('moderation_state')->value : '—',
+        $node->hasField('moderation_state') ? $node->get('moderation_state')->value : 'Sin dato',
         \Drupal::service('date.formatter')->format($node->getCreatedTime(), 'short'),
         ['data' => ['#markup' => $assign . $state_links]],
       ];
@@ -158,7 +158,7 @@ class AdminController extends ControllerBase {
         $user->getDisplayName(),
         $user->getEmail(),
         $user->hasField('field_numero_casa') ? $user->get('field_numero_casa')->value : '',
-        ['data' => ['#markup' => Link::fromTextAndUrl('Aprobar y vincular', $approve)->toString() . ' · ' . Link::fromTextAndUrl('Rechazar', $reject)->toString()]],
+        ['data' => ['#markup' => Link::fromTextAndUrl('Aprobar y vincular', $approve)->toString() . ' ' . Link::fromTextAndUrl('Rechazar', $reject)->toString()]],
       ];
     }
     $houses = Node::loadMultiple($this->entityTypeManager()->getStorage('node')->getQuery()
@@ -178,12 +178,12 @@ class AdminController extends ControllerBase {
         $deactivate = Url::fromRoute('provenza_core.deactivate_house', ['node' => $house->id()], [
           'query' => ['token' => \Drupal::csrfToken()->get('provenza_core.deactivate_house/' . $house->id())],
         ]);
-        $actions .= ' · ' . Link::fromTextAndUrl('Desactivar', $deactivate)->toString();
+        $actions .= ' ' . Link::fromTextAndUrl('Desactivar', $deactivate)->toString();
       }
       $hrows[] = [
         $house->label(),
         $status_label,
-        $house->get('field_titular')->entity?->label() ?? '—',
+        $house->get('field_titular')->entity?->label() ?? 'Sin titular',
         ['data' => ['#markup' => $actions]],
       ];
     }
@@ -423,7 +423,7 @@ class AdminController extends ControllerBase {
     $nids = $this->entityTypeManager()->getStorage('node')->getQuery()
       ->accessCheck(FALSE)->condition('type', 'solicitud')->exists('field_calificacion')->execute();
     if (!$nids) {
-      return '—';
+      return 'Sin dato';
     }
     $sum = 0;
     $n = 0;
@@ -431,7 +431,7 @@ class AdminController extends ControllerBase {
       $sum += (int) $node->get('field_calificacion')->value;
       $n++;
     }
-    return $n ? number_format($sum / $n, 1) : '—';
+    return $n ? number_format($sum / $n, 1) : 'Sin dato';
   }
 
   protected function countOpenIncidents(): int {

@@ -45,7 +45,7 @@ class PortalController extends ControllerBase {
         $when = \Drupal::service('date.formatter')->format((int) $node->get('field_fecha_evento')->value, 'custom', 'd/m/Y H:i', 'America/Mexico_City');
       }
       $events[] = [
-        'title' => $when ? $when . ' · ' . $node->label() : $node->label(),
+        'title' => $when ? $node->label() . ' (' . $when . ')' : $node->label(),
         'url' => $node->toUrl()->toString(),
       ];
     }
@@ -53,6 +53,8 @@ class PortalController extends ControllerBase {
     $login = [];
     if ($account->isAnonymous()) {
       $login = $this->formBuilder()->getForm(\Drupal\user\Form\UserLoginForm::class);
+      // En la portada el formulario está al final: sin autofoco la página no salta.
+      unset($login['name']['#attributes']['autofocus']);
       $login['#action'] = Url::fromRoute('user.login', [], [
         'query' => ['destination' => '/inicio'],
       ])->toString();
@@ -246,29 +248,89 @@ class PortalController extends ControllerBase {
         $query->condition('field_tipo_documento', reset($terms)->id());
       }
     }
+    if ($bundle === 'evento') {
+      $query->sort('field_fecha_evento', 'ASC');
+    }
+    if ($bundle === 'aviso') {
+      $query->sort('created', 'DESC');
+    }
     $nodes = Node::loadMultiple($query->execute());
+    $formatter = \Drupal::service('date.formatter');
     $items = [];
     foreach ($nodes as $node) {
-      $extra = '';
-      if ($bundle === 'tarifa' && $node->hasField('field_monto')) {
-        $extra = ' — $' . number_format((float) $node->get('field_monto')->value, 0, '.', ',');
-      }
-      if ($bundle === 'directorio' && $node->hasField('field_telefono') && !$node->get('field_telefono')->isEmpty()) {
-        $tel = $node->get('field_telefono')->value;
-        $extra = ' — <a href="tel:' . $tel . '">' . $tel . '</a>';
-      }
-      $items[] = [
-        '#markup' => '<a href="' . $node->toUrl()->toString() . '">' . $node->label() . '</a>' . $extra,
+      $item = [
+        'titulo' => $node->label(),
+        'url' => $node->toUrl()->toString(),
+        'resumen' => $node->hasField('body') ? $this->summary((string) $node->get('body')->value) : '',
+        'cuerpo' => $node->hasField('body') && !$node->get('body')->isEmpty() ? [
+          '#type' => 'processed_text',
+          '#text' => $node->get('body')->value,
+          '#format' => $node->get('body')->format ?: 'basic_html',
+        ] : NULL,
+        'fecha' => $formatter->format($node->getCreatedTime(), 'custom', 'j \d\e F \d\e Y', 'America/Mexico_City'),
       ];
+      switch ($bundle) {
+        case 'tarifa':
+          $item['monto'] = number_format((float) $node->get('field_monto')->value, 0, '.', ',');
+          break;
+
+        case 'instalacion':
+          $item['codigo'] = (string) $node->get('field_codigo_instalacion')->value;
+          $item['horario'] = str_replace('–', ' a ', (string) $node->get('field_horarios')->value);
+          $item['capacidad'] = (int) $node->get('field_capacidad')->value;
+          break;
+
+        case 'directorio':
+          $item['telefono'] = (string) $node->get('field_telefono')->value;
+          $item['correo'] = (string) $node->get('field_correo')->value;
+          break;
+
+        case 'evento':
+          $ts = $node->get('field_fecha_evento')->isEmpty() ? NULL : (int) $node->get('field_fecha_evento')->value;
+          $item['dia'] = $ts ? $formatter->format($ts, 'custom', 'j', 'America/Mexico_City') : '';
+          $item['mes'] = $ts ? mb_substr($formatter->format($ts, 'custom', 'F', 'America/Mexico_City'), 0, 3) : '';
+          $item['hora'] = $ts ? $formatter->format($ts, 'custom', 'l j \d\e F, H:i', 'America/Mexico_City') . ' h' : '';
+          $item['lugar'] = (string) $node->get('field_ubicacion')->value;
+          $item['tipo'] = $node->get('field_tipo_evento')->entity?->label() ?? '';
+          break;
+
+        case 'aviso':
+          $item['categoria'] = $node->get('field_categoria_aviso')->entity?->label() ?? '';
+          $item['urgente'] = (bool) $node->get('field_urgente')->value;
+          break;
+
+        case 'documento':
+          $item['tipo'] = $node->get('field_tipo_documento')->entity?->label() ?? '';
+          $file = $node->get('field_archivo')->entity;
+          $item['archivo'] = $file ? \Drupal::service('file_url_generator')->generateString($file->getFileUri()) : '';
+          break;
+      }
+      $items[] = $item;
     }
-    return [
-      'list' => [
-        '#theme' => 'item_list',
-        '#items' => $items,
-        '#empty' => 'No hay contenidos todavía.',
-        '#attributes' => ['class' => ['provenza-listing']],
-      ],
+    $intro = [
+      'tarifa' => 'Montos vigentes en pesos mexicanos. Administración los actualiza sin tocar código y cada instalación muestra las tarifas que le corresponden.',
+      'instalacion' => 'Espacios de uso común para todas las casas. Revisa horarios, capacidad y reglas antes de visitarlos.',
+      'aviso' => 'Comunicados de Administración. Los urgentes también aparecen en la parte superior de cada página.',
+      'faq' => 'Las dudas más comunes de los colonos. Si no encuentras la tuya, escríbenos desde Contacto.',
+      'documento' => 'Reglamentos, actas y formatos. Algunos documentos solo se muestran a residentes con sesión iniciada.',
+      'directorio' => 'Teléfonos y correos de las áreas que atienden el fraccionamiento. En tu celular, toca el número para llamar.',
+      'evento' => 'Asambleas, cortes programados, jornadas de jardinería y recolección.',
     ];
+    return [
+      '#theme' => 'provenza_listing',
+      '#bundle' => $bundle,
+      '#intro' => $intro[$bundle] ?? '',
+      '#items' => $items,
+      '#cache' => ['tags' => ['node_list:' . $bundle], 'contexts' => ['user.roles']],
+    ];
+  }
+
+  /**
+   * Texto plano recortado para tarjetas.
+   */
+  protected function summary(string $html, int $length = 150): string {
+    $text = trim(preg_replace('/\s+/', ' ', strip_tags(str_replace(['<br>', '<br />', '</p>'], ' ', $html))));
+    return mb_strlen($text) > $length ? rtrim(mb_substr($text, 0, $length)) . '…' : $text;
   }
 
   /**

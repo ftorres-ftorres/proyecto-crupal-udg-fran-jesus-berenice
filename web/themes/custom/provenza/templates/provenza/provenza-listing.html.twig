@@ -1,0 +1,107 @@
+{#
+  Listados públicos con un diseño distinto por tipo de contenido.
+#}
+<div class="listado listado--{{ bundle }}">
+  {% if intro %}<p class="listado__intro">{{ intro }}</p>{% endif %}
+
+  {% if not items %}
+    <div class="vacio">
+      <span class="vacio__icono">{{ source('@provenza/icons/documento.svg') }}</span>
+      <p>Todavía no hay contenidos en esta sección.</p>
+    </div>
+
+  {% elseif bundle == 'instalacion' %}
+    <div class="rejilla-fotos rejilla-fotos--listado">
+      {% for i in items %}
+        <a class="foto-tarjeta foto-tarjeta--alta revela" href="{{ i.url }}" style="--retraso: {{ (loop.index0 % 4) * 70 }}ms">
+          <img src="{{ i.foto }}" alt="{{ i.titulo }}" loading="lazy" width="640" height="480">
+          <span class="foto-tarjeta__pie">
+            <span class="foto-tarjeta__titulo">{{ i.titulo }}</span>
+            <span class="foto-tarjeta__dato">{{ source('@provenza/icons/reloj.svg') }}{{ i.horario }}</span>
+            {% if i.capacidad %}<span class="foto-tarjeta__dato">{{ source('@provenza/icons/grupo.svg') }}Hasta {{ i.capacidad }} personas</span>{% endif %}
+          </span>
+        </a>
+      {% endfor %}
+    </div>
+
+  {% elseif bundle == 'tarifa' %}
+    <div class="tarifas">
+      {% for t in items %}
+        <div class="tarifa revela" style="--retraso: {{ loop.index0 * 40 }}ms">
+          <span class="tarifa__concepto">{{ t.titulo }}</span>
+          <span class="tarifa__monto"><small>$</small>{{ t.monto }}<small>MXN</small></span>
+        </div>
+      {% endfor %}
+    </div>
+    <p class="nota">{{ source('@provenza/icons/ayuda.svg') }}Los pagos se hacen directamente con Administración. El portal publica los montos para que todas las casas tengan la misma información.</p>
+
+  {% elseif bundle == 'faq' %}
+    <div class="acordeon">
+      {% for f in items %}
+        <details class="acordeon__item revela"{% if loop.first %} open{% endif %}>
+          <summary>{{ f.titulo }}</summary>
+          <div class="acordeon__cuerpo">{{ f.cuerpo }}</div>
+        </details>
+      {% endfor %}
+    </div>
+
+  {% elseif bundle == 'evento' %}
+    <div class="eventos eventos--listado">
+      {% for e in items %}
+        <a class="evento revela" href="{{ e.url }}">
+          <span class="evento__fecha"><strong>{{ e.dia }}</strong>{{ e.mes }}</span>
+          <span class="evento__info">
+            <span class="evento__titulo">{{ e.titulo }}</span>
+            <span class="evento__hora">{{ e.hora }}{% if e.lugar %}, {{ e.lugar }}{% endif %}</span>
+          </span>
+          {% if e.tipo %}<span class="etiqueta">{{ e.tipo }}</span>{% endif %}
+        </a>
+      {% endfor %}
+    </div>
+
+  {% elseif bundle == 'directorio' %}
+    <div class="contactos">
+      {% for c in items %}
+        <div class="contacto revela">
+          <span class="contacto__icono">{{ source('@provenza/icons/telefono.svg') }}</span>
+          <h2 class="contacto__nombre">{{ c.titulo }}</h2>
+          {% if c.resumen %}<p>{{ c.resumen }}</p>{% endif %}
+          <div class="contacto__acciones">
+            {% if c.telefono %}<a class="boton boton--chico" href="tel:{{ c.telefono|replace({' ': ''}) }}">{{ source('@provenza/icons/telefono.svg') }}{{ c.telefono }}</a>{% endif %}
+            {% if c.correo %}<a class="boton boton--chico boton--claro" href="mailto:{{ c.correo }}">{{ source('@provenza/icons/correo.svg') }}Correo</a>{% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  {% elseif bundle == 'documento' %}
+    <div class="documentos">
+      {% for d in items %}
+        <a class="documento revela" href="{{ d.archivo ?: d.url }}">
+          <span class="documento__icono">{{ source('@provenza/icons/documento.svg') }}</span>
+          <span class="documento__info">
+            <span class="documento__titulo">{{ d.titulo }}</span>
+            <span class="documento__meta">{{ d.tipo }}{% if d.tipo %}, {% endif %}{{ d.fecha }}</span>
+          </span>
+          <span class="documento__flecha">{{ source('@provenza/icons/flecha_diag.svg') }}</span>
+        </a>
+      {% endfor %}
+    </div>
+
+  {% else %}
+    <div class="tarjetas">
+      {% for a in items %}
+        <a class="tarjeta revela{{ a.urgente ? ' tarjeta--urgente' }}" href="{{ a.url }}" style="--retraso: {{ (loop.index0 % 3) * 60 }}ms">
+          <span class="tarjeta__meta">
+            {% if a.urgente %}<span class="etiqueta etiqueta--acento">Urgente</span>{% endif %}
+            {% if a.categoria %}<span class="etiqueta">{{ a.categoria }}</span>{% endif %}
+            <span>{{ a.fecha }}</span>
+          </span>
+          <span class="tarjeta__titulo">{{ a.titulo }}</span>
+          {% if a.resumen %}<span class="tarjeta__texto">{{ a.resumen }}</span>{% endif %}
+          <span class="enlace-flecha">Leer{{ source('@provenza/icons/flecha.svg') }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>

@@ -43,6 +43,9 @@ function provenza_core_theme($existing, $type, $theme, $path): array {
         'filters' => [],
       ],
     ],
+    'provenza_listing' => [
+      'variables' => ['bundle' => '', 'intro' => '', 'items' => []],
+    ],
     'provenza_tiles' => [
       'variables' => ['items' => []],
     ],
@@ -194,7 +197,7 @@ function provenza_core_grant(string $realm, int $gid, int $view = 1, int $update
  */
 function provenza_core_format_datetime(?string $value): string {
   if (!$value) {
-    return '—';
+    return 'Sin fecha';
   }
   $ts = strtotime($value . ' UTC') ?: strtotime($value);
   if (!$ts) {
@@ -642,4 +645,37 @@ function provenza_core_tokens($type, $tokens, array $data, array $options, $bubb
     }
   }
   return $replacements;
+}
+
+/**
+ * Publica los webforms como páginas con alias en español (idempotente).
+ */
+function provenza_core_form_pages(): void {
+  $paths = [
+    'solicitud_servicio' => '/form/solicitud-servicio',
+    'recoleccion_especial' => '/form/recoleccion-especial',
+    'calificar_servicio' => '/form/calificar-servicio',
+    'queja_sugerencia' => '/form/queja-sugerencia',
+    'reservar_salon' => '/form/reservar-salon',
+    'registrar_visita' => '/form/registrar-visita',
+    'reportar_incidente' => '/form/reportar-incidente',
+  ];
+  // Webform crea por sí mismo el alias /form/... a partir de /webform/{id}.
+  // Aquí solo se publica cada formulario como página.
+  foreach (array_keys($paths) as $id) {
+    $webform = \Drupal\webform\Entity\Webform::load($id);
+    if ($webform && !$webform->getSetting('page')) {
+      $webform->setSetting('page', TRUE);
+      $webform->save();
+    }
+  }
+  // Limpia alias de versiones anteriores que apuntaban a rutas inexistentes.
+  $storage = \Drupal::entityTypeManager()->getStorage('path_alias');
+  foreach (array_keys($paths) as $id) {
+    foreach (['/webform/' . str_replace('_', '-', $id), '/form/' . $id] as $bad) {
+      foreach ($storage->loadByProperties(['path' => $bad]) as $alias) {
+        $alias->delete();
+      }
+    }
+  }
 }

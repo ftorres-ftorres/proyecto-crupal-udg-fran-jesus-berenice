@@ -78,7 +78,8 @@ class SiteInstaller {
    */
   protected function configureSite(): void {
     $site = \Drupal::configFactory()->getEditable('system.site');
-    $site->set('name', 'Portal de colonos · Provenza Residencial');
+    $site->set('name', 'Provenza Residencial');
+    $site->set('slogan', 'Portal de colonos');
     $site->set('slogan', 'Colonos del Condominio Residencial AC');
     $site->set('page.front', '/inicio');
     $site->set('mail', 'no-reply@provenza.ddev.site')->save();
@@ -1296,7 +1297,7 @@ YAML, 'incidente');
           'configuration' => [
             'recipient' => '[node:author:mail]',
             'subject' => 'Actualización de [node:folio]',
-            'message' => "Hola [node:author:display-name],\n\nEl folio [node:folio] cambió de estado.\n\n[node:url:absolute]\n\nPortal de colonos · Provenza Residencial",
+            'message' => "Hola [node:author:display-name],\n\nEl folio [node:folio] cambió de estado.\n\n[node:url:absolute]\n\nPortal de colonos de Provenza Residencial",
           ],
           'successors' => [
             ['id' => 'Activity_log', 'condition' => ''],

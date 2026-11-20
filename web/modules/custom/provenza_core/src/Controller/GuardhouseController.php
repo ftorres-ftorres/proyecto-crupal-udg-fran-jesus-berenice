@@ -126,7 +126,7 @@ class GuardhouseController extends ControllerBase {
     $house = $node->get('field_domicilio')->entity;
     $ventana = provenza_core_format_datetime((string) $node->get('field_ventana_inicio')->value) . ' a ' . provenza_core_format_datetime((string) $node->get('field_ventana_fin')->value);
     return [
-      '#markup' => '<div class="provenza-pass"><h2>Pase de acceso</h2><p class="provenza-folio">' . $node->get('field_folio')->value . '</p><p><strong>' . $node->get('field_nombre_visita')->value . '</strong></p><p>Casa: ' . ($house ? $house->label() : '—') . '</p><p>Ventana: ' . $ventana . '</p>' . ($qr ? '<p><img alt="Código QR del pase" src="' . $qr . '" width="280" height="280" /></p>' : '') . '<p>Muestra este pase en caseta.</p></div>',
+      '#markup' => '<div class="provenza-pass"><h2>Pase de acceso</h2><p class="provenza-folio">' . $node->get('field_folio')->value . '</p><p><strong>' . $node->get('field_nombre_visita')->value . '</strong></p><p>Casa: ' . ($house ? $house->label() : 'Sin casa') . '</p><p>Ventana: ' . $ventana . '</p>' . ($qr ? '<p><img alt="Código QR del pase" src="' . $qr . '" width="280" height="280" /></p>' : '') . '<p>Muestra este pase en caseta.</p></div>',
       '#attached' => ['library' => ['provenza_core/portal']],
     ];
   }

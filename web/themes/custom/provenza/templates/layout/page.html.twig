@@ -1,0 +1,31 @@
+<a href="#contenido" class="visually-hidden focusable saltar">Saltar al contenido</a>
+{% include '@provenza/layout/_header.html.twig' %}
+<section class="cabecera{{ foto_cabecera ? ' cabecera--foto' }}"{% if foto_cabecera %} style="--foto: url('{{ foto_cabecera }}')"{% endif %}>
+  <div class="contenedor cabecera__interior">
+    {{ page.breadcrumb }}
+    {{ page.header }}
+  </div>
+</section>
+{% if page.highlighted %}<div class="contenedor destacado">{{ page.highlighted }}</div>{% endif %}
+<main id="contenido" class="principal contenedor{{ page.sidebar or ayuda_formulario ? ' principal--con-lateral' }}" tabindex="-1">
+  <div class="principal__cuerpo">
+    {{ page.content_above }}
+    {{ page.content }}
+    {{ page.content_below }}
+  </div>
+  {% if page.sidebar or ayuda_formulario %}
+    <aside class="principal__lateral" role="complementary">
+      {% if ayuda_formulario %}
+        <div class="ayuda">
+          <h2>Qué pasa después</h2>
+          <ol class="ayuda__pasos">
+            {% for paso in ayuda_formulario %}<li><span>{{ loop.index }}</span>{{ paso }}</li>{% endfor %}
+          </ol>
+          <p class="ayuda__nota">{{ source('@provenza/icons/telefono.svg') }}<span>¿Es urgente? Llama a caseta desde <a href="/seguridad/telefonos-de-emergencia">Teléfonos de emergencia</a>.</span></p>
+        </div>
+      {% endif %}
+      {{ page.sidebar }}
+    </aside>
+  {% endif %}
+</main>
+{% include '@provenza/layout/_footer.html.twig' %}

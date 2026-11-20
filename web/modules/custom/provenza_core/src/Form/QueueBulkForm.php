@@ -69,7 +69,7 @@ class QueueBulkForm extends FormBase {
         'folio' => $folio,
         'tipo' => $node->type->entity->label(),
         'titulo' => Link::fromTextAndUrl($node->label(), $node->toUrl()),
-        'estado' => $node->hasField('moderation_state') ? ($node->get('moderation_state')->value ?: '—') : '—',
+        'estado' => $node->hasField('moderation_state') ? ($node->get('moderation_state')->value ?: 'Sin dato') : 'Sin dato',
         'fecha' => \Drupal::service('date.formatter')->format($node->getCreatedTime(), 'short'),
       ];
     }

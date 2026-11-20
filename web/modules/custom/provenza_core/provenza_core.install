@@ -10,36 +10,15 @@ use Drupal\provenza_core\Install\SiteInstaller;
 /**
  * Implements hook_install().
  */
-function provenza_core_install(): void {
-  \Drupal::classResolver(SiteInstaller::class)->install();
-  $paths = [
-    'solicitud_servicio' => '/form/solicitud-servicio',
-    'recoleccion_especial' => '/form/recoleccion-especial',
-    'calificar_servicio' => '/form/calificar-servicio',
-    'queja_sugerencia' => '/form/queja-sugerencia',
-    'reservar_salon' => '/form/reservar-salon',
-    'registrar_visita' => '/form/registrar-visita',
-    'reportar_incidente' => '/form/reportar-incidente',
-  ];
-  foreach ($paths as $id => $alias) {
-    $webform = \Drupal\webform\Entity\Webform::load($id);
-    if ($webform) {
-      $webform->set('settings', ['page' => TRUE] + $webform->getSettings());
-      $webform->save();
-    }
-    \Drupal::service('path_alias.manager');
-    $storage = \Drupal::entityTypeManager()->getStorage('path_alias');
-    $storage->create([
-      'path' => '/webform/' . str_replace('_', '-', $id),
-      'alias' => $alias,
-      'langcode' => 'es',
-    ])->save();
-    $storage->create([
-      'path' => '/form/' . $id,
-      'alias' => $alias,
-      'langcode' => 'es',
-    ])->save();
+function provenza_core_install(bool $is_syncing = FALSE): void {
+  // Durante site:install --existing-config los tipos de contenido llegan
+  // después por la importación de configuración. En ese caso la estructura
+  // se completa con "drush provenza:setup".
+  if ($is_syncing || \Drupal::isConfigSyncing()) {
+    return;
   }
+  \Drupal::classResolver(SiteInstaller::class)->install();
+  provenza_core_form_pages();
 }
 
 /**

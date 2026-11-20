@@ -22,6 +22,7 @@ class ProvenzaCommands extends DrushCommands {
   #[CLI\Command(name: 'provenza:setup', aliases: ['pza-setup'])]
   public function setup(): void {
     $this->classResolver->getInstanceFromDefinition(SiteInstaller::class)->install();
+    provenza_core_form_pages();
     $this->logger()->success('Estructura de Provenza actualizada.');
   }
 

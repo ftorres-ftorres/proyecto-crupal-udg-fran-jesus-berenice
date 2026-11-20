@@ -1,0 +1,7 @@
+{% set clases = ['campo', 'campo--' ~ field_name|clean_class, label_display == 'inline' ? 'campo--en-linea'] %}
+<div{{ attributes.addClass(clases) }}>
+  {% if not label_hidden %}<div class="campo__etiqueta{{ label_display == 'visually_hidden' ? ' visually-hidden' }}">{{ label }}</div>{% endif %}
+  {% if multiple %}<div class="campo__items">{% endif %}
+  {% for item in items %}<div{{ item.attributes.addClass('campo__item') }}>{{ item.content }}</div>{% endfor %}
+  {% if multiple %}</div>{% endif %}
+</div>

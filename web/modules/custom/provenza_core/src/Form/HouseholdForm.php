@@ -43,7 +43,7 @@ class HouseholdForm extends FormBase {
       $rows[] = [
         $member->get('field_nombre_completo')->value ?: $member->getDisplayName(),
         $member->getEmail(),
-        $member->hasField('field_relacion') ? ($member->get('field_relacion')->value ?: '—') : '—',
+        $member->hasField('field_relacion') ? ($member->get('field_relacion')->value ?: 'Sin dato') : 'Sin dato',
         $member->isActive() ? 'Activa' : 'Inactiva',
       ];
     }

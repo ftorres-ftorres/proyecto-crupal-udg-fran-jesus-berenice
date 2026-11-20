@@ -33,7 +33,7 @@ class ApproveUserForm extends FormBase {
     $default = count($matches) === 1 ? (string) array_key_first($matches) : '';
 
     $form['intro'] = [
-      '#markup' => '<p><strong>' . $user->getDisplayName() . '</strong> · ' . $user->getEmail() . ($house_number ? ' · Casa declarada: ' . $house_number : '') . '</p>',
+      '#markup' => '<p><strong>' . $user->getDisplayName() . '</strong>, ' . $user->getEmail() . ($house_number ? '. Casa declarada: ' . $house_number : '') . '</p>',
     ];
     $form['casa'] = [
       '#type' => 'select',

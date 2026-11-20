@@ -10,7 +10,11 @@ use Drupal\provenza_demo\DemoContentGenerator;
 /**
  * Implements hook_install().
  */
-function provenza_demo_install(): void {
+function provenza_demo_install(bool $is_syncing = FALSE): void {
+  // Con --existing-config los datos se cargan después con "drush provenza-demo:generate".
+  if ($is_syncing || \Drupal::isConfigSyncing()) {
+    return;
+  }
   \Drupal::classResolver(DemoContentGenerator::class)->generate();
 }
 
