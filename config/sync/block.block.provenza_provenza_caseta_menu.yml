@@ -1,0 +1,35 @@
+uuid: 0a2aa0c8-e798-4e37-84ac-9ebd7fb3f1ba
+langcode: es
+status: true
+dependencies:
+  config:
+    - system.menu.guardhouse
+  module:
+    - system
+    - user
+  theme:
+    - provenza
+id: provenza_provenza_caseta_menu
+theme: provenza
+region: sidebar
+weight: -9
+provider: null
+plugin: 'system_menu_block:guardhouse'
+settings:
+  id: 'system_menu_block:guardhouse'
+  label: ''
+  label_display: ''
+  provider: system
+  level: 1
+  depth: 1
+  expand_all_items: false
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      caseta: caseta
+      administracion: administracion
+      webmaster: webmaster

@@ -1,0 +1,22 @@
+uuid: 6e01577f-78c7-4915-9e99-ed3d648767ea
+langcode: es
+status: true
+dependencies:
+  theme:
+    - provenza
+_core:
+  default_config_hash: ydSxdq7R66I8UMC460rOzlfzvlUL4VRbdwc6z9DWaUI
+id: provenza_secondary_local_tasks
+theme: provenza
+region: highlighted
+weight: -2
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Solapas secundarias'
+  label_display: '0'
+  provider: core
+  primary: false
+  secondary: true
+visibility: {  }

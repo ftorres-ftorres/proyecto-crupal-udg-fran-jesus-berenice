@@ -1,0 +1,23 @@
+uuid: c68da070-f04d-44a4-bf3b-675746d34bc0
+langcode: es
+status: false
+dependencies:
+  module:
+    - search
+  theme:
+    - provenza
+_core:
+  default_config_hash: _nZjxxdypO6xrOAJkCYD81v0L7wh2zbCAVO7_C-UKIc
+id: provenza_search_form_narrow
+theme: provenza
+region: primary_menu
+weight: -4
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Formulario de búsqueda (estrecho)'
+  label_display: '0'
+  provider: search
+  page_id: null
+visibility: {  }

@@ -1,0 +1,22 @@
+uuid: 6d760225-b3a2-4bc8-af75-c3a741f420f6
+langcode: es
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - provenza
+_core:
+  default_config_hash: VfPFqqxfkomud5CO8DUijw85QIl9GIxh_nIxLOYESxg
+id: provenza_help
+theme: provenza
+region: content_above
+weight: -20
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Ayuda
+  label_display: '0'
+  provider: help
+visibility: {  }

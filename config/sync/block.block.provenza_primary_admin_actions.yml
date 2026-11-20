@@ -1,0 +1,20 @@
+uuid: f618bc3f-c779-4260-b47a-b1232e7774cc
+langcode: es
+status: true
+dependencies:
+  theme:
+    - provenza
+_core:
+  default_config_hash: Q9_2whdOj1YIomfvsIfopROW4FT_X5pY0DjdOiOaQ5U
+id: provenza_primary_admin_actions
+theme: provenza
+region: highlighted
+weight: -5
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Acciones principales de administración'
+  label_display: '0'
+  provider: core
+visibility: {  }

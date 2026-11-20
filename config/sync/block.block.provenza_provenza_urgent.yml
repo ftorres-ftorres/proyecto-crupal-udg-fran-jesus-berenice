@@ -1,0 +1,20 @@
+uuid: ff1e968f-30ae-492c-8779-2552e02154d3
+langcode: es
+status: true
+dependencies:
+  module:
+    - provenza_core
+  theme:
+    - provenza
+id: provenza_provenza_urgent
+theme: provenza
+region: highlighted
+weight: -20
+provider: null
+plugin: provenza_urgent_notices
+settings:
+  id: provenza_urgent_notices
+  label: ''
+  label_display: ''
+  provider: provenza_core
+visibility: {  }

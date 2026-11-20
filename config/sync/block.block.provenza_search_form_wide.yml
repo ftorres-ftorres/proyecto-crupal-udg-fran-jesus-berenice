@@ -1,0 +1,23 @@
+uuid: 42636f83-184d-4012-bf14-562424921bbe
+langcode: es
+status: false
+dependencies:
+  module:
+    - search
+  theme:
+    - provenza
+_core:
+  default_config_hash: pbbed0hdqGDF-_QWVVTWRAwgDIotFuAvWH5mWUZu0fA
+id: provenza_search_form_wide
+theme: provenza
+region: secondary_menu
+weight: -5
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Formulario de búsqueda (ancho)'
+  label_display: '0'
+  provider: search
+  page_id: null
+visibility: {  }

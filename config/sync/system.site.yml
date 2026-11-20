@@ -2,9 +2,9 @@ _core:
   default_config_hash: ijfbzDTN4CbE7Sr-6ubWzy_t1vH4OtU1doNCLssVz-4
 langcode: es
 uuid: a4e44417-1da5-4e0e-8540-0afc764f79f6
-name: 'Portal de colonos · Provenza Residencial'
+name: 'Provenza Residencial'
 mail: no-reply@provenza.ddev.site
-slogan: 'Colonos del Condominio Residencial AC'
+slogan: 'Portal de colonos'
 page:
   403: ''
   404: ''

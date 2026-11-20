@@ -1,0 +1,22 @@
+uuid: 1b3f8d23-3586-4d63-82c4-e2e9f479951f
+langcode: es
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - provenza
+_core:
+  default_config_hash: eYL19CLDyinGTWYQfBD1DswWzglEotE_kHnHx3AxTXM
+id: provenza_powered
+theme: provenza
+region: footer_bottom
+weight: 0
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Funciona con Drupal'
+  label_display: '0'
+  provider: system
+visibility: {  }

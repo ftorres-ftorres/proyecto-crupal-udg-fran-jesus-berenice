@@ -1,0 +1,20 @@
+uuid: d2a556f1-da76-4ad4-ba39-ced08c038845
+langcode: es
+status: false
+dependencies:
+  module:
+    - provenza_core
+  theme:
+    - provenza
+id: provenza_provenza_search
+theme: provenza
+region: secondary_menu
+weight: -5
+provider: null
+plugin: provenza_search_form
+settings:
+  id: provenza_search_form
+  label: ''
+  label_display: ''
+  provider: provenza_core
+visibility: {  }
